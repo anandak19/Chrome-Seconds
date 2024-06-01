@@ -1,0 +1,36 @@
+<div class="login-container">
+    <div class="login-container__image-section">
+      <img src="../../../assets/images/watch-cl.jpeg" alt="Sign UP" />
+    </div>
+  
+    <div class="login-container__form-section">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <h2 class="login-container__title">Login</h2>
+  
+        <div class="login-container__form-group">
+          <input type="email" id="email" formControlName="email" placeholder="Email">
+          @if (formSubmitted) {
+            @if (loginForm.get('email')?.hasError('required')) {
+              <small class="error-msg">Email is required</small>
+            }@else if (loginForm.get('email')?.hasError('email')) {
+              <small class="error-msg">Invalid email format</small>
+            }
+          }
+        </div>
+  
+        <div class="login-container__form-group">
+          <input type="password" id="password" formControlName="password" placeholder="Password">
+          @if (formSubmitted) {
+            @if (loginForm.get('password')?.hasError('required')) {
+              <small class="error-msg">Password is required</small>
+            }
+          }
+        </div>
+  
+        <button type="submit" class="login-container__submit-btn">Login</button>
+        <!-- sigup route is giving login/signup fix it  -->
+        <p class="login-container__signup-txt">Dont have an account?  <a [routerLink]="['/signup']">Sign Up</a> </p>
+      </form>
+    </div>
+  </div>
+  

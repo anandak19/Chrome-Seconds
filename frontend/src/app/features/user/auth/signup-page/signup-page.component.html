@@ -1,0 +1,71 @@
+<div class="signup-container">
+    <div class="signup-container__image-section">
+      <img src="../../../assets/images/watch-cl.jpeg" alt="Sign UP" />
+    </div>
+  
+    <div class="signup-container__form-section">
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <h2 class="signup-container__title">Sign Up</h2>
+  
+        <div class="signup-container__form-group">
+          <input type="text" id="fullname" formControlName="fullname" placeholder="Full Name"/>
+          @if (formSubmitted) {
+            @if (signupForm.get('fullname')?.hasError('required')) {
+              <small class="error-msg">Name is required</small>
+            }@else if (signupForm.get('fullname')?.hasError('minlength')) {
+              <small class="error-msg">Name must be at least 3 characters long</small>
+            }@else if (signupForm.get('fullname')?.hasError('maxlength')) {
+              <small class="error-msg">Name is too long</small>
+            }
+          }
+        </div>
+  
+  
+        <div class="signup-container__form-group">
+          <input type="email" id="email" formControlName="email" placeholder="Email">
+          @if (formSubmitted) {
+            @if (signupForm.get('email')?.hasError('required')) {
+              <small class="error-msg">Email is required</small>
+            }@else if (signupForm.get('email')?.hasError('email')) {
+              <small class="error-msg">Invalid email format</small>
+            }
+          }
+        </div>
+  
+  
+        <div class="signup-container__form-group">
+          <input type="password" id="password" formControlName="password" placeholder="Password">
+          @if (formSubmitted) {
+            @if (signupForm.get('password')?.hasError('required')) {
+              <small class="error-msg">Password is required</small>
+            }@else if (signupForm.get('password')?.hasError('tooShort')) {
+              <small class="error-msg">Password must be at least 5 characters long</small>
+            }@else if(signupForm.get('password')?.hasError('noUppercase')) {
+              <small class="error-msg">Password must contain at least one Upper case character</small>
+            }@else if (signupForm.get('password')?.hasError('noLowercase')) {
+              <small class="error-msg">Password must contain at least one lower case character</small>
+            }@else if (signupForm.get('password')?.hasError('noNumber')) {
+              <small class="error-msg">Password must contain at least one number</small>
+            }
+          }
+        </div>
+  
+  
+        <div class="signup-container__form-group">
+          <input type="password" id="confirmPassword" formControlName="confirmPassword" placeholder="Confirm Password">
+          @if (formSubmitted) {
+            @if (signupForm.get('confirmPassword')?.hasError('required')) {
+              <small class="error-msg">Re-enter your password</small>
+            }@else if (signupForm.get('confirmPassword')?.hasError('misMatch')) {
+              <small class="error-msg">Please provide correct password</small>
+            }
+          }
+        </div>
+  
+        <button type="submit" class="signup-container__submit-btn">Sign Up</button>
+        <p class="signup-container__login-txt">Already have an account?  <a [routerLink]="['/login']">Login</a> </p>
+  
+      </form>
+    </div>
+  </div>
+  

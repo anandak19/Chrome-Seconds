@@ -25,6 +25,7 @@ export const createProduct = async (req, res) => {
     color,
     weight,
     material,
+    gender,
   } = req.body;
 
   try {
@@ -46,6 +47,7 @@ export const createProduct = async (req, res) => {
       color,
       weight,
       material,
+      gender,
     });
 
     const savedProduct = await newProduct.save();

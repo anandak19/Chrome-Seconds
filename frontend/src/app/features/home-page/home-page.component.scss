@@ -1,0 +1,64 @@
+.home-container{
+    &__hero{
+        position: relative;
+        width: 100%;
+        height: 450px;
+        background-image: url('../../../assets/images/hero-img.jpg');
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-align: center;
+
+        &::after{
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+    }
+    &__hero-contents{
+        z-index: 2;
+        & p{
+            font-size: 28px;
+        }
+        & h1{
+            font-size: 54px;
+            margin: 18px 0;
+        }
+        & button{
+            background-color: #E54800;
+            color: #ffffff;
+            border-radius: 50px;
+            padding: 10px 32px;
+            font-size: 24px;
+            transition: all 0.3s ease;
+            outline: none; 
+            &:hover{
+                background-color: #ff5c33; 
+                transform: scale(1.06);
+            }
+            &:active{
+                transform: scale(1.02);
+            }
+        }
+    }
+
+    // products section 
+    &__products{
+        padding: 8px 38px;
+        margin: 24px 0;
+        background-color: #47362F;
+    }
+    &__prouducts-title{
+        color: #ffffff;
+        padding-left: 12px;
+        border-left: 6px solid #E54800;
+    }
+}

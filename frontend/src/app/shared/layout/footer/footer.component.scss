@@ -1,0 +1,26 @@
+.footer-container{
+    background-color: #000000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 36px 0;
+    bottom: 0;
+
+    &__contents{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    &__dev, &__name{
+        color: #acacac;
+    }
+    &__dev{
+        font-size: 14px;
+    }
+
+
+    &__copyright{
+        color: #7a7a7a;
+    }
+}
