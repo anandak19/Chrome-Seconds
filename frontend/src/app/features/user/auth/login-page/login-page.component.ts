@@ -48,12 +48,10 @@ export class LoginPageComponent implements OnInit, OnDestroy {
       console.log(this.loginForm.value);
       const { email, password } = this.loginForm.value;
       this.userData = { email, password };
-      // Handle form submission, e.g., send the data to the server
+      // send the data to the server
       this._userManagement.loginUser(this.userData).subscribe(
         (res) => {
-          console.log(res);
           this._router.navigate(['']);
-          alert(`Welcome back ${res.fullName}`);
         },
         (err) => {
           console.log(err);
@@ -63,7 +61,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
 
       // reset the form and related data 
       this.formSubmitted = false;
-      this.loginForm.reset();
+      this.loginForm.reset();      
     } else {
       console.log('Form is invalid');
     }

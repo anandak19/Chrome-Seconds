@@ -1,7 +1,11 @@
 import UserModel from "../models/user.model.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
-// function to create a new user 
+// secret key to create a token------
+const SECRET_KEY = "chrome_ak";
+
+// function to create a new user
 export const createUser = async (req, res) => {
   const { fullName, email, password } = req.body;
 
@@ -29,9 +33,11 @@ export const createUser = async (req, res) => {
     console.error("Error creating the user: ", error);
     res.status(500).json({ error: "Internal server error" });
   }
+
+  // generate a token for user and send it
 };
 
-// function to update user details 
+// function to update user details
 export const updateUser = async (req, res) => {
   const id = req.params.id;
   const updates = req.body;
@@ -57,7 +63,7 @@ export const updateUser = async (req, res) => {
   }
 };
 
-// function to login the user 
+// function to login the user
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
@@ -77,9 +83,36 @@ export const loginUser = async (req, res) => {
       return res.status(401).json({ error: "Invalid password" });
     }
 
-    res.status(200).json(requestedUser);
+    // Generate a JWT token
+    const token = jwt.sign(
+      { id: requestedUser._id },
+      SECRET_KEY,
+      { expiresIn: "7h" } // Token expires in 7 hour
+    );
+
+    const userImage = requestedUser.userImage
+
+    // send the user data except password and token to clint
+    res.status(200).json({ userImage, token });
   } catch (err) {
     console.error("Error finding user: ", err);
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+export const getProfileData = async (req, res) => {
+  // extract id from header 
+  const token = req.headers.authorization.split(' ')[1];
+  const decoded = jwt.verify(token, SECRET_KEY);
+  const userId = decoded.id;
+
+  try {
+    const user = await UserModel.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+}

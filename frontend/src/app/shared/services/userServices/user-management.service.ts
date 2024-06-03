@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserDetails, UserLogin } from '../../../core/models/user-details';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, tap, throwError } from 'rxjs';
 import { error } from 'node:console';
 
 @Injectable({
@@ -20,11 +20,35 @@ export class UserManagementService {
   }
 
   loginUser(userData: UserLogin): Observable<any> {
+    return this._http.post(`${this.apiUrl}/login`, userData).pipe(
+      tap((response: any) => {
+        const { token, userImage } = response;
+        localStorage.setItem('authToken', token);
+        localStorage.setItem('userImage', userImage || null);
+      }),
+
+      catchError(this.handleError)
+    );
+  }
+
+  // http requests to get user details 
+  getUserDetails(): Observable<any> {
+    const token = this.getToken()
+    if (!token) {
+      return throwError('User not logged in');
+    }
     return this._http
-      .post(`${this.apiUrl}/login`, userData)
+      .get(`${this.apiUrl}/profile`, { 
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .pipe(catchError(this.handleError));
   }
 
+
+  // to return token 
+  getToken() {
+    return localStorage.getItem('authToken');
+  }
   // to handle the error in http requests
   private handleError(error: HttpErrorResponse) {
     let errorMessage;

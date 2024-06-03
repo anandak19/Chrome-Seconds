@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   // home or landing page
@@ -59,6 +60,7 @@ export const routes: Routes = [
     path: 'user',
     title: 'Chrome Seconds - User',
     // guard to check if user is logged in 
+    canActivate: [authGuard],
     children: [
       {
         path: '',
@@ -75,6 +77,7 @@ export const routes: Routes = [
     path: 'cart',
     title: 'Chrome Seconds - Cart',
     // guard to check if user is logged in 
+    canActivate: [authGuard],
     loadComponent: () =>
       import('./features/user/cart-page/cart-page.component').then(
         (c) => c.CartPageComponent
