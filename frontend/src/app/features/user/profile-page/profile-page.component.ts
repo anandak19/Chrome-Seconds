@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { UserManagementService } from '../../../shared/services/userServices/user-management.service';
-import { dbUserData } from '../../../core/models/user-details';
+import { dbUserData, updatedUser } from '../../../core/models/user-details';
 import { error, profile } from 'node:console';
 import {
   FormBuilder,
@@ -11,6 +11,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-page',
@@ -21,9 +22,10 @@ import { CommonModule } from '@angular/common';
 })
 export class ProfilePageComponent implements OnInit {
   userData!: dbUserData;
+  updatedUser!: updatedUser
   profileForm!: FormGroup;
   public data!: dbUserData;
-  isUpdating: boolean = true;
+  isUpdating: boolean = false;
   userprofileImage!: string | null;
 
   @ViewChild('userImage') userImage!: ElementRef;
@@ -31,7 +33,8 @@ export class ProfilePageComponent implements OnInit {
 
   constructor(
     private _userManagement: UserManagementService,
-    private _fb: FormBuilder
+    private _fb: FormBuilder,
+    private _router: Router
   ) {}
 
   ngOnInit() {
@@ -58,7 +61,7 @@ export class ProfilePageComponent implements OnInit {
     this._userManagement.getUserDetails().subscribe(
       (res) => {
         this.userData = res;
-        this.userprofileImage = this.userData.profileImage
+        this.userprofileImage = this.userData.profileImage;
         this.patchFormValues(this.userData);
 
         console.log('Response data strored:', this.userData);
@@ -85,17 +88,16 @@ export class ProfilePageComponent implements OnInit {
     const reader = new FileReader();
     reader.onload = (e: any) => {
       this.userprofileImage = e.target.result;
-      // send http post reqest to save the image string to db 
+      // send http post reqest to save the image string to db
       this._userManagement.updateUserImage(this.userprofileImage).subscribe(
         (res) => {
           console.log(res);
-          // pay load too large error is getting  -------------------------------------fix it now 
-          
-        },(err) => {
+          // pay load too large error is getting  -------------------------------------fix it now
+        },
+        (err) => {
           console.error(err);
-          
         }
-      )
+      );
     };
     reader.readAsDataURL(file);
   }
@@ -106,14 +108,31 @@ export class ProfilePageComponent implements OnInit {
 
   // when user clicked on submit button
   onSubmit() {
-    if (this.profileForm.valid) {
-      console.log('Profile data edited:' + this.profileForm.value);
+    if (this.isUpdating) {
+      if (this.profileForm.valid) {
+        console.log(this.profileForm.value);
+        // http post to save the updated data to db
+        this.updatedUser = this.profileForm.value
+        this._userManagement.updateUserDetails(this.updatedUser).subscribe(
+          (res) => {
+            console.log(res);
+          },(err) => {
+            console.log(err);
+          }
+        )
+        //bring the change into the profile card data also     reload if needed
+      } else {
+        alert('Enter all details save');
+      }
+    } else {
+      this.isUpdating = !this.isUpdating;
     }
+  }
+
+  logout(){
+    this._userManagement.logoutUser();
+    this._router.navigate(['']);
   }
 }
 
-// when the page init get the user data from db
 
-// ----------------------------what will come here ?
-
-// show the user data in profile page

@@ -37,32 +37,6 @@ export const createUser = async (req, res) => {
   // generate a token for user and send it
 };
 
-// function to update user details
-export const updateUser = async (req, res) => {
-  const id = req.params.id;
-  const updates = req.body;
-
-  try {
-    if (updates.password) {
-      const hashedPassword = await bcrypt.hash(updates.password, 10);
-      updates.password = hashedPassword;
-    }
-
-    const updatedUser = await UserModel.findByIdAndUpdate(id, updates, {
-      new: true,
-    });
-
-    if (!updatedUser) {
-      return res.status(404).json({ error: "User not found" });
-    }
-
-    res.status(200).json(updatedUser);
-  } catch (err) {
-    console.error("Error updating user: ", err);
-    res.status(500).json({ error: "Internal server error" });
-  }
-};
-
 // function to login the user
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
@@ -87,7 +61,7 @@ export const loginUser = async (req, res) => {
     const token = jwt.sign(
       { id: requestedUser._id },
       SECRET_KEY,
-      { expiresIn: "7h" } // Token expires in 7 hour
+      { expiresIn: "42h" } // Token expires in 7 hour
     );
 
     const userImage = requestedUser.userImage;
@@ -119,7 +93,6 @@ export const getProfileData = async (req, res) => {
 
 export const updateProfileImage = async (req, res) => {
   const userImage = req.body.image;
-  console.log(userImage);
   // extract id from header
   const token = req.headers.authorization.split(" ")[1];
   const decoded = jwt.verify(token, SECRET_KEY);
@@ -137,5 +110,33 @@ export const updateProfileImage = async (req, res) => {
     res.status(200).json(updatedUserData);
   } catch (error) {
     res.status(500).json({ message: "Server error" + err});
+  }
+};
+
+// function to update user details
+export const updateUser = async (req, res) => {
+  const updates = req.body;
+
+  const token = req.headers.authorization.split(" ")[1];
+  const decoded = jwt.verify(token, SECRET_KEY);
+  const userId = decoded.id;
+
+  try {
+    // if (updates.password) {
+    //   const hashedPassword = await bcrypt.hash(updates.password, 10);
+    //   updates.password = hashedPassword;
+    // }
+    const updatedUser = await UserModel.findByIdAndUpdate(userId, updates, {
+      new: true,
+    });
+
+    if (!updatedUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json(updatedUser);
+  } catch (err) {
+    console.error("Error updating user: ", err);
+    res.status(500).json({ error: "Internal server error" });
   }
 };

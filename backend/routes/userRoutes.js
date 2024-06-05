@@ -10,7 +10,7 @@ import {
 const router = express.Router();
 
 router.post("/users", createUser);
-router.patch("/users/:id", updateUser);
+router.patch("/users", updateUser);
 router.post("/users/login", loginUser);
 router.get("/users/profile", getProfileData)
 router.post("/users/image", updateProfileImage)

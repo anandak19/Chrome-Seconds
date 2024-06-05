@@ -13,14 +13,17 @@
         type="file"
         accept="image/*"
         (change)="onFileSelected($event)"
-        [disabled]="!isUpdating"
         style="display: none"
         />
       </div>
 
       <div class="profile-container__card-details">
-        <h1>{{ userData.fullName }}</h1>
-        <p>{{ userData.email }}</p>
+        <h1>{{ profileForm.get('fullName')?.value }}</h1>
+        @if (profileForm.value.address) {
+          <p>{{ profileForm.get('address')?.value }}</p>
+        }@else {
+          <p>{{ profileForm.get('email')?.value }}</p>
+        }
 
       </div>
     </div>
@@ -48,6 +51,7 @@
               class="profile-container__form-control"
               type="text"
               formControlName="email"
+              [readonly]="!isUpdating"
               [ngClass]="{'updating-details': isUpdating}"
             />
             @if (profileForm.get('email')?.hasError('required')) {
@@ -61,6 +65,7 @@
               class="profile-container__form-control"
               type="number"
               formControlName="phone"
+              [readonly]="!isUpdating"
               [ngClass]="{'updating-details': isUpdating}"
             />
             @if (profileForm.get('phone')?.hasError('required')) {
@@ -80,6 +85,7 @@
               class="profile-container__form-control"
               type="text"
               formControlName="address"
+              [readonly]="!isUpdating"
               [ngClass]="{'updating-details': isUpdating}"
             />
             @if (profileForm.get('address')?.hasError('required')) {
@@ -93,6 +99,7 @@
               class="profile-container__form-control"
               type="number"
               formControlName="pincode"
+              [readonly]="!isUpdating"
               [ngClass]="{'updating-details': isUpdating}"
             />
             @if (profileForm.get('pincode')?.hasError('required')) {
@@ -107,8 +114,10 @@
 
         <div class="profile-container__button-section">
           <button>Change Password</button>
-          <button>Update Profile</button>
+          <button (click)="logout()">Logout</button>
+          <button type="submit">{{ isUpdating ? 'Save' : 'Update Profile' }}</button>
         </div>
+
       </form>
     </div>
   </div>

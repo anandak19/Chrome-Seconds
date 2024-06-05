@@ -24,3 +24,11 @@ export interface dbUserData {
   profileImage: string | null;
   __v: number;
 }
+
+export interface updatedUser {
+  address: string;
+  email: string;
+  fullName: string;
+  phone: number;
+  pincode: number;
+}
