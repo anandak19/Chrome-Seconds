@@ -90,7 +90,7 @@ export const loginUser = async (req, res) => {
       { expiresIn: "7h" } // Token expires in 7 hour
     );
 
-    const userImage = requestedUser.userImage
+    const userImage = requestedUser.userImage;
 
     // send the user data except password and token to clint
     res.status(200).json({ userImage, token });
@@ -101,18 +101,41 @@ export const loginUser = async (req, res) => {
 };
 
 export const getProfileData = async (req, res) => {
-  // extract id from header 
-  const token = req.headers.authorization.split(' ')[1];
+  // extract id from header
+  const token = req.headers.authorization.split(" ")[1];
   const decoded = jwt.verify(token, SECRET_KEY);
   const userId = decoded.id;
 
   try {
     const user = await UserModel.findById(userId);
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
     res.json(user);
   } catch (error) {
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: "Server error" });
   }
-}
+};
+
+export const updateProfileImage = async (req, res) => {
+  const userImage = req.body.image;
+  console.log(userImage);
+  // extract id from header
+  const token = req.headers.authorization.split(" ")[1];
+  const decoded = jwt.verify(token, SECRET_KEY);
+  const userId = decoded.id;
+
+  try {
+    const updatedUserData = await UserModel.findByIdAndUpdate(
+      userId,
+      { profileImage: userImage },
+      { new: true }
+    );
+    if (!updatedUserData) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json(updatedUserData);
+  } catch (error) {
+    res.status(500).json({ message: "Server error" + err});
+  }
+};

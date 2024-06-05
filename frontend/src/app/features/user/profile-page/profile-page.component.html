@@ -1,1 +1,115 @@
-<p>profile-page works!</p>
+<div class="profile-container">
+  <div class="profile-container__wrapper">
+    <div class="profile-container__profile-card">
+
+      <div class="profile-container__user-image" (click)="fileInput.click()">
+        @if (userprofileImage) {
+            <img #userImage [src]="userprofileImage" alt="Selected profile picture" />
+        }@else {
+            <img src="../../../../assets/images/default/default-user.jpeg" alt="" />
+        }
+        <input
+        #fileInput
+        type="file"
+        accept="image/*"
+        (change)="onFileSelected($event)"
+        [disabled]="!isUpdating"
+        style="display: none"
+        />
+      </div>
+
+      <div class="profile-container__card-details">
+        <h1>{{ userData.fullName }}</h1>
+        <p>{{ userData.email }}</p>
+
+      </div>
+    </div>
+
+    <div class="profile-container__profile-details">
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+        <div class="profile-container__inputs-container">
+          <div class="profile-container__form-group">
+            <label for="fullName" id="fullName">Name:</label>
+            <input
+              class="profile-container__form-control"
+              type="text"
+              formControlName="fullName"
+              [readonly]="!isUpdating"
+              [ngClass]="{'updating-details': isUpdating}"
+            />
+            @if (profileForm.get('fullName')?.hasError('required')) {
+            <small>Name is required</small>
+            }
+          </div>
+
+          <div class="profile-container__form-group">
+            <label for="email" id="email">Email:</label>
+            <input
+              class="profile-container__form-control"
+              type="text"
+              formControlName="email"
+              [ngClass]="{'updating-details': isUpdating}"
+            />
+            @if (profileForm.get('email')?.hasError('required')) {
+            <small>Email is required</small>
+            }
+          </div>
+
+          <div class="profile-container__form-group">
+            <label for="phone" id="phone">Phone:</label>
+            <input
+              class="profile-container__form-control"
+              type="number"
+              formControlName="phone"
+              [ngClass]="{'updating-details': isUpdating}"
+            />
+            @if (profileForm.get('phone')?.hasError('required')) {
+            <small>Phone number is required</small>
+            }@else if (profileForm.get('phone')?.hasError('minlength')) {
+            <small>Enter a valid phone number</small>
+            }@else if (profileForm.get('phone')?.hasError('maxlength')) {
+            <small>Enter a valid phone number</small>
+            }
+          </div>
+
+          <div
+            class="profile-container__form-group profile-container__form-group--address"
+          >
+            <label for="address" id="address">Address:</label>
+            <input
+              class="profile-container__form-control"
+              type="text"
+              formControlName="address"
+              [ngClass]="{'updating-details': isUpdating}"
+            />
+            @if (profileForm.get('address')?.hasError('required')) {
+            <small>Address is required</small>
+            }
+          </div>
+
+          <div class="profile-container__form-group">
+            <label for="pincode" id="pincode">PIN Code:</label>
+            <input
+              class="profile-container__form-control"
+              type="number"
+              formControlName="pincode"
+              [ngClass]="{'updating-details': isUpdating}"
+            />
+            @if (profileForm.get('pincode')?.hasError('required')) {
+            <small>Pincode is required</small>
+            }@else if (profileForm.get('pincode')?.hasError('minlength')) {
+            <small>Enter a valid pincode</small>
+            }@else if (profileForm.get('pincode')?.hasError('maxlength')) {
+            <small>Enter a valid pincode</small>
+            }
+          </div>
+        </div>
+
+        <div class="profile-container__button-section">
+          <button>Change Password</button>
+          <button>Update Profile</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

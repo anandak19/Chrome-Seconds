@@ -44,6 +44,18 @@ export class UserManagementService {
       .pipe(catchError(this.handleError));
   }
 
+  // http reqest to store the user image string 
+  updateUserImage(imageString: string | null): Observable<any> {
+    const token = this.getToken()
+    if (!token) {
+      return throwError('User not logged in');
+    }
+    return this._http.post(`${this.apiUrl}/image`, {"image": imageString}, {
+      headers: { Authorization: `Bearer ${token}`}
+    })
+    .pipe(catchError(this.handleError))
+  }
+
 
   // to return token 
   getToken() {
