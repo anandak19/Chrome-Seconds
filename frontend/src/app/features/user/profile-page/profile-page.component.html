@@ -1,5 +1,5 @@
-<div class="profile-container">
-  <div class="profile-container__wrapper">
+<div class="profile-container" >
+  <div class="profile-container__wrapper" [ngClass]="{'blur-div': showPasswordInputs}">
     <div class="profile-container__profile-card">
 
       <div class="profile-container__user-image" (click)="fileInput.click()">
@@ -113,12 +113,70 @@
         </div>
 
         <div class="profile-container__button-section">
-          <button>Change Password</button>
+          <button (click)="changePassword()">Change Password</button>
           <button (click)="logout()">Logout</button>
           <button type="submit">{{ isUpdating ? 'Save' : 'Update Profile' }}</button>
         </div>
 
       </form>
+      
     </div>
   </div>
+  
+  <!-- update Password clicked ------------- -->
+  <div *ngIf="showPasswordInputs" class="overlay"></div>
+
+  @if (showPasswordInputs) {
+    <div class="profile-container__password-change-form">
+    <form [formGroup]="updatePasswordForm" (ngSubmit)="onPasswordSubmit()">
+      <div class="profile-container__form-group">
+        <label for="currentPassword">Current Password:</label>
+        <input type="password" id="currentPassword" formControlName="currentPassword" class="profile-container__form-control">
+        @if (updatePasswordForm.get('currentPassword')?.invalid && updatePasswordForm.get('currentPassword')?.touched) {
+          <small class="error-msg">Current Password is required</small>
+        }
+      </div>
+    
+      <div class="profile-container__form-group">
+        <label for="newPassword">New Password:</label>
+        <input type="password" id="newPassword" formControlName="newPassword" class="profile-container__form-control">
+        @if (updatePasswordForm.get('newPassword')?.invalid && updatePasswordForm.get('newPassword')?.touched) {
+          <small class="error-msg">
+            @if (updatePasswordForm.get('newPassword')?.hasError('required')) {
+              <ng-container>New Password is required</ng-container>
+            }@else if (updatePasswordForm.get('newPassword')?.hasError('tooShort')) {
+              <ng-container>Password must be at least 5 characters long</ng-container>
+            }@else if (updatePasswordForm.get('newPassword')?.hasError('noUppercase')) {
+              <ng-container>Password must contain at least one uppercase character</ng-container>
+            }@else if (updatePasswordForm.get('newPassword')?.hasError('noLowercase')) {
+              <ng-container>Password must contain at least one lowercase character</ng-container>
+            }@else if (updatePasswordForm.get('newPassword')?.hasError('noNumber')) {
+              <ng-container>Password must contain at least one number</ng-container>
+            }
+          </small>
+        }
+      </div>
+    
+      <div class="profile-container__form-group">
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" formControlName="confirmPassword" class="profile-container__form-control">
+        @if (updatePasswordForm.get('confirmPassword')?.invalid && updatePasswordForm.get('confirmPassword')?.touched) {
+          <small class="error-msg">
+            @if (updatePasswordForm.get('confirmPassword')?.hasError('required')) {
+              <ng-container>Confirm Password is required</ng-container>
+            }@else if (updatePasswordForm.get('confirmPassword')?.hasError('misMatch')) {
+              <ng-container>Passwords do not match</ng-container>
+            }
+          </small>
+        }
+      </div>
+    
+      <div class="profile-container__button-section">
+        <button (click)="closePasswordForm()">Cancel</button>
+        <button type="submit">Save</button>
+      </div>
+    </form>
+
+  </div>
+  }
 </div>

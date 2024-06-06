@@ -32,3 +32,8 @@ export interface updatedUser {
   phone: number;
   pincode: number;
 }
+
+export interface passwordUpdation {
+  userInput: String;
+  newPassword: String;
+}

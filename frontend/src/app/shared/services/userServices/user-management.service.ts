@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import {
   UserDetails,
   UserLogin,
+  passwordUpdation,
   updatedUser,
 } from '../../../core/models/user-details';
 import { Observable, catchError, tap, throwError } from 'rxjs';
@@ -77,12 +78,24 @@ export class UserManagementService {
       .pipe(catchError(this.handleError));
   }
 
+  updateUserPassword(passwords: passwordUpdation): Observable<any> {
+    const token = this.getToken();
+    if (!token) {
+      return throwError('User not logged in');
+    }
+    return this._http
+      .patch(`${this.apiUrl}/password`, passwords, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .pipe(catchError(this.handleError));
+  }
+
   // to return token
   getToken() {
     return localStorage.getItem('authToken');
   }
 
-  logoutUser(){
+  logoutUser() {
     localStorage.clear();
   }
   // to handle the error in http requests

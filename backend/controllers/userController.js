@@ -122,10 +122,6 @@ export const updateUser = async (req, res) => {
   const userId = decoded.id;
 
   try {
-    // if (updates.password) {
-    //   const hashedPassword = await bcrypt.hash(updates.password, 10);
-    //   updates.password = hashedPassword;
-    // }
     const updatedUser = await UserModel.findByIdAndUpdate(userId, updates, {
       new: true,
     });
@@ -140,3 +136,45 @@ export const updateUser = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+// function to update password
+export const updatePassword = async (req, res) => {
+  // get the user input and new password from the body 
+  const { userInput, newPassword} = req.body 
+
+  // separate the id from token 
+  const token = req.headers.authorization.split(" ")[1];
+  const decoded = jwt.verify(token, SECRET_KEY);
+  const userId = decoded.id;
+
+  try {
+    // find the user details with the id 
+    const requestedUser = await UserModel.findById(userId);
+    // compare the user input with the current password 
+    const passwordMatch = await bcrypt.compare(
+      userInput,
+      requestedUser.password
+    );
+
+    // if not not same return error as current password is not correct
+    if (!passwordMatch) {
+      return res.status(401).json({ error: "Current password is wrong" });
+    }
+    // hash the new password 
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // update the database with the new password return the user data
+    const updatedUser = await UserModel.findByIdAndUpdate(userId, {password: hashedPassword}, {
+      new: true,
+    });
+
+    if (!updatedUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json(updatedUser);
+    
+  } catch (error) {
+    console.log(error);
+  }
+}

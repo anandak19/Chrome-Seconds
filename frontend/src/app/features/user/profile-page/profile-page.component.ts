@@ -1,17 +1,20 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { UserManagementService } from '../../../shared/services/userServices/user-management.service';
-import { dbUserData, updatedUser } from '../../../core/models/user-details';
+import { dbUserData, passwordUpdation, updatedUser } from '../../../core/models/user-details';
 import { error, profile } from 'node:console';
 import {
+  AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { UserValidationService } from '../../../shared/services/validations/user-validation.service';
 
 @Component({
   selector: 'app-profile-page',
@@ -24,9 +27,12 @@ export class ProfilePageComponent implements OnInit {
   userData!: dbUserData;
   updatedUser!: updatedUser
   profileForm!: FormGroup;
-  public data!: dbUserData;
-  isUpdating: boolean = false;
+  updatePasswordForm!: FormGroup
+  data!: dbUserData;
   userprofileImage!: string | null;
+  isUpdating: boolean = false;
+  showPasswordInputs: boolean = false
+  newPasswordData!: passwordUpdation
 
   @ViewChild('userImage') userImage!: ElementRef;
   @ViewChild('fileInput') fileInput!: ElementRef;
@@ -34,11 +40,12 @@ export class ProfilePageComponent implements OnInit {
   constructor(
     private _userManagement: UserManagementService,
     private _fb: FormBuilder,
-    private _router: Router
+    private _router: Router,
+    private _userValidation: UserValidationService
   ) {}
 
   ngOnInit() {
-    // inint the reactive form with empty values
+    // inint the reactive form with empty values for user data updation
     this.profileForm = this._fb.group({
       fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -56,6 +63,13 @@ export class ProfilePageComponent implements OnInit {
         [Validators.required, Validators.minLength(7), Validators.maxLength(7)],
       ],
     });
+
+    // init form to update user password  
+    this.updatePasswordForm =this._fb.group({
+      currentPassword: ['', [Validators.required]],
+      newPassword : ['' , [this._userValidation.passwordValidator]],
+      confirmPassword: ['', [this.confirmPasswordValidator]]
+    })
 
     // get user data from backend and store in the userData variable
     this._userManagement.getUserDetails().subscribe(
@@ -101,12 +115,11 @@ export class ProfilePageComponent implements OnInit {
     };
     reader.readAsDataURL(file);
   }
-
   openFileInput() {
     this.fileInput.nativeElement.click();
   }
 
-  // when user clicked on submit button
+  // when user clicked on submit button to save updates
   onSubmit() {
     if (this.isUpdating) {
       if (this.profileForm.valid) {
@@ -120,6 +133,7 @@ export class ProfilePageComponent implements OnInit {
             console.log(err);
           }
         )
+        this.isUpdating = false
         //bring the change into the profile card data also     reload if needed
       } else {
         alert('Enter all details save');
@@ -129,6 +143,48 @@ export class ProfilePageComponent implements OnInit {
     }
   }
 
+  // to show chage password form
+  changePassword(){
+    // display input fealds to enter current password and new password
+    this.showPasswordInputs = true
+  }
+  // to close the changePassword form 
+  closePasswordForm(){
+    this.showPasswordInputs = false
+    this.updatePasswordForm.reset();
+  }
+  onPasswordSubmit(){
+    // when user clicked save . write a http patch request  , with the {current password and new password} as parameter
+    if (this.updatePasswordForm.valid) {
+      console.log(this.updatePasswordForm.value);
+      this.newPasswordData = {
+        userInput: this.updatePasswordForm.value.currentPassword,
+        newPassword: this.updatePasswordForm.value.newPassword
+      };
+      
+      this._userManagement.updateUserPassword(this.newPasswordData).subscribe(
+        (res) => {
+         console.log(res);
+        },
+        (err) => {
+          console.log(err);
+          
+        }
+      )
+    }
+    // console the response 
+    // alert the error 
+  }
+
+  // confirm password validation 
+  confirmPasswordValidator(control: AbstractControl): ValidationErrors | null {
+    const password = control.root.get('newPassword');
+    return password && control.value !== password.value
+      ? { misMatch: true }
+      : null;
+  }
+
+  // logout button clicked 
   logout(){
     this._userManagement.logoutUser();
     this._router.navigate(['']);

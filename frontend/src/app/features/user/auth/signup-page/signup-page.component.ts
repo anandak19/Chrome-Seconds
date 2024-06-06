@@ -11,6 +11,7 @@ import {
 import { Router, RouterLink } from '@angular/router';
 import { UserDetails } from '../../../../core/models/user-details';
 import { UserManagementService } from '../../../../shared/services/userServices/user-management.service';
+import { UserValidationService } from '../../../../shared/services/validations/user-validation.service';
 
 @Component({
   selector: 'app-signup-page',
@@ -27,7 +28,8 @@ export class SignupPageComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private _userManagement: UserManagementService,
-    private _router: Router
+    private _router: Router,
+    private _userValidation: UserValidationService
   ) {}
 
   ngOnInit(): void {
@@ -41,10 +43,10 @@ export class SignupPageComponent implements OnInit, OnDestroy {
         ],
       ],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, this.passwordValidator]],
+      password: ['', [Validators.required, this._userValidation.passwordValidator]],
       confirmPassword: [
         '',
-        [Validators.required, this.confirmPasswordValidator],
+        [Validators.required, this._userValidation.confirmPasswordValidator],
       ],
     });
   }
@@ -52,32 +54,6 @@ export class SignupPageComponent implements OnInit, OnDestroy {
     this.formSubmitted = false;
   }
 
-  // validating password type
-  passwordValidator(
-    control: AbstractControl
-  ): { [key: string]: boolean } | null {
-    const password = control.root.get('password')?.value;
-    if (!password || password.length < 5) {
-      return { tooShort: true };
-    } else if (!/[A-Z]/.test(password)) {
-      return { noUppercase: true };
-    } else if (!/[a-z]/.test(password)) {
-      return { noLowercase: true };
-    } else if (!/\d/.test(password)) {
-      return { noNumber: true };
-    }
-    return null;
-  }
-
-  // validating both passwords
-  confirmPasswordValidator(
-    control: AbstractControl
-  ): { [key: string]: boolean } | null {
-    const password = control.root.get('password');
-    return password && control.value !== password.value
-      ? { misMatch: true }
-      : null;
-  }
 
   onSubmit() {
     this.formSubmitted = true;
