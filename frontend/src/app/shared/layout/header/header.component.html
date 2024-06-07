@@ -46,11 +46,11 @@
   <div class="header-container__cart-account">
     <!-- if the user is not logged in show this -->
     <button
+    
       class="header-container__login-button"
       routerLink="login"
       routerLinkActive="active-btn"
-      [routerLinkActiveOptions]="{ exact: true }"
-    >
+      [routerLinkActiveOptions]="{ exact: true }">
       Login
     </button>
 
@@ -62,7 +62,7 @@
       class="header-container__cart"
     />
     <div class="header-container__user" routerLink="user">
-      <img src="../../../../assets/images/pro_pic.JPG" alt="" />
+      <img [src]="userImage" alt="Profile Picture" />
     </div>
   </div>
 </div>

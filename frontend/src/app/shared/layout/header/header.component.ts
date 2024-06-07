@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { UserManagementService } from '../../services/userServices/user-management.service';
 
 @Component({
   selector: 'app-header',
@@ -8,6 +9,23 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit{
 
+  public userImage! : string
+  
+
+  constructor(private _usermanagement: UserManagementService) {}
+
+
+  ngOnInit(): void {
+    // get user image and show it 
+    this._usermanagement.currentUserImage.subscribe( image => {
+      this.userImage = image
+    })
+  }
+
+  onClick(){
+    console.log("hi");
+    
+  }
 }

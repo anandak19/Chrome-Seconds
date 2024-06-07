@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 
 // secret key to create a token------
 const SECRET_KEY = "chrome_ak";
+const ADMIN_EMAIL = "anan@gmail.com"
 
 // function to create a new user
 export const createUser = async (req, res) => {
@@ -42,12 +43,15 @@ export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
+    // check the if their a user with email
     const requestedUser = await UserModel.findOne({ email });
+    // console.log(requestedUser);
 
     if (!requestedUser) {
       return res.status(404).json({ error: "User not found" });
     }
 
+    // check if the password is correct 
     const passwordMatch = await bcrypt.compare(
       password,
       requestedUser.password
@@ -57,17 +61,20 @@ export const loginUser = async (req, res) => {
       return res.status(401).json({ error: "Invalid password" });
     }
 
+    const role = requestedUser.email === ADMIN_EMAIL ? 'admin' : 'user';
+
     // Generate a JWT token
     const token = jwt.sign(
-      { id: requestedUser._id },
+      { id: requestedUser._id, role },
       SECRET_KEY,
-      { expiresIn: "42h" } // Token expires in 7 hour
+      { expiresIn: "48h" } // Token expires in 48 hour
     );
-
-    const userImage = requestedUser.userImage;
+    
+    // to send user image 
+    const userImage = requestedUser.profileImage;
 
     // send the user data except password and token to clint
-    res.status(200).json({ userImage, token });
+    res.status(200).json({ userImage, token, role });
   } catch (err) {
     console.error("Error finding user: ", err);
     res.status(500).json({ error: "Internal server error" });

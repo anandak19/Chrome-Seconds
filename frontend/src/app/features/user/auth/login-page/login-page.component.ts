@@ -51,7 +51,8 @@ export class LoginPageComponent implements OnInit, OnDestroy {
       // send the data to the server
       this._userManagement.loginUser(this.userData).subscribe(
         (res) => {
-          this._router.navigate(['']);
+          console.log(res);
+          this._router.navigate([''])
         },
         (err) => {
           console.log(err);
