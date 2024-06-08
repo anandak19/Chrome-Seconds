@@ -31,6 +31,7 @@
             >About</a
           >
         </li>
+
         <li class="header-container__item">
           <a
             routerLink="contact"
@@ -39,6 +40,16 @@
             >Contact</a
           >
         </li>
+
+        <li class="header-container__item">
+          <a
+            routerLink="contact"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            >Contact</a
+          >
+        </li>
+        
       </ul>
     </nav>
   </div>
@@ -64,5 +75,6 @@
     <div class="header-container__user" routerLink="user">
       <img [src]="userImage" alt="Profile Picture" />
     </div>
+    
   </div>
 </div>

@@ -38,10 +38,6 @@ export class UserManagementService {
     return this._http.post(`${this.apiUrl}/login`, userData).pipe(
       tap((response: any) => {
         const { token, userImage, role } = response;
-        // save token and image to localStorage ------ jsonify this later
-        // localStorage.setItem('authToken', token);
-        // localStorage.setItem('userImage', userImage);
-        // localStorage.setItem('role', role)
         const authData = {
           token: token,
           userImage: userImage,
@@ -122,7 +118,6 @@ export class UserManagementService {
     }
     return throwError(errorMessage);
   }
-
   // ------------other functions------------
 
   // to get token

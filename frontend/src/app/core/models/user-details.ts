@@ -37,3 +37,10 @@ export interface passwordUpdation {
   userInput: String;
   newPassword: String;
 }
+
+// delete 
+export interface authData {
+  token: String;
+  userImage: String;
+  role: string;
+}
