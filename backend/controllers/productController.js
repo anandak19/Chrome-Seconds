@@ -1,4 +1,9 @@
 import ProductModel from "../models/product.model.js";
+import jwt from "jsonwebtoken";
+
+// move this to env file later 
+const SECRET_KEY = "chrome_ak";
+const ADMIN_EMAIL = "anan@gmail.com"
 
 // function to get all products
 export const getAllProducts = async (req, res) => {
@@ -80,7 +85,9 @@ export const deleteProduct = async (req, res) => {
     return res.status(403).json({ error: "You are unauthorized to do this" });
   }
 
-  const productId = req.body.productId;
+  // const productId = req.body.productId;
+const productId = req.params.productId;
+
 
   try {
     const deletedProduct = await ProductModel.findOneAndDelete({ productId });

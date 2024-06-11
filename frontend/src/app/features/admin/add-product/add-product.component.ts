@@ -6,6 +6,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { UserManagementService } from '../../../shared/services/userServices/user-management.service';
+import { ProductManagementService } from '../../../shared/services/productServices/product-management.service';
 
 @Component({
   selector: 'app-add-product',
@@ -22,7 +24,7 @@ export class AddProductComponent {
 
   @ViewChild('fileInput') fileInput!: ElementRef;
 
-  constructor(private location: Location, private fb: FormBuilder) {}
+  constructor(private location: Location, private fb: FormBuilder, private _productManagement: ProductManagementService) {}
 
   ngOnInit(): void {
     // inint form 
@@ -62,8 +64,21 @@ export class AddProductComponent {
     this.isFormSubmitted = true
     if (this.productForm.valid) {
       console.log(this.productForm.value);
+      const productData = this.productForm.value
       console.log("valid product");
       // Add submission logic here ----
+      this._productManagement.createProduct(productData).subscribe(
+        (res) => {
+          console.log("Added prododuct is: ");
+          console.log(res);
+          
+          
+        },(error) => {
+          console.error(error);
+          
+        }
+      )
+
       
       
     }

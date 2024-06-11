@@ -38,8 +38,8 @@
     & th,
     & td {
       padding: 12px;
-      border: 1px solid #ffffff;
       text-align: left;
+      border: 1px solid #ccc;
 
       &:first-child {
         font-weight: bold;
@@ -52,6 +52,7 @@
       color: white;
     }
     tr {
+
       &:hover{
         background-color: #dcdcdc;
         }
