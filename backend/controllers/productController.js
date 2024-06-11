@@ -1,6 +1,6 @@
 import ProductModel from "../models/product.model.js";
 
-// function to get all products 
+// function to get all products
 export const getAllProducts = async (req, res) => {
   try {
     const products = await ProductModel.find({});
@@ -11,8 +11,18 @@ export const getAllProducts = async (req, res) => {
   }
 };
 
-// function to create new product 
+// function to create new product
 export const createProduct = async (req, res) => {
+  // extract role from header
+  const token = req.headers.authorization.split(" ")[1];
+  const decoded = jwt.verify(token, SECRET_KEY);
+  const userRole = decoded.role;
+
+  if (userRole !== "admin") {
+    return res.status(403).json({ error: "You are unauthorized to do this" });
+  }
+
+  // get product details from body
   const {
     productId,
     productName,
@@ -29,12 +39,13 @@ export const createProduct = async (req, res) => {
   } = req.body;
 
   try {
+    // check if the product with same id exists
     const existingProduct = await ProductModel.findOne({ productId });
-
     if (existingProduct) {
       return res.status(400).json({ error: "Product with same ID exists" });
     }
 
+    // create new product object
     const newProduct = new ProductModel({
       productId,
       productName,
@@ -58,8 +69,17 @@ export const createProduct = async (req, res) => {
   }
 };
 
-// function to delete a product 
+// function to delete a product
 export const deleteProduct = async (req, res) => {
+  // extract role from header
+  const token = req.headers.authorization.split(" ")[1];
+  const decoded = jwt.verify(token, SECRET_KEY);
+  const userRole = decoded.role;
+
+  if (userRole !== "admin") {
+    return res.status(403).json({ error: "You are unauthorized to do this" });
+  }
+
   const productId = req.body.productId;
 
   try {
@@ -69,14 +89,16 @@ export const deleteProduct = async (req, res) => {
       return res.status(404).json({ error: "Product not found" });
     }
 
-    res.status(200).json({ message: "Product deleted successfully", deletedProduct });
+    res
+      .status(200)
+      .json({ message: "Product deleted successfully", deletedProduct });
   } catch (err) {
     console.error("Error deleting product: ", err);
     res.status(500).json({ error: "Internal server error" });
   }
 };
 
-//function to get details of one product  
+//function to get details of one product
 export const getProductById = async (req, res) => {
   const id = req.params.id;
 

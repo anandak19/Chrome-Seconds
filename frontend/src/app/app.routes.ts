@@ -106,4 +106,30 @@ export const routes: Routes = [
       ),
   },
 
+
+    // admin routes
+    {
+      path: 'admin',
+      title: 'Chrome Seconds - Admin',
+      children: [
+        {
+          path: '',
+          loadComponent: () =>
+            import(
+              './features/admin/admin-panel/admin-panel.component'
+            ).then((c) => c.AdminPanelComponent),
+        },
+        {
+          path: 'add-product',
+          title: 'Chrome Seconds - New product',
+          loadComponent: () =>
+            import(
+              './features/admin/add-product/add-product.component'
+            ).then((c) => c.AddProductComponent),
+        },
+      ],
+    },
+
+    { path: '**', redirectTo: '' }
+
 ];

@@ -1,0 +1,65 @@
+.admin-panel {
+  background-color: #ffffff;
+  padding: 14px 28px;
+
+  &__title {
+    text-align: center;
+    margin-top: 8px;
+  }
+  &__button-section {
+    display: flex;
+    justify-content: end;
+    margin: 18px 0;
+  }
+  &__add-btn {
+    padding: 8px 22px;
+    font-size: 18px;
+    border-radius: 6px;
+    background-color: #e54800;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease; 
+    &:hover {
+      background-color: #c03f00;
+    }
+    &:active {
+      background-color: #a83600;
+      transform: scale(0.98);
+    }
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    overflow: scroll;
+
+    & th,
+    & td {
+      padding: 12px;
+      border: 1px solid #ffffff;
+      text-align: left;
+
+      &:first-child {
+        font-weight: bold;
+        background-color: #555555;
+        color: #ffffff;
+      }
+    }
+    th {
+      background-color: #000000;
+      color: white;
+    }
+    tr {
+      &:hover{
+        background-color: #dcdcdc;
+        }
+    }
+
+    img {
+      max-width: 100px;
+      border-radius: 4px;
+    }
+  }
+}

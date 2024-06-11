@@ -1,0 +1,259 @@
+<div class="add-product">
+  <button class="add-product__back-btn" (click)="navigateBack()">
+    Go Back
+  </button>
+  <h1 class="add-product__title">Add new Product</h1>
+
+  <div class="add-product__product-form-container">
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+      <div class="add-product__form-inputs">
+        <div class="add-product__form-group">
+          <label for="productId">Product ID</label>
+          <input
+            formControlName="productId"
+            type="text"
+            [ngClass]="{
+              error: isFormSubmitted && productForm.get('productId')?.invalid
+            }"
+          />
+
+          @if (productForm.get('productId')?.invalid && isFormSubmitted) {
+          <small>
+            @if (productForm.get('productId')?.hasError('required')) {
+            <ng-container>Id is required</ng-container>
+            }
+          </small>
+          }
+        </div>
+
+        <div class="add-product__form-group">
+          <label for="productName">Product Name</label>
+          <input
+            id="productName"
+            formControlName="productName"
+            type="text"
+            [ngClass]="{
+              error: isFormSubmitted && productForm.get('productName')?.invalid
+            }"
+          />
+          @if (productForm.get('productName')?.invalid && isFormSubmitted) {
+          <small>
+            @if (productForm.get('productName')?.hasError('required')) {
+            <ng-container>ProductName is required</ng-container>
+            }
+          </small>
+          }
+        </div>
+
+        <div class="add-product__form-group">
+          <label for="category">Category</label>
+          <select
+            id="category"
+            formControlName="category"
+            [ngClass]="{
+              error: isFormSubmitted && productForm.get('category')?.invalid
+            }"
+          >
+            <option value="">Select Category</option>
+            <option value="Dress Watch">Dress Watch</option>
+            <option value="Sports Watch">Sports Watch</option>
+            <option value="Casual Watch">Casual Watch</option>
+            <option value="Smart Watch">Smart Watch</option>
+            <option value="Luxury Watch">Luxury Watch</option>
+          </select>
+          @if (productForm.get('category')?.invalid && isFormSubmitted) {
+          <small>
+            @if (productForm.get('category')?.hasError('required')) {
+            <ng-container>Category is required</ng-container>
+            }
+          </small>
+          }
+        </div>
+
+        <div class="add-product__form-group" style="grid-column: span 3">
+          <label for="description">Description</label>
+          <textarea
+            id="description"
+            formControlName="description"
+            [ngClass]="{
+              error: isFormSubmitted && productForm.get('description')?.invalid
+            }"
+          ></textarea>
+          @if (productForm.get('description')?.invalid && isFormSubmitted) {
+          <small>
+            @if (productForm.get('description')?.hasError('required')) {
+            <ng-container>Description is required</ng-container>
+            }
+          </small>
+          }
+        </div>
+
+        <div class="add-product__form-group">
+          <label for="brand">Brand</label>
+          <select
+            id="brand"
+            formControlName="brand"
+            [ngClass]="{
+              error: isFormSubmitted && productForm.get('brand')?.invalid
+            }"
+          >
+            <option value="">Select Brand</option>
+            <option value="LuxuryTime">LuxuryTime</option>
+            <option value="Timeless">Timeless</option>
+            <option value="ElegantWatches">ElegantWatches</option>
+            <option value="Sportify">Sportify</option>
+            <option value="ClassicTimepieces">ClassicTimepieces</option>
+          </select>
+          @if (productForm.get('brand')?.invalid && isFormSubmitted) {
+          <small>
+            @if (productForm.get('brand')?.hasError('required')) {
+            <ng-container>Brand is required</ng-container>
+            }
+          </small>
+          }
+        </div>
+
+        <div class="add-product__form-group">
+          <label for="gender">Gender</label>
+          <select
+            id="gender"
+            formControlName="gender"
+            [ngClass]="{
+              error: isFormSubmitted && productForm.get('gender')?.invalid
+            }"
+          >
+            <option value="">Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Unisex">Unisex</option>
+          </select>
+          @if (productForm.get('gender')?.invalid && isFormSubmitted) {
+          <small>
+            @if (productForm.get('gender')?.hasError('required')) {
+            <ng-container>Gender is required</ng-container>
+            }
+          </small>
+          }
+        </div>
+
+        <div class="add-product__form-group">
+          <label for="price">Price</label>
+          <input
+            id="price"
+            formControlName="price"
+            type="number"
+            [ngClass]="{
+              error: isFormSubmitted && productForm.get('price')?.invalid
+            }"
+          />
+          @if (productForm.get('price')?.invalid && isFormSubmitted) {
+          <small>
+            @if (productForm.get('price')?.hasError('required')) {
+            <ng-container>Price is required</ng-container>
+            }
+          </small>
+          }
+        </div>
+
+        <div class="add-product__form-group">
+          <label for="color">Color</label>
+          <input
+            id="color"
+            formControlName="color"
+            type="text"
+            [ngClass]="{
+              error: isFormSubmitted && productForm.get('color')?.invalid
+            }"
+          />
+          @if (productForm.get('color')?.invalid && isFormSubmitted) {
+          <small>
+            @if (productForm.get('color')?.hasError('required')) {
+            <ng-container>Color is required</ng-container>
+            }
+          </small>
+          }
+        </div>
+
+        <div class="add-product__form-group">
+          <label for="weight">Weight(gm)</label>
+          <input
+            id="weight"
+            formControlName="weight"
+            type="number"
+            [ngClass]="{
+              error: isFormSubmitted && productForm.get('weight')?.invalid
+            }"
+          />
+          @if (productForm.get('weight')?.invalid && isFormSubmitted) {
+          <small>
+            @if (productForm.get('weight')?.hasError('required')) {
+            <ng-container>Weight is required</ng-container>
+            }
+          </small>
+          }
+        </div>
+
+        <div class="add-product__form-group">
+          <label for="material">Material</label>
+          <input
+            id="material"
+            formControlName="material"
+            type="text"
+            [ngClass]="{
+              error: isFormSubmitted && productForm.get('material')?.invalid
+            }"
+          />
+          @if (productForm.get('material')?.invalid && isFormSubmitted) {
+          <small>
+            @if (productForm.get('material')?.hasError('required')) {
+            <ng-container>Material is required</ng-container>
+            }
+          </small>
+          }
+        </div>
+
+        <div class="add-product__form-group" style="grid-column: span 2">
+          <label for="specifications">Specifications</label>
+          <textarea
+            id="specifications"
+            formControlName="specifications"
+            [ngClass]="{
+              error:
+                isFormSubmitted && productForm.get('specifications')?.invalid
+            }"
+          ></textarea>
+          @if (productForm.get('specifications')?.invalid && isFormSubmitted) {
+          <small>
+            @if (productForm.get('specifications')?.hasError('required')) {
+            <ng-container>Specifications is required</ng-container>
+            }
+          </small>
+          }
+        </div>
+
+        <div class="add-product__form-group add-product__form-group--image-box">
+          <input
+            id="image"
+            accept="image/*"
+            type="file"
+            (change)="onFileSelected($event)"
+          />
+          <label
+            for="image"
+            [ngClass]="{
+              'image-warning':
+                isFormSubmitted && productForm.get('image')?.invalid,
+              'image-stored': base64Image
+            }"
+          >
+            {{ base64Image ? "Image selected" : "Choose an Image" }}
+          </label>
+        </div>
+      </div>
+
+      <button class="add-product__add-watch-btn" type="submit">
+        Add Product
+      </button>
+    </form>
+  </div>
+</div>
