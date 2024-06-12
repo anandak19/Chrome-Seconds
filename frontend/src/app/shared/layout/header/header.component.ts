@@ -12,7 +12,7 @@ import { UserManagementService } from '../../services/userServices/user-manageme
 export class HeaderComponent implements OnInit{
 
   public userImage! : string
-  authData! : string
+  isLoggedIn: boolean = false;
   
 
   constructor(private _usermanagement: UserManagementService) {}
@@ -23,6 +23,11 @@ export class HeaderComponent implements OnInit{
     this._usermanagement.currentUserImage.subscribe( image => {
       this.userImage = image
     })
+
+    // check if user is login 
+    this._usermanagement.isLoggedIn.subscribe(status => {
+      this.isLoggedIn = status;
+    });
     
   }
 

@@ -17,6 +17,7 @@ export class UserManagementService {
 
   private currentUserImageSubject!: BehaviorSubject<string>;
   public currentUserImage!: Observable<string>;
+  private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(private _http: HttpClient) {
     const storedImage = this.getStoredImage();
@@ -43,9 +44,10 @@ export class UserManagementService {
           userImage: userImage,
           role: role,
         };
+
+        
         const authDataString = JSON.stringify(authData);
         localStorage.setItem('authData', authDataString);
-
         this.currentUserImageSubject.next(userImage);
       }),
       catchError(this.handleError)
@@ -69,7 +71,8 @@ export class UserManagementService {
 
   // http reqest to store the user image string
   updateUserImage(imageString: string | null): Observable<any> {
-    const token = this.getToken();
+    const authData = this.getAuthData();
+    const token = authData.token;
     if (!token) {
       return throwError('User not logged in');
     }
@@ -86,7 +89,8 @@ export class UserManagementService {
 
   // http reqest to update user details
   updateUserDetails(userData: updatedUser): Observable<any> {
-    const token = this.getToken();
+    const authData = this.getAuthData()
+    const token = authData.token;
     if (!token) {
       return throwError('User not logged in');
     }
@@ -99,7 +103,8 @@ export class UserManagementService {
 
   // http reqest to update user password
   updateUserPassword(passwords: passwordUpdation): Observable<any> {
-    const token = this.getToken();
+    const authData = this.getAuthData();
+    const token = authData.token
     if (!token) {
       return throwError('User not logged in');
     }
@@ -120,11 +125,7 @@ export class UserManagementService {
   }
   // ------------other functions------------
 
-  // to get token
-  getToken() {
-    return localStorage.getItem('authToken');
-  }
-
+  // get auth data from localStorage 
   getAuthData() {
     const authDataString = localStorage.getItem('authData');
 
@@ -151,8 +152,21 @@ export class UserManagementService {
     return AppConfig.defaultUserUrl;
   }
 
+  // to check if user is login 
+  get isLoggedIn(): Observable<boolean> {
+    const authData = this.getAuthData()
+    if (authData) {
+      this.loggedIn.next(true);
+    } else {
+      this.loggedIn.next(false);
+    }
+
+    return this.loggedIn.asObservable();
+  }
+
   logoutUser() {
     localStorage.clear();
+    
     this.currentUserImageSubject.next(AppConfig.defaultUserUrl);
   }
 }
