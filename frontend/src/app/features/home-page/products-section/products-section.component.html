@@ -1,60 +1,20 @@
 <div class="products-section">
   <h1 class="products-section__title">FEATURED COLLECTIONS</h1>
   <div class="products-section__products-wrapped">
+    @for (product of featuredProducts; track $index) {
 
     <div class="products-section__product-card">
       <div class="products-section__image">
-        <img src="../../../../assets/images/watch-cl.jpeg" alt="" />
+        <img [src]="product.image" alt="" />
       </div>
       <div class="products-section__product-data">
-        <h5>Ananthaks Watch - N12222</h5>
-        <p>$ 4000</p>
+        <h5>{{ product.productName }}</h5>
+        <p><span class="products-section__rupee-symbol">₹</span>{{product.price}}</p>
         <div class="products-section__cart-button">
           <button>Add to cart</button>
         </div>
       </div>
     </div>
-
-    <div class="products-section__product-card">
-      <div class="products-section__image">
-        <img src="../../../../assets/images/watch-cl.jpeg" alt="" />
-      </div>
-      <div class="products-section__product-data">
-        <h5>Ananthaks Watch - N12222</h5>
-        <p>$ 4000</p>
-        <div class="products-section__cart-button">
-          <button>Add to cart</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="products-section__product-card">
-      <div class="products-section__image">
-        <img src="../../../../assets/images/watch-cl.jpeg" alt="" />
-      </div>
-      <div class="products-section__product-data">
-        <h5>Ananthaks Watch - N12222</h5>
-        <p>$ 4000</p>
-        <div class="products-section__cart-button">
-          <button>Add to cart</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="products-section__product-card">
-      <div class="products-section__image">
-        <img src="../../../../assets/images/watch-cl.jpeg" alt="" />
-      </div>
-      <div class="products-section__product-data">
-        <h5>Ananthaks Watch - N12222</h5>
-        <p>$ 4000</p>
-        <div class="products-section__cart-button">
-          <button>Add to cart</button>
-        </div>
-      </div>
-    </div>
-
-    
-
+    }
   </div>
 </div>

@@ -1,14 +1,26 @@
+import productModel from "../models/product.model.js";
 import ProductModel from "../models/product.model.js";
 import jwt from "jsonwebtoken";
 
-// move this to env file later 
+// move this to env file later
 const SECRET_KEY = "chrome_ak";
-const ADMIN_EMAIL = "anan@gmail.com"
+const ADMIN_EMAIL = "anan@gmail.com";
 
 // function to get all products
 export const getAllProducts = async (req, res) => {
   try {
     const products = await ProductModel.find({});
+    res.status(200).json(products);
+  } catch (err) {
+    console.error("Error fetching products: ", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+// function to get 8 products for home page
+export const getSomeProducts = async (req, res) => {
+  try {
+    const products = await ProductModel.find({}).limit(8);
     res.status(200).json(products);
   } catch (err) {
     console.error("Error fetching products: ", err);
@@ -86,8 +98,7 @@ export const deleteProduct = async (req, res) => {
   }
 
   // const productId = req.body.productId;
-const productId = req.params.productId;
-
+  const productId = req.params.productId;
 
   try {
     const deletedProduct = await ProductModel.findOneAndDelete({ productId });
