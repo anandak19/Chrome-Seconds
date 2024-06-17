@@ -1,1 +1,128 @@
-<p>products-page works!</p>
+<div class="products-container">
+  <div class="products-container__hero">
+    <img src="../../../../assets/images/Products/banner.svg" alt="" />
+  </div>
+
+  <div class="products-container__proudcts-section">
+    <!-- Filters start  -->
+    <div class="products-container__filters">
+       <!-- Gender  -->
+      <div class="products-container__select">
+        <div
+          class="products-container__select-selected"
+          [ngClass]="{ selected: slectedGender !== 'Gender' }"
+          (click)="toggleGenderDropdown('.gender-list')"
+        >
+          {{ slectedGender }}
+          <img src="../../../../assets/icons/down.svg" alt="">
+        </div>
+        <div class="gender-list select-items select-hide ">
+          <div (click)="selectGender('Gender')">All</div>
+          <div (click)="selectGender('Men')">Men</div>
+          <div (click)="selectGender('Women')">Women</div>
+          <div (click)="selectGender('Unisex')">Unisex</div>
+        </div>
+      </div>
+      <!-- Brand  -->
+      <div class="products-container__select">
+        <div
+          class="products-container__select-selected"
+          [ngClass]="{ selected: slectedBrand !== 'Brand' }"
+          (click)="toggleGenderDropdown('.brand-list')"
+        >
+          {{ slectedBrand }}
+          <img src="../../../../assets/icons/down.svg" alt="">
+        </div>
+        <div class="brand-list select-items select-hide ">
+          <div (click)="selectBrand('Brand')">All</div>
+          <div (click)="selectBrand('Brand1')">Brand1</div>
+          <div (click)="selectBrand('Brand2')">Brand2</div>
+          <div (click)="selectBrand('Brand3')">Brand3</div>
+        </div>
+      </div>
+      <!-- Category  -->
+      <div class="products-container__select">
+        <div
+          class="products-container__select-selected"
+          [ngClass]="{ selected: slectedCategory !== 'Category' }"
+          (click)="toggleGenderDropdown('.category-list')"
+        >
+          {{ slectedCategory }}
+          <img src="../../../../assets/icons/down.svg" alt="">
+        </div>
+        <div class="category-list select-items select-hide ">
+          <div (click)="selectCategory('Category')">All</div>
+          <div (click)="selectCategory('Category1')">Category1</div>
+          <div (click)="selectCategory('Category2')">Category2</div>
+          <div (click)="selectCategory('Category3')">Category3</div>
+        </div>
+      </div>
+    </div>
+    <!-- Filters end  -->
+
+    <!-- Products list start -->
+     <div class="products-container__product-list-container">
+       <div class="products-container__products-list-title">
+         <h1>Watches For You</h1>
+        </div>
+        <div class="products-container__products-list">
+          
+          <!-- product card  -->
+           @for (product of allProducts; track $index) {
+
+           
+          <div class="products-container__product-card">
+            <div class="products-container__product-card-image">
+              <img [src]= "product.image" alt="">
+            </div>
+            <div class="products-container__product-card-product-details">
+              <div class="products-container__product-card-name-price">
+                <h4>{{ product.productName }}</h4>
+                <p><span>₹</span>{{product.price}}</p>
+              </div>
+              <div class="products-container__product-card-discription-button">
+                <p>{{product.description}}</p>
+                <button>Add to cart</button>
+              </div>
+            </div>
+          </div>
+        }
+          <!-- <div class="products-container__product-card">
+            <div class="products-container__product-card-image">
+              <img src="../../../../assets/images/watch-cl.jpeg" alt="">
+            </div>
+            <div class="products-container__product-card-product-details">
+              <div class="products-container__product-card-name-price">
+                <h4>Gamma Watch 2021 -Gray matter rrrr rr rrrrr rrr rrrrrrrrrrrrrrrrrrrrrrrr</h4>
+                <p><span>₹</span>40000</p>
+              </div>
+              <div class="products-container__product-card-discription-button">
+                <p>Fffffffffffffff fffffffffff fffff ffffffffffff fffffffffff ffffffffffdfdff ffffffffffff ffffff safad</p>
+                <button>Add to cart</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="products-container__product-card">
+            <div class="products-container__product-card-image">
+              <img src="../../../../assets/images/watch-cl.jpeg" alt="">
+            </div>
+            <div class="products-container__product-card-product-details">
+              <div class="products-container__product-card-name-price">
+                <h4>Gamma Watch 2021 -Gray matter rrrr rr rrrrr rrr rrrrrrrrrrrrrrrrrrrrrrrr</h4>
+                <p><span>₹</span>40000</p>
+              </div>
+              <div class="products-container__product-card-discription-button">
+                <p>Fffffffffffffff fffffffffff fffff ffffffffffff fffffffffff ffffffffffdfdff ffffffffffff ffffff safad</p>
+                <button>Add to cart</button>
+              </div>
+            </div>
+          </div> -->
+
+        </div>
+      </div>
+
+
+    <!-- Products list end -->
+  </div>
+</div>
