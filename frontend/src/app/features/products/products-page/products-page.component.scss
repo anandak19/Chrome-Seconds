@@ -24,7 +24,9 @@
 
   &__select {
     position: relative;
-    width: 200px;
+    min-width: 214px;
+    max-width: max-content;
+    padding: 2px 12px;
     border-radius: 10px;
   }
   &__select-selected {
@@ -36,12 +38,12 @@
     border-radius: 50px;
     font-size: 18px;
     color: #292929;
-    width: 80%;
+    // width: 80%;
     display: flex;
-    gap: 22px;
+    gap: 15px;
     justify-content: center;
     img{
-      width: 10%;
+      width: 12px;
     }
   }
 

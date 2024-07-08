@@ -6,7 +6,7 @@
   <div class="products-container__proudcts-section">
     <!-- Filters start  -->
     <div class="products-container__filters">
-       <!-- Gender  -->
+      <!-- Gender  -->
       <div class="products-container__select">
         <div
           class="products-container__select-selected"
@@ -14,9 +14,9 @@
           (click)="toggleGenderDropdown('.gender-list')"
         >
           {{ slectedGender }}
-          <img src="../../../../assets/icons/down.svg" alt="">
+          <img src="../../../../assets/icons/down.svg" alt="" />
         </div>
-        <div class="gender-list select-items select-hide ">
+        <div class="gender-list select-items select-hide">
           <div (click)="selectGender('Gender')">All</div>
           <div (click)="selectGender('Male')">Men</div>
           <div (click)="selectGender('Female')">Women</div>
@@ -31,12 +31,14 @@
           (click)="toggleGenderDropdown('.brand-list')"
         >
           {{ slectedBrand }}
-          <img src="../../../../assets/icons/down.svg" alt="">
+          <img src="../../../../assets/icons/down.svg" alt="" />
         </div>
-        <div class="brand-list select-items select-hide ">
+        <div class="brand-list select-items select-hide">
           <div (click)="selectBrand('Brand')">All</div>
           <div (click)="selectBrand('LuxuryTime')">Luxury Time</div>
-          <div (click)="selectBrand('ClassicTimepieces')">Classic Timepieces</div>
+          <div (click)="selectBrand('ClassicTimepieces')">
+            Classic Timepieces
+          </div>
           <div (click)="selectBrand('ElegantWatches')">Elegant Watches</div>
           <div (click)="selectBrand('Sportify')">Sportify</div>
         </div>
@@ -49,9 +51,9 @@
           (click)="toggleGenderDropdown('.category-list')"
         >
           {{ slectedCategory }}
-          <img src="../../../../assets/icons/down.svg" alt="">
+          <img src="../../../../assets/icons/down.svg" alt="" />
         </div>
-        <div class="category-list select-items select-hide ">
+        <div class="category-list select-items select-hide">
           <div (click)="selectCategory('Category')">All</div>
           <div (click)="selectCategory('Casual Watch')">Casual Watch</div>
           <div (click)="selectCategory('Luxury Watch')">Luxury Watch</div>
@@ -63,36 +65,35 @@
     <!-- Filters end  -->
 
     <!-- Products list start -->
-     <div class="products-container__product-list-container">
-       <div class="products-container__products-list-title">
-         <h1>Watches For You</h1>
-        </div>
-        <div class="products-container__products-list">
-          
-          <!-- product card start -->
-           @for (product of allProducts; track $index) {
-          <div class="products-container__product-card">
-            <div class="products-container__product-card-image">
-              <img [src]= "product.image" alt="">
+    <div class="products-container__product-list-container">
+      <div class="products-container__products-list-title">
+        <h1>Watches For You</h1>
+      </div>
+      <div class="products-container__products-list">
+        <!-- product card start -->
+        @for (product of allProducts; track $index) {
+        <div class="products-container__product-card">
+          <div class="products-container__product-card-image">
+            <img [src]="product.image" alt="" />
+          </div>
+          <div class="products-container__product-card-product-details">
+            <div class="products-container__product-card-name-price">
+              <!-- <h4 [routerLink]="['/watch', product._id]">{{ product.productName }}</h4> -->
+              <h4 [routerLink]="'/watch/' + product._id">{{ product.productName }}</h4>
+              <p><span>₹</span>{{ product.price }}</p>
             </div>
-            <div class="products-container__product-card-product-details">
-              <div class="products-container__product-card-name-price">
-                <h4>{{ product.productName }}</h4>
-                <p><span>₹</span>{{product.price}}</p>
-              </div>
-              <div class="products-container__product-card-discription-button">
-                <p>{{product.description}}</p>
-                <button>Add to cart</button>
-              </div>
+            <div class="products-container__product-card-discription-button">
+              <p>{{ product.description }}</p>
+              <button>Add to cart</button>
             </div>
           </div>
+        </div>
+        }@empty {
+          <div>Nothing to show</div>
         }
         <!-- product card end -->
-
-
-        </div>
       </div>
-
+    </div>
 
     <!-- Products list end -->
   </div>

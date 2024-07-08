@@ -25,7 +25,8 @@ export const routes: Routes = [
           ).then((c) => c.ProductsPageComponent),
       },
       {
-        path: 'watch/:id',
+        // path: 'watch/:id',
+        path: 'watch/id',
         title: 'Chrome Seconds - Products details',
         loadComponent: () =>
           import(

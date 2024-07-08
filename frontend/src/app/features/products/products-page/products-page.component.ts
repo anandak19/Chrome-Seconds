@@ -2,11 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { databaseWatchDetails, ProductParams } from '../../../core/models/watch-details';
 import { ProductManagementService } from '../../../shared/services/productServices/product-management.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-products-page',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './products-page.component.html',
   styleUrl: './products-page.component.scss',
 })
@@ -71,16 +72,13 @@ export class ProductsPageComponent implements OnInit {
     this.toggleGenderDropdown(this.selectedDropdown);
   }
 
-
-
-
-
+  // method to display products 
   displayProducts(){
-    console.log(this.params);
+    console.log(this.params);//
         this._productManagement.getAllProducts(this.params).subscribe(
         (res) =>{
           this.allProducts = res
-          console.log("f",this.allProducts);
+          console.log("f",this.allProducts);//
         }, (error)=> {
           console.log(error);
         }
