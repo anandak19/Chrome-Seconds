@@ -78,8 +78,7 @@
           </div>
           <div class="products-container__product-card-product-details">
             <div class="products-container__product-card-name-price">
-              <!-- <h4 [routerLink]="['/watch', product._id]">{{ product.productName }}</h4> -->
-              <h4 [routerLink]="'/watch/' + product._id">{{ product.productName }}</h4>
+              <h4 [routerLink]="'watch/' + product._id">{{ product.productName }}</h4>
               <p><span>₹</span>{{ product.price }}</p>
             </div>
             <div class="products-container__product-card-discription-button">

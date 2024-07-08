@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { databaseWatchDetails } from '../../../core/models/watch-details';
+import { ProductManagementService } from '../../../shared/services/productServices/product-management.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-product-details-page',
@@ -9,4 +12,26 @@ import { Component } from '@angular/core';
 })
 export class ProductDetailsPageComponent {
 
+  product!: databaseWatchDetails
+  productId!: string;
+
+  constructor(
+    private route: ActivatedRoute,
+    private _productService: ProductManagementService
+  ) {}
+
+
+  ngOnInit(): void {
+    const productId = this.route.snapshot.paramMap.get('productId');
+    if (productId) {
+      this._productService.getProductById(productId).subscribe(
+        (res) => {
+          console.log(res);
+        }
+      )
+    }
+
+    
+
+  }
 }

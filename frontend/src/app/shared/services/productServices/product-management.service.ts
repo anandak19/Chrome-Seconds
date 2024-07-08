@@ -53,18 +53,19 @@ export class ProductManagementService {
     return this._http.get<databaseWatchDetails[]>(this.apiUrl, { params });
   }
 
-
-
-
-
-
-
-
-
   // get eight products 
   getSomeProducts(): Observable<databaseWatchDetails[]> {
     return this._http.get<databaseWatchDetails[]>(`${this.apiUrl}/product/eight`);
   }
+
+  // get product by id 
+  getProductById(productId: string): Observable<databaseWatchDetails[]> {
+    return this._http.get<databaseWatchDetails[]>(`${this.apiUrl}/${productId}`)
+  }
+
+
+
+
 
   // delete a product
   deleteOneProduct(productId: string): Observable<databaseWatchDetails>{

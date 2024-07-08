@@ -85,6 +85,15 @@ export class ProductsPageComponent implements OnInit {
       )
   }
 
+  logProductwithId(id: string){
+    this._productManagement.getProductById(id).subscribe(
+      (res)=>{
+        console.log(res);
+        
+      }
+    )
+  }
+
 
 
 

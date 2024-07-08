@@ -26,7 +26,7 @@ export const routes: Routes = [
       },
       {
         // path: 'watch/:id',
-        path: 'watch/id',
+        path: 'watch/:productId',
         title: 'Chrome Seconds - Products details',
         loadComponent: () =>
           import(

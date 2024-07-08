@@ -119,7 +119,7 @@ export const deleteProduct = async (req, res) => {
 
 //function to get details of one product
 export const getProductById = async (req, res) => {
-  const id = req.params.id;
+  const id = req.params.productId;
 
   try {
     const selectedProduct = await ProductModel.findById(id);
