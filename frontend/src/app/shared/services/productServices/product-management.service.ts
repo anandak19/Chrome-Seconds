@@ -1,7 +1,7 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
-import { WatchDetails, databaseWatchDetails } from '../../../core/models/watch-details';
+import { ProductParams, WatchDetails, databaseWatchDetails } from '../../../core/models/watch-details';
 import { UserManagementService } from '../userServices/user-management.service';
 
 @Injectable({
@@ -29,10 +29,37 @@ export class ProductManagementService {
       .pipe(catchError(this.handleError));
   }
 
+
+
+
+
+
   // get all products
-  getAllProducts(): Observable<databaseWatchDetails[]> {
-    return this._http.get<databaseWatchDetails[]>(this.apiUrl);
+  getAllProducts(paramsObj?: ProductParams): Observable<databaseWatchDetails[]> {
+    let params = new HttpParams();
+
+    if (paramsObj?.gender) {
+      params = params.set('gender', paramsObj.gender);
+    }
+
+    if (paramsObj?.brand) {
+      params = params.set('brand', paramsObj.brand);
+    }
+
+    if (paramsObj?.category) {
+      params = params.set('category', paramsObj.category);
+    }
+
+    return this._http.get<databaseWatchDetails[]>(this.apiUrl, { params });
   }
+
+
+
+
+
+
+
+
 
   // get eight products 
   getSomeProducts(): Observable<databaseWatchDetails[]> {

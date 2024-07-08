@@ -18,8 +18,8 @@
         </div>
         <div class="gender-list select-items select-hide ">
           <div (click)="selectGender('Gender')">All</div>
-          <div (click)="selectGender('Men')">Men</div>
-          <div (click)="selectGender('Women')">Women</div>
+          <div (click)="selectGender('Male')">Men</div>
+          <div (click)="selectGender('Female')">Women</div>
           <div (click)="selectGender('Unisex')">Unisex</div>
         </div>
       </div>
@@ -35,9 +35,10 @@
         </div>
         <div class="brand-list select-items select-hide ">
           <div (click)="selectBrand('Brand')">All</div>
-          <div (click)="selectBrand('Brand1')">Brand1</div>
-          <div (click)="selectBrand('Brand2')">Brand2</div>
-          <div (click)="selectBrand('Brand3')">Brand3</div>
+          <div (click)="selectBrand('LuxuryTime')">Luxury Time</div>
+          <div (click)="selectBrand('ClassicTimepieces')">Classic Timepieces</div>
+          <div (click)="selectBrand('ElegantWatches')">Elegant Watches</div>
+          <div (click)="selectBrand('Sportify')">Sportify</div>
         </div>
       </div>
       <!-- Category  -->
@@ -52,9 +53,10 @@
         </div>
         <div class="category-list select-items select-hide ">
           <div (click)="selectCategory('Category')">All</div>
-          <div (click)="selectCategory('Category1')">Category1</div>
-          <div (click)="selectCategory('Category2')">Category2</div>
-          <div (click)="selectCategory('Category3')">Category3</div>
+          <div (click)="selectCategory('Casual Watch')">Casual Watch</div>
+          <div (click)="selectCategory('Luxury Watch')">Luxury Watch</div>
+          <div (click)="selectCategory('Dress Watch')">Dress Watch</div>
+          <div (click)="selectCategory('Sports Watch')">Sports Watch</div>
         </div>
       </div>
     </div>
@@ -67,10 +69,8 @@
         </div>
         <div class="products-container__products-list">
           
-          <!-- product card  -->
+          <!-- product card start -->
            @for (product of allProducts; track $index) {
-
-           
           <div class="products-container__product-card">
             <div class="products-container__product-card-image">
               <img [src]= "product.image" alt="">
@@ -87,37 +87,8 @@
             </div>
           </div>
         }
-          <!-- <div class="products-container__product-card">
-            <div class="products-container__product-card-image">
-              <img src="../../../../assets/images/watch-cl.jpeg" alt="">
-            </div>
-            <div class="products-container__product-card-product-details">
-              <div class="products-container__product-card-name-price">
-                <h4>Gamma Watch 2021 -Gray matter rrrr rr rrrrr rrr rrrrrrrrrrrrrrrrrrrrrrrr</h4>
-                <p><span>₹</span>40000</p>
-              </div>
-              <div class="products-container__product-card-discription-button">
-                <p>Fffffffffffffff fffffffffff fffff ffffffffffff fffffffffff ffffffffffdfdff ffffffffffff ffffff safad</p>
-                <button>Add to cart</button>
-              </div>
-            </div>
-          </div>
+        <!-- product card end -->
 
-          <div class="products-container__product-card">
-            <div class="products-container__product-card-image">
-              <img src="../../../../assets/images/watch-cl.jpeg" alt="">
-            </div>
-            <div class="products-container__product-card-product-details">
-              <div class="products-container__product-card-name-price">
-                <h4>Gamma Watch 2021 -Gray matter rrrr rr rrrrr rrr rrrrrrrrrrrrrrrrrrrrrrrr</h4>
-                <p><span>₹</span>40000</p>
-              </div>
-              <div class="products-container__product-card-discription-button">
-                <p>Fffffffffffffff fffffffffff fffff ffffffffffff fffffffffff ffffffffffdfdff ffffffffffff ffffff safad</p>
-                <button>Add to cart</button>
-              </div>
-            </div>
-          </div> -->
 
         </div>
       </div>

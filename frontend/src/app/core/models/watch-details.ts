@@ -30,3 +30,9 @@ export interface databaseWatchDetails {
     material: string;
     gender: string;
 }
+
+export interface ProductParams {
+    gender?: string;
+    brand?: string;
+    category?: string;
+  }

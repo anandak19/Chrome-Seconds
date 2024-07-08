@@ -8,8 +8,9 @@ const ADMIN_EMAIL = "anan@gmail.com";
 
 // function to get all products
 export const getAllProducts = async (req, res) => {
+  console.log(req.query);
   try {
-    const products = await ProductModel.find({});
+    const products = await ProductModel.find(req.query);
     res.status(200).json(products);
   } catch (err) {
     console.error("Error fetching products: ", err);
