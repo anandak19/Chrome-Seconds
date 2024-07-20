@@ -12,8 +12,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProductDetailsPageComponent {
 
-  product!: databaseWatchDetails
   productId!: string;
+  productData!: databaseWatchDetails
 
   constructor(
     private route: ActivatedRoute,
@@ -26,7 +26,10 @@ export class ProductDetailsPageComponent {
     if (productId) {
       this._productService.getProductById(productId).subscribe(
         (res) => {
-          console.log(res);
+          this.productData = res
+          console.log(this.productData);
+        },(error)=>{
+          console.log(error);
         }
       )
     }

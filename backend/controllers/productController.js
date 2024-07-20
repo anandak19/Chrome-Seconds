@@ -48,12 +48,15 @@ export const createProduct = async (req, res) => {
     category,
     brand,
     price,
-    image,
+    mainImage,
+    secondImage,
+    thirdImage,
+    forthImage,
     specifications,
     color,
     weight,
     material,
-    gender,
+    gender
   } = req.body;
 
   try {
@@ -71,12 +74,15 @@ export const createProduct = async (req, res) => {
       category,
       brand,
       price,
-      image,
+      mainImage,
+      secondImage,
+      thirdImage,
+      forthImage,
       specifications,
       color,
       weight,
       material,
-      gender,
+      gender
     });
 
     const savedProduct = await newProduct.save();

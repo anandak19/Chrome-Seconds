@@ -1,0 +1,34 @@
+.product-details-container {
+  padding: 0 68px;
+  background-color: aliceblue;
+
+  &__hero-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px 0;
+    height: calc(100dvh - 110px);
+  }
+
+  &__image-section {
+    //   background-color: aquamarine;
+      flex: 1;
+      max-width: 50%;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+
+    & img {
+        height: 588px;
+        width: 588px;
+    }
+  }
+
+  &__product-info {
+    background-color: rgb(189, 217, 241);
+    flex: 1;
+    padding: 10px;
+  }
+}

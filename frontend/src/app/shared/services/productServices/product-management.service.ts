@@ -59,8 +59,8 @@ export class ProductManagementService {
   }
 
   // get product by id 
-  getProductById(productId: string): Observable<databaseWatchDetails[]> {
-    return this._http.get<databaseWatchDetails[]>(`${this.apiUrl}/${productId}`)
+  getProductById(productId: string): Observable<databaseWatchDetails> {
+    return this._http.get<databaseWatchDetails>(`${this.apiUrl}/${productId}`)
   }
 
 

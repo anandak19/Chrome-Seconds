@@ -26,7 +26,19 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    image: {
+    mainImage: {
+      type: String,
+      required: true,
+    },
+    secondImage: {
+      type: String,
+      required: true,
+    },
+    thirdImage: {
+      type: String,
+      required: true,
+    },
+    forthImage: {
       type: String,
       required: true,
     },
@@ -49,6 +61,10 @@ const productSchema = new mongoose.Schema(
     gender: {
       type: String,
       required: true,
+    },
+    isAvailable: {
+      type: Boolean,
+      default: false,
     },
   },
   { collection: "products" }
