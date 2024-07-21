@@ -6,7 +6,7 @@ export interface WatchDetails {
     category: string;
     brand: string;
     price: number;
-    image: string;
+    images: string[];
     specifications: string;
     color: string;
     weight: number;
@@ -23,12 +23,13 @@ export interface databaseWatchDetails {
     category: string;
     brand: string;
     price: number;
-    image: string;
+    images: string[];
     specifications: string;
     color: string;
     weight: string;
     material: string;
     gender: string;
+    isAvailable: boolean
 }
 
 export interface ProductParams {

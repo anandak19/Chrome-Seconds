@@ -1,10 +1,8 @@
 import UserModel from "../models/user.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-
-// secret key to create a token------
-const SECRET_KEY = "chrome_ak";
-const ADMIN_EMAIL = "anan@gmail.com"
+import dotenv from 'dotenv';
+dotenv.config();
 
 // function to create a new user
 export const createUser = async (req, res) => {
@@ -61,12 +59,12 @@ export const loginUser = async (req, res) => {
       return res.status(401).json({ error: "Invalid password" });
     }
 
-    const role = requestedUser.email === ADMIN_EMAIL ? 'admin' : 'user';
+    const role = requestedUser.email === process.env.ADMIN_EMAIL ? 'admin' : 'user';
 
     // Generate a JWT token
     const token = jwt.sign(
       { id: requestedUser._id, role },
-      SECRET_KEY,
+      process.env.SECRET_KEY,
       { expiresIn: "48h" } // Token expires in 48 hour
     );
     
@@ -84,7 +82,7 @@ export const loginUser = async (req, res) => {
 export const getProfileData = async (req, res) => {
   // extract id from header
   const token = req.headers.authorization.split(" ")[1];
-  const decoded = jwt.verify(token, SECRET_KEY);
+  const decoded = jwt.verify(token, process.env.SECRET_KEY);
   const userId = decoded.id;
 
   try {
@@ -102,7 +100,7 @@ export const updateProfileImage = async (req, res) => {
   const userImage = req.body.image;
   // extract id from header
   const token = req.headers.authorization.split(" ")[1];
-  const decoded = jwt.verify(token, SECRET_KEY);
+  const decoded = jwt.verify(token, process.env.SECRET_KEY);
   const userId = decoded.id;
 
   try {
@@ -125,7 +123,7 @@ export const updateUser = async (req, res) => {
   const updates = req.body;
 
   const token = req.headers.authorization.split(" ")[1];
-  const decoded = jwt.verify(token, SECRET_KEY);
+  const decoded = jwt.verify(token, process.env.SECRET_KEY);
   const userId = decoded.id;
 
   try {
@@ -151,7 +149,7 @@ export const updatePassword = async (req, res) => {
 
   // separate the id from token 
   const token = req.headers.authorization.split(" ")[1];
-  const decoded = jwt.verify(token, SECRET_KEY);
+  const decoded = jwt.verify(token, process.env.SECRET_KEY);
   const userId = decoded.id;
 
   try {

@@ -241,12 +241,14 @@
           <label
             for="image"
             [ngClass]="{
-              'image-warning':
-                isFormSubmitted && productForm.get('image')?.invalid,
-              'image-stored': base64Image
-            }"
-          >
-            {{ base64Image ? "Image selected" : "Choose an Image" }}
+              'image-warning': isFormSubmitted  && productForm.get('images')?.hasError('minArrayLength'),
+              'image-stored': imageRemaining == 0
+            }">
+            @if (imageRemaining > 0) {
+              Choose images ({{ imageRemaining }} remaining)
+            }@else {
+              All images are added
+            }
           </label>
         </div>
       </div>

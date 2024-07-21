@@ -1,10 +1,7 @@
-import productModel from "../models/product.model.js";
 import ProductModel from "../models/product.model.js";
 import jwt from "jsonwebtoken";
-
-// move this to env file later
-const SECRET_KEY = "chrome_ak";
-const ADMIN_EMAIL = "anan@gmail.com";
+import dotenv from 'dotenv';
+dotenv.config();
 
 // function to get all products
 export const getAllProducts = async (req, res) => {
@@ -33,7 +30,7 @@ export const getSomeProducts = async (req, res) => {
 export const createProduct = async (req, res) => {
   // extract role from header
   const token = req.headers.authorization.split(" ")[1];
-  const decoded = jwt.verify(token, SECRET_KEY);
+  const decoded = jwt.verify(token, process.env.SECRET_KEY );
   const userRole = decoded.role;
 
   if (userRole !== "admin") {
@@ -48,10 +45,7 @@ export const createProduct = async (req, res) => {
     category,
     brand,
     price,
-    mainImage,
-    secondImage,
-    thirdImage,
-    forthImage,
+    images,
     specifications,
     color,
     weight,
@@ -74,10 +68,7 @@ export const createProduct = async (req, res) => {
       category,
       brand,
       price,
-      mainImage,
-      secondImage,
-      thirdImage,
-      forthImage,
+      images,
       specifications,
       color,
       weight,
@@ -97,7 +88,7 @@ export const createProduct = async (req, res) => {
 export const deleteProduct = async (req, res) => {
   // extract role from header
   const token = req.headers.authorization.split(" ")[1];
-  const decoded = jwt.verify(token, SECRET_KEY);
+  const decoded = jwt.verify(token, process.env.SECRET_KEY );
   const userRole = decoded.role;
 
   if (userRole !== "admin") {

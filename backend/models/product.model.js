@@ -26,20 +26,8 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    mainImage: {
-      type: String,
-      required: true,
-    },
-    secondImage: {
-      type: String,
-      required: true,
-    },
-    thirdImage: {
-      type: String,
-      required: true,
-    },
-    forthImage: {
-      type: String,
+    images: {
+      type: [String],
       required: true,
     },
     specifications: {
