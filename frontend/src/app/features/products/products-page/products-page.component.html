@@ -18,8 +18,8 @@
         </div>
         <div class="gender-list select-items select-hide">
           <div (click)="selectGender('Gender')">All</div>
-          <div (click)="selectGender('Male')">Men</div>
-          <div (click)="selectGender('Female')">Women</div>
+          <div (click)="selectGender('Men')">Men</div>
+          <div (click)="selectGender('Women')">Women</div>
           <div (click)="selectGender('Unisex')">Unisex</div>
         </div>
       </div>
@@ -33,14 +33,12 @@
           {{ slectedBrand }}
           <img src="../../../../assets/icons/down.svg" alt="" />
         </div>
+             <!-- Update new Brand names here  -->
         <div class="brand-list select-items select-hide">
           <div (click)="selectBrand('Brand')">All</div>
-          <div (click)="selectBrand('LuxuryTime')">Luxury Time</div>
-          <div (click)="selectBrand('ClassicTimepieces')">
-            Classic Timepieces
-          </div>
-          <div (click)="selectBrand('ElegantWatches')">Elegant Watches</div>
-          <div (click)="selectBrand('Sportify')">Sportify</div>
+          <div (click)="selectBrand('RADO')">RADO</div>
+          <div (click)="selectBrand('TISSOT')">TISSOT</div>
+          <div (click)="selectBrand('FASTRACK')">FASTRACK</div>
         </div>
       </div>
       <!-- Category  -->
@@ -74,11 +72,13 @@
         @for (product of allProducts; track $index) {
         <div class="products-container__product-card">
           <div class="products-container__product-card-image">
-            <!-- <img [src]="product.image" alt="" /> -->
+            <img [src]="product.images[0]" alt="" />
           </div>
           <div class="products-container__product-card-product-details">
             <div class="products-container__product-card-name-price">
-              <h4 [routerLink]="'watch/' + product._id">{{ product.productName }}</h4>
+              <h4 [routerLink]="'watch/' + product._id">
+                {{ product.productName }}
+              </h4>
               <p><span>₹</span>{{ product.price }}</p>
             </div>
             <div class="products-container__product-card-discription-button">
@@ -88,7 +88,7 @@
           </div>
         </div>
         }@empty {
-          <div>Nothing to show</div>
+        <div>Nothing to show</div>
         }
         <!-- product card end -->
       </div>

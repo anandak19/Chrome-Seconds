@@ -97,12 +97,11 @@
               error: isFormSubmitted && productForm.get('brand')?.invalid
             }"
           >
+              <!-- Update new Brand names here  -->
             <option value="">Select Brand</option>
-            <option value="LuxuryTime">LuxuryTime</option>
-            <option value="Timeless">Timeless</option>
-            <option value="ElegantWatches">ElegantWatches</option>
-            <option value="Sportify">Sportify</option>
-            <option value="ClassicTimepieces">ClassicTimepieces</option>
+            <option value="RADO">RADO</option>
+            <option value="TISSOT">TISSOT</option>
+            <option value="FASTRACK">FASTRACK</option>
           </select>
           @if (productForm.get('brand')?.invalid && isFormSubmitted) {
           <small>
@@ -123,8 +122,8 @@
             }"
           >
             <option value="">Select Gender</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
+            <option value="Men">Men</option>
+            <option value="Women">Women</option>
             <option value="Unisex">Unisex</option>
           </select>
           @if (productForm.get('gender')?.invalid && isFormSubmitted) {

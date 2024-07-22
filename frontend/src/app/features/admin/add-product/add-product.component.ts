@@ -24,7 +24,7 @@ export class AddProductComponent {
   productForm!: FormGroup;
   base64Image?: string | null;
   isFormSubmitted: boolean = false;
-  imageRemaining: number = 4
+  imageRemaining: number = 4;
 
   constructor(
     private location: Location,
@@ -55,11 +55,25 @@ export class AddProductComponent {
     return this.productForm.get('images') as FormArray;
   }
 
+  // clear image forms array
+  clearImagesFormArray() {
+    while (this.imagesFormArray.length) {
+      this.imagesFormArray.removeAt(0);
+    }
+  }
+
   //validator to check if the image array has min 4 Images
   minArrayLength(min: number): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const formArray = control as FormArray;
-      return formArray.length < min ? { minArrayLength: { requiredLength: min, actualLength: formArray.length } } : null;
+      return formArray.length < min
+        ? {
+            minArrayLength: {
+              requiredLength: min,
+              actualLength: formArray.length,
+            },
+          }
+        : null;
     };
   }
 
@@ -77,7 +91,7 @@ export class AddProductComponent {
       reader.onload = () => {
         if (this.imagesFormArray.length < 4) {
           this.addImage(reader.result as string);
-          this.imageRemaining--
+          this.imageRemaining--;
         } else {
           alert('You can only upload a maximum of 4 images.');
         }
@@ -96,8 +110,14 @@ export class AddProductComponent {
       // Add submission logic here ----
       this._productManagement.createProduct(productData).subscribe(
         (res) => {
+          alert('Product added successfully');
           console.log('Added prododuct is: ');
           console.log(res);
+          this.isFormSubmitted = false;
+          this.imageRemaining = 4;
+          // Clear the images form array
+          this.clearImagesFormArray();
+          this.productForm.reset();
         },
         (error) => {
           console.error(error);

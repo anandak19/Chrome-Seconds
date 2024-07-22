@@ -33,7 +33,7 @@
         <td>{{ product.category }}</td>
         <td>{{ product.brand }}</td>
         <td>{{ product.price | currency : "INR" : "symbol" : "4.2-3" }}</td>
-        <!-- <td><img [src]="product.image" alt="{{ product.productName }}" /></td> -->
+        <img [src]="product.images[0]" alt="{{ product.productName }}" />
         <td>{{ product.specifications }}</td>
         <td>{{ product.color }}</td>
         <td>{{ product.weight }}</td>
