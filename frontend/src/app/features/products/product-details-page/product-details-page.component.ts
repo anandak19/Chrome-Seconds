@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { databaseWatchDetails } from '../../../core/models/watch-details';
 import { ProductManagementService } from '../../../shared/services/productServices/product-management.service';
 import { ActivatedRoute } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-product-details-page',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './product-details-page.component.html',
   styleUrl: './product-details-page.component.scss'
 })
@@ -14,6 +15,8 @@ export class ProductDetailsPageComponent {
 
   productId!: string;
   productData!: databaseWatchDetails
+  currentSlide: number = 0;
+  
 
   constructor(
     private route: ActivatedRoute,
@@ -33,8 +36,16 @@ export class ProductDetailsPageComponent {
         }
       )
     }
+  }
+
+
+  goToSlide(index: number): void {
+    this.currentSlide = index;
+  }
+
+
 
     
 
-  }
+
 }

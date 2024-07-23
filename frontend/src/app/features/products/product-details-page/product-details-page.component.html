@@ -1,13 +1,40 @@
 <div class="product-details-container">
     <div class="product-details-container__hero-section">
-        <div class="product-details-container__image-section">
-            <!-- <img [src]="productData.image" alt="Product Image" /> -->
-        </div>
+
+        <div class="row product-details-container__image-section">
+            <div class="col-2">
+              <!-- Custom indicators -->
+              <ul class="list-group" style="gap: 8px">
+                <li *ngFor="let image of productData.images; let i = index" 
+                    class="list-group-item"
+                    [class.active-slide]="i === currentSlide"
+                    (mouseover)="goToSlide(i)">
+                  <img [src]="image" class="img-thumbnail" alt="Product Thumbnail">
+                </li>
+              </ul>
+            </div>
+            <div class="col-10">
+              <!-- Bootstrap Carousel -->
+              <div id="" class="carousel slide">
+                <div class="carousel-inner">
+                  <div *ngFor="let image of productData.images; let i = index" 
+                       class="carousel-item" 
+                       [class.active]="i === currentSlide">
+                    <img [src]="image" class="d-block w-100" alt="Product Image">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
         <div class="product-details-container__product-info">
-            <h1>{{ productData.productName }}</h1>
-            <p class="product-price">${{ productData.price }}</p>
-            <p class="product-description">{{ productData.description }}</p>
-            <button>Add to cart</button>
+            <div class="product-details-container__product-info-contents">
+                <h1>{{ productData.productName }}</h1>
+                <p class="product-details-container__product-price">${{ productData.price }}</p>
+                <p class="product-details-container__product-description">{{ productData.description }}</p>
+                <button class="product-details-container__btn">Add to cart</button>
+                <button class="product-details-container__btn product-details-container__btn--buy">{{ productData.isAvailable ? 'Buy now' : 'Out of Stock' }}</button>
+            </div>
         </div>
     </div>
 </div>
