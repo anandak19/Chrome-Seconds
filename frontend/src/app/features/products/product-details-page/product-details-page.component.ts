@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { databaseWatchDetails } from '../../../core/models/watch-details';
 import { ProductManagementService } from '../../../shared/services/productServices/product-management.service';
 import { ActivatedRoute } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-product-details-page',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CurrencyPipe],
   templateUrl: './product-details-page.component.html',
   styleUrl: './product-details-page.component.scss'
 })

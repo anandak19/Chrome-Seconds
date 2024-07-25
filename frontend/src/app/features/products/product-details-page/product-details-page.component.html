@@ -30,7 +30,7 @@
         <div class="product-details-container__product-info">
             <div class="product-details-container__product-info-contents">
                 <h1>{{ productData.productName }}</h1>
-                <p class="product-details-container__product-price">${{ productData.price }}</p>
+                <p class="product-details-container__product-price">{{ productData.price | currency:'INR':'symbol':'1.0' }}</p>
                 <p class="product-details-container__product-description">{{ productData.description }}</p>
                 <button class="product-details-container__btn">Add to cart</button>
                 <button class="product-details-container__btn product-details-container__btn--buy">{{ productData.isAvailable ? 'Buy now' : 'Out of Stock' }}</button>
