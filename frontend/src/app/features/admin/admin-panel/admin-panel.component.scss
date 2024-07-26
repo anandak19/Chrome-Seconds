@@ -42,13 +42,29 @@
     z-index: 2;
     display: flex;
     gap: 18px;
-    // flex-direction: column;
+    padding: 28px 22px;
 
     & button {
       padding: 8px 14px;
       margin: 4px;
       color: #ffffff;
-      // background-color: #c03f00;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s, transform 0.3s;
+    
+      &:hover {
+        transform: scale(1.1);
+      }
+    
+      &:active {
+        transform: scale(0.98);
+      }
+    
+      &:focus {
+        outline: none; 
+        box-shadow: 0 0 0 3px rgba(192, 63, 0, 0.5);
+      }
     }
     .availality-btn{
       background-color: #e54800;
@@ -80,6 +96,7 @@
     & th,
     & td {
       padding: 12px;
+      font-size: 0.9rem;
       text-align: left;
       border: 1px solid #ccc;
 
@@ -102,6 +119,29 @@
     img {
       max-width: 100px;
       border-radius: 4px;
+    }
+  }
+
+  &__watch-action-btn {
+    padding: 14px 4px;
+    background-color: #c03f00;
+    color: #ffffff;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s, transform 0.1s;
+  
+    &:hover {
+      background-color: #a63700;
+      transform: scale(1.1);
+    }
+  
+    &:active {
+      transform: scale(0.98);
+    }
+  
+    &:focus {
+      outline: none;
     }
   }
 }

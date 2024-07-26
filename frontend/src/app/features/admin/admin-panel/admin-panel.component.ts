@@ -14,7 +14,7 @@ import { CommonModule, CurrencyPipe } from '@angular/common';
 export class AdminPanelComponent implements OnInit {
   public allProductsDetails: databaseWatchDetails[] = [];
   showActions: boolean = false;
-  selectedProduct! : string
+  selectedProduct! : databaseWatchDetails
 
   constructor(
     public _router: Router,
@@ -39,21 +39,41 @@ export class AdminPanelComponent implements OnInit {
   }
 
   toggleActions(productId: string): void {
-    this.selectedProduct = productId
+    this._productManagement.getProductById(productId).subscribe(
+      (res) => {
+        this.selectedProduct = res
+      },(err) => {
+        console.error(err);
+        
+      }
+    )
     this.showActions = !this.showActions;
   }
 
 
   //set as available
   changeAvailability(){
-
+    const isAvailable = !this.selectedProduct.isAvailable
+    console.log(this.selectedProduct._id);
+    
+    this._productManagement.updateAvailability(this.selectedProduct._id, isAvailable).subscribe(
+      (res)=> {
+        console.log(res);
+        alert("Availability updated")
+        this.toggleActions('')
+      },(err) => {
+        console.error(err);
+      }
+    )
   }
+
   // delete a product 
   deleteProductClicked() {
-
-    this._productManagement.deleteOneProduct(this.selectedProduct).subscribe(
+    this._productManagement.deleteOneProduct(this.selectedProduct._id).subscribe(
       (res) => {
         console.log(res);
+        alert("Availability updated")
+        this.toggleActions('')
         this.getAllProducts()
       },
       (err) => {

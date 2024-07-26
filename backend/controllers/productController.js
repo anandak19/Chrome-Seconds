@@ -1,6 +1,7 @@
 import ProductModel from "../models/product.model.js";
 import jwt from "jsonwebtoken";
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
+import productModel from "../models/product.model.js";
 dotenv.config();
 
 // function to get all products
@@ -30,7 +31,7 @@ export const getSomeProducts = async (req, res) => {
 export const createProduct = async (req, res) => {
   // extract role from header
   const token = req.headers.authorization.split(" ")[1];
-  const decoded = jwt.verify(token, process.env.SECRET_KEY );
+  const decoded = jwt.verify(token, process.env.SECRET_KEY);
   const userRole = decoded.role;
 
   if (userRole !== "admin") {
@@ -50,7 +51,7 @@ export const createProduct = async (req, res) => {
     color,
     weight,
     material,
-    gender
+    gender,
   } = req.body;
 
   try {
@@ -73,7 +74,7 @@ export const createProduct = async (req, res) => {
       color,
       weight,
       material,
-      gender
+      gender,
     });
 
     const savedProduct = await newProduct.save();
@@ -88,7 +89,7 @@ export const createProduct = async (req, res) => {
 export const deleteProduct = async (req, res) => {
   // extract role from header
   const token = req.headers.authorization.split(" ")[1];
-  const decoded = jwt.verify(token, process.env.SECRET_KEY );
+  const decoded = jwt.verify(token, process.env.SECRET_KEY);
   const userRole = decoded.role;
 
   if (userRole !== "admin") {
@@ -110,6 +111,34 @@ export const deleteProduct = async (req, res) => {
       .json({ message: "Product deleted successfully", deletedProduct });
   } catch (err) {
     console.error("Error deleting product: ", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+// function to update availability
+export const updateAvailability = async (req, res) => {
+  // extract role from header
+  // const token = req.headers.authorization.split(" ")[1];
+  // const decoded = jwt.verify(token, process.env.SECRET_KEY);
+  // const userRole = decoded.role;
+
+  // if (userRole !== "admin") {
+  //   return res.status(403).json({ error: "You are unauthorized to do this" });
+  // }
+
+  const { isAvailable, productId } = req.body;
+  try {
+    const updatedProductData = await productModel.findByIdAndUpdate(
+      productId,
+      { isAvailable: isAvailable },
+      { new: true }
+    );
+    if (!updatedProductData) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    res.status(200).json(updatedProductData);
+  } catch (error) {
+    console.error("Error updating product: ", err);
     res.status(500).json({ error: "Internal server error" });
   }
 };

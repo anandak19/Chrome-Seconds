@@ -79,6 +79,7 @@ export const loginUser = async (req, res) => {
   }
 };
 
+// function to get user profile data 
 export const getProfileData = async (req, res) => {
   // extract id from header
   const token = req.headers.authorization.split(" ")[1];
@@ -96,6 +97,7 @@ export const getProfileData = async (req, res) => {
   }
 };
 
+// function to update user profile image
 export const updateProfileImage = async (req, res) => {
   const userImage = req.body.image;
   // extract id from header
