@@ -4,8 +4,6 @@
 
   &__hero-section {
     display: flex;
-    // align-items: center;
-    // justify-content: center;
     padding: 18px 0;
     height: calc(100dvh - 110px);
   }
@@ -42,6 +40,9 @@
   &__product-info {
     flex: 1;
     padding: 80px 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   &__product-info-contents{
     padding: 18px;
@@ -51,6 +52,17 @@
       font-weight: 700;
     }
   }
+  &__product-id{
+    background-color: #e5e5e5;
+    padding: 4px 8px;
+    font-size: 1.0rem;
+    width: fit-content;
+  }
+  &__product-color{
+    font-size: 1.0rem;
+    font-style: italic;
+    color: #2e2e2e;
+  }
   &__product-price{
     font-size: 1.6rem;
     font-weight: 600;
@@ -58,9 +70,35 @@
   &__product-description{
     font-size: 1.0rem;
   }
+
+  &__product-delivery{
+    padding: 8px 14px;
+    background-color: #dadada;
+    width: 50%;
+    border-radius: 10px;
+    display: flex;
+    justify-content:center;
+    align-items:flex-start;
+    flex-direction: column;
+    .deliveryDate{
+      font-size: 0.9rem;
+      margin: 0;
+      padding: 0;
+      font-weight: 600;
+    }
+    .info{
+      font-size: 0.8rem;
+      margin: 0;
+      padding: 0;
+    }
+    & span{
+      color: #a07000;
+    }
+  }
+
   &__btn{
     padding: 14px 28px;
-    margin-top: 18px;
+    margin-top: 20px;
     background-color: #000000;
     color: #ffffff;
     font-size: 1.2rem;

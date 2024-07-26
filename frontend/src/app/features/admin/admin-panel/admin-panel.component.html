@@ -6,6 +6,15 @@
     </button>
   </div>
 
+  @if (showActions) {
+    <div class="admin-panel__actions-div">
+      <button class="availality-btn" (click)="changeAvailability()">Set as availale</button>
+      <button class="delete-btn" (click)="deleteProductClicked()">Delete Product</button>
+      <button class="close-btn" (click)="toggleActions('')">Close</button>
+    </div>
+  }
+  <div *ngIf="showActions" class="overlay"></div>
+
   <table class="admin-panel__table">
     <thead>
       <tr>
@@ -21,7 +30,7 @@
         <th>Weight(gm)</th>
         <th>Material</th>
         <th>Gender</th>
-        <th>Delete</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -40,8 +49,8 @@
         <td>{{ product.material }}</td>
         <td>{{ product.gender }}</td>
         <td>
-          <button (click)="deleteProductClicked(product.productId)" class="admin-panel__watch-del-btn">
-            Delete
+          <button (click)="toggleActions(product.productId )" class="admin-panel__watch-action-btn">
+            Action
           </button>
         </td>
       </tr>

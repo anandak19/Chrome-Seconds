@@ -29,9 +29,17 @@
           
         <div class="product-details-container__product-info">
             <div class="product-details-container__product-info-contents">
+              <p class="product-details-container__product-id">Code: {{productData.productId}}</p>
                 <h1>{{ productData.productName }}</h1>
+                <p class="product-details-container__product-color">Color: {{productData.color}}</p>
                 <p class="product-details-container__product-price">{{ productData.price | currency:'INR':'symbol':'1.0' }}</p>
                 <p class="product-details-container__product-description">{{ productData.description }}</p>
+                @if (productData.isAvailable) {
+                  <div class="product-details-container__product-delivery">
+                    <p class="deliveryDate">Delivery by {{deliveryDate | date: 'dd MMMM EEEE'}} <span>| Free</span></p>
+                    <p class="info">If orderd before 12:00pm</p>
+                  </div>
+                }
                 <button class="product-details-container__btn">Add to cart</button>
                 <button class="product-details-container__btn product-details-container__btn--buy">{{ productData.isAvailable ? 'Buy now' : 'Out of Stock' }}</button>
             </div>
