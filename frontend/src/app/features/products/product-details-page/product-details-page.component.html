@@ -45,4 +45,57 @@
             </div>
         </div>
     </div>
+
+    <div class="product-details-container__full-specifications">
+      <h2>Full Specifications</h2>
+
+      <div class="product-details-container__specifications-grid">
+
+        <div class="product-details-container__specification-cell">
+          <p class="spec-lable">Brand</p>
+          <p class="spec-value">{{productData.brand}}</p>
+        </div>
+
+        <div class="product-details-container__specification-cell">
+          <p class="spec-lable">Browse Category</p>
+          <p class="spec-value">{{productData.category}}</p>
+        </div>
+
+        <div class="product-details-container__specification-cell">
+          <p class="spec-lable">Watch code</p>
+          <p class="spec-value">{{productData.productId}}</p>
+        </div>
+
+        <div class="product-details-container__specification-cell">
+          <p class="spec-lable">Color</p>
+          <p class="spec-value">{{productData.color}}</p>
+        </div>
+
+        <div class="product-details-container__specification-cell">
+          <p class="spec-lable">Weight</p>
+          <p class="spec-value">{{productData.weight}}.gm</p>
+        </div>
+
+        <div class="product-details-container__specification-cell">
+          <p class="spec-lable">Material</p>
+          <p class="spec-value">{{productData.material}}</p>
+        </div>
+
+        <div class="product-details-container__specification-cell">
+          <p class="spec-lable">Gender</p>
+          <p class="spec-value">{{productData.gender}}</p>
+        </div>
+
+        <div class="product-details-container__specification-cell">
+          <p class="spec-lable">Availabiity</p>
+          <p class="spec-value">{{productData.isAvailable? 'In stock' : 'Out of Stock'}}</p>
+        </div>
+
+      </div>
+      <div class="product-details-container__specification-cell" style="margin-top: 18px;">
+        <p class="spec-value" style="margin: 0;">About Watch
+        <p class="spec-lable">{{productData.specifications}}</p>
+      </div>
+      
+    </div>
 </div>

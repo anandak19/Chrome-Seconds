@@ -1,11 +1,10 @@
 .product-details-container {
-  padding: 0 68px;
-  background-color: aliceblue;
-
+  // hero section 
   &__hero-section {
     display: flex;
-    padding: 18px 0;
+    padding: 18px 68px;
     height: calc(100dvh - 110px);
+    background-color: #ffffff;
   }
 
   &__image-section {
@@ -123,4 +122,34 @@
     }
   }
   
+
+  // full spec section 
+  &__full-specifications{
+    padding: 18px 68px;
+    background-color: transparent;
+    & h2{
+      font-size: 1.6rem;
+      font-weight: 500;
+      padding-bottom: 18px;
+    }
+  }
+  &__specifications-grid{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); 
+    grid-template-rows: repeat(2, 1fr); 
+    gap: 16px; 
+  }
+  &__specification-cell{
+    .spec-lable{
+      font-size: 0.9rem;
+      margin: 0;
+      color: #343434;
+    }
+    .spec-value{
+      font-size: 1.1rem;
+      color: #000;
+      font-weight: 500;
+    }
+  }
+
 }
