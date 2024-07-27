@@ -1,8 +1,6 @@
 <div class="login-container">
-    <div class="login-container__image-section">
-      <img src="../../../assets/images/watch-cl.jpeg" alt="Sign UP" />
-    </div>
   
+  <div class="overlay"></div>
     <div class="login-container__form-section">
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <h2 class="login-container__title">Login</h2>
@@ -32,5 +30,6 @@
         <p class="login-container__signup-txt">Dont have an account?  <a [routerLink]="['/signup']">Sign Up</a> </p>
       </form>
     </div>
+
   </div>
   
