@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+const Schema = mongoose.Schema;
 const userSchema = new mongoose.Schema(
   {
     fullName: {
@@ -29,7 +30,10 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: null,
     },
-
+    cart: {
+      type: [{ type: Schema.Types.ObjectId, ref: "Product" }],
+      default: [],
+    },
   },
   { collection: "users" }
 );

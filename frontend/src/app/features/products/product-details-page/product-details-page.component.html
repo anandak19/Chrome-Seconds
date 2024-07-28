@@ -40,7 +40,7 @@
                     <p class="info">If orderd before 12:00pm</p>
                   </div>
                 }
-                <button class="product-details-container__btn">Add to cart</button>
+                <button class="product-details-container__btn" (click)="addCart(productData._id)">Add to cart</button>
                 <button class="product-details-container__btn product-details-container__btn--buy">{{ productData.isAvailable ? 'Buy now' : 'Out of Stock' }}</button>
             </div>
         </div>

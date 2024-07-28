@@ -3,6 +3,7 @@ import { databaseWatchDetails } from '../../../core/models/watch-details';
 import { ProductManagementService } from '../../../shared/services/productServices/product-management.service';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
+import { CartService } from '../../../shared/services/cartServices/cart.service';
 
 @Component({
   selector: 'app-product-details-page',
@@ -19,7 +20,8 @@ export class ProductDetailsPageComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private _productService: ProductManagementService
+    private _productService: ProductManagementService,
+    private _cartService: CartService
   ) {}
 
   ngOnInit(): void {
@@ -43,5 +45,17 @@ export class ProductDetailsPageComponent {
 
   goToSlide(index: number): void {
     this.currentSlide = index;
+  }
+
+  addCart(productId: string): void {
+    console.log(productId);
+    this._cartService.addCart(productId).subscribe(
+      (res) => {
+        console.log(res);
+      },
+      (err) => {
+        console.error(err);
+      }
+    );
   }
 }

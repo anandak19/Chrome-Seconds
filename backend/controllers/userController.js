@@ -1,7 +1,8 @@
 import UserModel from "../models/user.model.js";
+import ProductModel from "../models/product.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 dotenv.config();
 
 // function to create a new user
@@ -49,7 +50,7 @@ export const loginUser = async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
-    // check if the password is correct 
+    // check if the password is correct
     const passwordMatch = await bcrypt.compare(
       password,
       requestedUser.password
@@ -59,7 +60,8 @@ export const loginUser = async (req, res) => {
       return res.status(401).json({ error: "Invalid password" });
     }
 
-    const role = requestedUser.email === process.env.ADMIN_EMAIL ? 'admin' : 'user';
+    const role =
+      requestedUser.email === process.env.ADMIN_EMAIL ? "admin" : "user";
 
     // Generate a JWT token
     const token = jwt.sign(
@@ -67,8 +69,8 @@ export const loginUser = async (req, res) => {
       process.env.SECRET_KEY,
       { expiresIn: "48h" } // Token expires in 48 hour
     );
-    
-    // to send user image 
+
+    // to send user image
     const userImage = requestedUser.profileImage;
 
     // send the user data except password and token to clint
@@ -79,7 +81,7 @@ export const loginUser = async (req, res) => {
   }
 };
 
-// function to get user profile data 
+// function to get user profile data
 export const getProfileData = async (req, res) => {
   // extract id from header
   const token = req.headers.authorization.split(" ")[1];
@@ -116,7 +118,7 @@ export const updateProfileImage = async (req, res) => {
     }
     res.status(200).json(updatedUserData);
   } catch (error) {
-    res.status(500).json({ message: "Server error" + err});
+    res.status(500).json({ message: "Server error" + err });
   }
 };
 
@@ -146,18 +148,18 @@ export const updateUser = async (req, res) => {
 
 // function to update password
 export const updatePassword = async (req, res) => {
-  // get the user input and new password from the body 
-  const { userInput, newPassword} = req.body 
+  // get the user input and new password from the body
+  const { userInput, newPassword } = req.body;
 
-  // separate the id from token 
+  // separate the id from token
   const token = req.headers.authorization.split(" ")[1];
   const decoded = jwt.verify(token, process.env.SECRET_KEY);
   const userId = decoded.id;
 
   try {
-    // find the user details with the id 
+    // find the user details with the id
     const requestedUser = await UserModel.findById(userId);
-    // compare the user input with the current password 
+    // compare the user input with the current password
     const passwordMatch = await bcrypt.compare(
       userInput,
       requestedUser.password
@@ -167,21 +169,26 @@ export const updatePassword = async (req, res) => {
     if (!passwordMatch) {
       return res.status(401).json({ error: "Current password is wrong" });
     }
-    // hash the new password 
+    // hash the new password
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
     // update the database with the new password return the user data
-    const updatedUser = await UserModel.findByIdAndUpdate(userId, {password: hashedPassword}, {
-      new: true,
-    });
+    const updatedUser = await UserModel.findByIdAndUpdate(
+      userId,
+      { password: hashedPassword },
+      {
+        new: true,
+      }
+    );
 
     if (!updatedUser) {
       return res.status(404).json({ error: "User not found" });
     }
 
     res.status(200).json(updatedUser);
-    
   } catch (error) {
     console.log(error);
+    res.status(500).json({ error: 'An error occurred', details: error.message });
   }
-}
+};
+

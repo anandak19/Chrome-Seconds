@@ -78,7 +78,7 @@ export class UserManagementService {
     }
     return this._http
       .post(
-        `${this.apiUrl}/image`,
+        `${this.apiUrl}/add-image`,
         { image: imageString },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -116,7 +116,7 @@ export class UserManagementService {
   }
 
   // to handle the error in http requests
-  private handleError(error: HttpErrorResponse) {
+  handleError(error: HttpErrorResponse) {
     let errorMessage;
     if (error.error) {
       errorMessage = error.error.error;
