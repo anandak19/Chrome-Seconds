@@ -7,7 +7,7 @@ import {
   updateProfileImage,
   updatePassword
 } from "../controllers/userController.js";
-import { addCart } from "../controllers/cartController.js";
+import { addCart, decreaseCart, getCart, removeCartItem } from "../controllers/cartController.js";
 
 const router = express.Router();
 
@@ -19,6 +19,9 @@ router.get("/users/profile", getProfileData)
 // change this to patch later 
 router.post("/users/add-image", updateProfileImage)
 // cart routes 
+router.get("/users/cart", getCart)
+router.delete("/users/cart", removeCartItem)
 router.patch("/users/add-cart", addCart)
+router.patch("/users/decrese-cart", decreaseCart)
 
 export default router;

@@ -30,10 +30,12 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: null,
     },
-    cart: {
-      type: [{ type: Schema.Types.ObjectId, ref: "Product" }],
-      default: [],
-    },
+    cart: [
+      {
+          productId: { type: Schema.Types.ObjectId, ref: 'Product' },
+          quantity: { type: Number, default: 1 }
+      }
+  ]
   },
   { collection: "users" }
 );

@@ -1,8 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, HostListener, OnInit } from '@angular/core';
-import { databaseWatchDetails, ProductParams } from '../../../core/models/watch-details';
+import {
+  databaseWatchDetails,
+  ProductParams,
+} from '../../../core/models/watch-details';
 import { ProductManagementService } from '../../../shared/services/productServices/product-management.service';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { CartService } from '../../../shared/services/cartServices/cart.service';
 
 @Component({
   selector: 'app-products-page',
@@ -16,22 +20,26 @@ export class ProductsPageComponent implements OnInit {
   slectedBrand = 'Brand';
   slectedCategory = 'Category';
   selectedDropdown!: string;
-  allProducts: databaseWatchDetails[] = []
+  allProducts: databaseWatchDetails[] = [];
   params: ProductParams = {};
 
-  constructor(public _productManagement: ProductManagementService) {}
+  constructor(
+    public _productManagement: ProductManagementService,
+    private _cartService: CartService,
+    private router: Router
+  ) {}
 
   // when select a gender
   selectGender(gender: string) {
     console.log(gender);
-    this.slectedGender = gender
-    if (gender !== "Gender") {
+    this.slectedGender = gender;
+    if (gender !== 'Gender') {
       // this.slectedGender = gender;
       if (gender) {
         this.params.gender = gender;
       }
-    }else{
-      this.params.gender = ''
+    } else {
+      this.params.gender = '';
     }
     this.displayProducts();
 
@@ -42,16 +50,16 @@ export class ProductsPageComponent implements OnInit {
   // when select a brand
   selectBrand(brand: string) {
     console.log(brand);
-    this.slectedBrand = brand
-    if (brand !== "Brand") {
+    this.slectedBrand = brand;
+    if (brand !== 'Brand') {
       if (brand) {
         this.params.brand = brand;
       }
-    }else{
+    } else {
       this.params.brand = '';
     }
     this.displayProducts();
-    
+
     // hide dropdown
     this.toggleGenderDropdown(this.selectedDropdown);
   }
@@ -60,11 +68,11 @@ export class ProductsPageComponent implements OnInit {
   selectCategory(category: string) {
     console.log(category);
     this.slectedCategory = category;
-    if (category !== "Category") {
+    if (category !== 'Category') {
       if (category) {
         this.params.category = category;
       }
-    }else{
+    } else {
       this.params.category = '';
     }
     this.displayProducts();
@@ -72,31 +80,39 @@ export class ProductsPageComponent implements OnInit {
     this.toggleGenderDropdown(this.selectedDropdown);
   }
 
-  // method to display products 
-  displayProducts(){
-    console.log(this.params);//
-        this._productManagement.getAllProducts(this.params).subscribe(
-        (res) =>{
-          this.allProducts = res
-          console.log("f",this.allProducts);//
-        }, (error)=> {
-          console.log(error);
-        }
-      )
-  }
-
-  logProductwithId(id: string){
-    this._productManagement.getProductById(id).subscribe(
-      (res)=>{
-        console.log(res);
+  // method to display products
+  displayProducts() {
+    console.log(this.params); //
+    this._productManagement.getAllProducts(this.params).subscribe(
+      (res) => {
+        this.allProducts = res;
+        console.log('f', this.allProducts); //
+      },
+      (error) => {
+        console.log(error);
       }
-    )
+    );
   }
 
+  logProductwithId(id: string) {
+    this._productManagement.getProductById(id).subscribe((res) => {
+      console.log(res);
+    });
+  }
 
-
-
-
+  addCart(productId: string): void {
+    console.log(productId);
+    this._cartService.addCart(productId).subscribe(
+      (res) => {
+        console.log(res);
+        alert('Product Added to cart');
+        this.router.navigateByUrl('/cart');
+      },
+      (err) => {
+        console.error(err);
+      }
+    );
+  }
 
   toggleGenderDropdown(dropdown: string) {
     if (this.selectedDropdown && this.selectedDropdown !== dropdown) {
@@ -124,7 +140,6 @@ export class ProductsPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.displayProducts()
+    this.displayProducts();
   }
-  
 }

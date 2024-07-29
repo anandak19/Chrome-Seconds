@@ -73,6 +73,7 @@ export const routes: Routes = [
     ],
   },
 
+  // cart 
   // loged in user routes with auth guard 
   {
     path: 'cart',

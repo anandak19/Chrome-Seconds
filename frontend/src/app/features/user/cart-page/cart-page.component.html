@@ -1,110 +1,47 @@
 <div class="cart-container">
   <div class="cart-container__cart-items-section">
+    @for (product of cartProducts; track $index) {
     <div class="cart-container__item">
       <div class="cart-container__item-image-left">
         <div class="cart-container__item-image">
-          <img src="../../../../assets/images/watch-cl7.jpg" alt="" />
+          <img [src]="product.productId.images[0]" alt="" />
         </div>
         <div class="cart-container__item-quantity">
-          <button>-</button>
-          <p>10</p>
-          <button>+</button>
+          <button
+            (click)="decreaseQuantity(product.productId._id)"
+            [disabled]="product.quantity <= 1"
+          >
+            -
+          </button>
+          <p>{{ product.quantity }}</p>
+          <button (click)="increaseQuantity(product.productId._id)">+</button>
         </div>
       </div>
       <div class="cart-container__item-contents-right">
-        <h6>RADO CAPTAIN COOK BLACK DIAL MEN 43MM</h6>
-        <p class="color">Ceramic Gray</p>
-        <p class="delivery-date">Delivery by June 27 <span>| Free</span></p>
-        <p class="price">₹415,500</p>
-        <button class="remove-btn">Remove</button>
+        <h6>{{ product.productId.productName }}</h6>
+        <p class="color">{{ product.productId.color }}</p>
+        <p class="delivery-date">
+          Delivery by {{ deliveryDate | date : "EEEE MMMM dd" }}
+          <span>| Free</span>
+        </p>
+        <p class="price">₹{{ product.productId.price }}</p>
+        <!-- give function to remove from cart  -->
+        <button class="remove-btn" (click)="removeCartItem(product.productId._id)">Remove</button>
       </div>
     </div>
-
-    <div class="cart-container__item">
-      <div class="cart-container__item-image-left">
-        <div class="cart-container__item-image">
-          <img src="../../../../assets/images/watch-cl7.jpg" alt="" />
-        </div>
-        <div class="cart-container__item-quantity">
-          <button>-</button>
-          <p>10</p>
-          <button>+</button>
-        </div>
-      </div>
-      <div class="cart-container__item-contents-right">
-        <h6>RADO CAPTAIN COOK BLACK DIAL MEN 43MM</h6>
-        <p class="color">Ceramic Gray</p>
-        <p class="delivery-date">Delivery by June 27 <span>| Free</span></p>
-        <p class="price">₹415,500</p>
-        <button class="remove-btn">Remove</button>
-      </div>
-    </div>
-
-    <div class="cart-container__item">
-      <div class="cart-container__item-image-left">
-        <div class="cart-container__item-image">
-          <img src="../../../../assets/images/watch-cl7.jpg" alt="" />
-        </div>
-        <div class="cart-container__item-quantity">
-          <button>-</button>
-          <p>10</p>
-          <button>+</button>
-        </div>
-      </div>
-      <div class="cart-container__item-contents-right">
-        <h6>RADO CAPTAIN COOK BLACK DIAL MEN 43MM</h6>
-        <p class="color">Ceramic Gray</p>
-        <p class="delivery-date">Delivery by June 27 <span>| Free</span></p>
-        <p class="price">₹415,500</p>
-        <button class="remove-btn">Remove</button>
-      </div>
-    </div>
-
-    <div class="cart-container__item">
-      <div class="cart-container__item-image-left">
-        <div class="cart-container__item-image">
-          <img src="../../../../assets/images/watch-cl7.jpg" alt="" />
-        </div>
-        <div class="cart-container__item-quantity">
-          <button>-</button>
-          <p>10</p>
-          <button>+</button>
-        </div>
-      </div>
-      <div class="cart-container__item-contents-right">
-        <h6>RADO CAPTAIN COOK BLACK DIAL MEN 43MM</h6>
-        <p class="color">Ceramic Gray</p>
-        <p class="delivery-date">Delivery by June 27 <span>| Free</span></p>
-        <p class="price">₹415,500</p>
-        <button class="remove-btn">Remove</button>
-      </div>
-    </div>
-
-    <div class="cart-container__item">
-      <div class="cart-container__item-image-left">
-        <div class="cart-container__item-image">
-          <img src="../../../../assets/images/watch-cl7.jpg" alt="" />
-        </div>
-        <div class="cart-container__item-quantity">
-          <button>-</button>
-          <p>10</p>
-          <button>+</button>
-        </div>
-      </div>
-      <div class="cart-container__item-contents-right">
-        <h6>RADO CAPTAIN COOK BLACK DIAL MEN 43MM</h6>
-        <p class="color">Ceramic Gray</p>
-        <p class="delivery-date">Delivery by June 27 <span>| Free</span></p>
-        <p class="price">₹415,500</p>
-        <button class="remove-btn">Remove</button>
-      </div>
-    </div>
+    }@empty {
+      <p class="empty-text">Cart empty</p>
+    }
   </div>
   <div class="cart-container__amount-section">
     <h3>Price Details</h3>
     <table class="cart-container__price-table">
       <tr>
-        <td class="table-label">Price(3 Watches)</td>
+        @if (cartProducts && cartProducts.length > 0) {
+          <td class="table-label">Price({{ cartProducts.length }} Watches)</td>
+        }@else {
+          <td class="table-label">Price Watches</td>
+        }
         <td class="table-value" style="color: #1f1f1f; font-weight: 500">
           $25,000
         </td>
@@ -119,7 +56,7 @@
       </tr>
     </table>
     <div class="cart-container__place-order-container">
-        <button>PLACE ORDER</button>
+      <button>PLACE ORDER</button>
     </div>
   </div>
 </div>

@@ -83,7 +83,7 @@
             </div>
             <div class="products-container__product-card-discription-button">
               <p>{{ product.description }}</p>
-              <button>Add to cart</button>
+              <button (click)="addCart(product._id)">Add to cart</button>
             </div>
           </div>
         </div>

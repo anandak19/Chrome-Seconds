@@ -6,37 +6,44 @@ import dotenv from "dotenv";
 dotenv.config();
 
 //function to add product to cart
+
 export const addCart = async (req, res) => {
-  const { productId } = req.body;
+  const { productId, quantity } = req.body;
   // separate the id from token
   const token = req.headers.authorization.split(" ")[1];
   const decoded = jwt.verify(token, process.env.SECRET_KEY);
   const userId = decoded.id;
-  console.log(userId);
+
+  if (!mongoose.Types.ObjectId.isValid(productId)) {
+    return res.status(400).json({ error: "Invalid product ID" });
+  }
+
+  const productObjectId = new mongoose.Types.ObjectId(productId);
+  const quantityNum = parseInt(quantity, 10);
+
+  if (isNaN(quantityNum) || quantityNum <= 0) {
+    return res.status(400).json({ error: "Invalid quantity" });
+  }
 
   try {
-    // find user by id
-    const user = await UserModel.findById(userId);
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
-
-    // Find the product by ID
-    const product = await ProductModel.findById(productId);
-    if (!product) {
-      return res.status(404).json({ error: "Product not found" });
-    }
-
-    // Update the user's cart by adding the product ID
-    const updatedUser = await UserModel.findByIdAndUpdate(
-      userId,
-      { $push: { cart: new mongoose.Types.ObjectId(product._id) } },
-      { new: true, useFindAndModify: false }
+    // Using findOneAndUpdate for atomic update
+    const updatedUser = await UserModel.findOneAndUpdate(
+      { _id: userId, "cart.productId": productObjectId },
+      { $inc: { "cart.$.quantity": quantityNum } },
+      { new: true }
     );
 
     if (!updatedUser) {
-      console.error("User not found:", userId);
-      return res.status(404).json({ error: "User not found" });
+      // If the product was not found in the cart, push a new item
+      await UserModel.findByIdAndUpdate(
+        userId,
+        {
+          $push: {
+            cart: { productId: productObjectId, quantity: quantityNum },
+          },
+        },
+        { new: true }
+      );
     }
 
     res.status(200).json({ message: "Product added successfully" });
@@ -48,19 +55,125 @@ export const addCart = async (req, res) => {
   }
 };
 
-// function to return products in cart
-// export const showCartItems = async (req, res) => {
-//   // separate the id from token
-//   const token = req.headers.authorization.split(" ")[1];
-//   const decoded = jwt.verify(token, process.env.SECRET_KEY);
-//   const userId = decoded.id;
-//   console.log(userId);
+export const getCart = async (req, res) => {
+  // Extract token from headers
+  const token = req.headers.authorization.split(" ")[1];
+  const decoded = jwt.verify(token, process.env.SECRET_KEY);
+  const userId = decoded.id;
+  // const { userId } = req.body
 
-//   try {
-//     // find user by id
-//     const user = await UserModel.findById(userId);
-//     if (!user) {
-//       return res.status(404).json({ error: "User not found" });
-//     }
-//   } catch (error) {}
-// };
+  try {
+    const user = await UserModel.findById(userId).populate("cart.productId");
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json(user.cart);
+  } catch (error) {
+    console.error("Error retrieving cart:", error);
+    res
+      .status(500)
+      .json({ error: "An error occurred", details: error.message });
+  }
+};
+
+export const decreaseCart = async (req, res) => {
+  const { productId, quantity } = req.body;
+  const token = req.headers.authorization.split(" ")[1];
+  const decoded = jwt.verify(token, process.env.SECRET_KEY);
+  const userId = decoded.id;
+
+  if (!mongoose.Types.ObjectId.isValid(productId)) {
+    return res.status(400).json({ error: "Invalid product ID" });
+  }
+
+  const productObjectId = new mongoose.Types.ObjectId(productId);
+  const quantityNum = parseInt(quantity, 10);
+
+  if (isNaN(quantityNum) || quantityNum <= 0) {
+    return res.status(400).json({ error: "Invalid quantity" });
+  }
+
+  try {
+    // Find the user and check if the product exists in the cart
+    const user = await UserModel.findOne({
+      _id: userId,
+      "cart.productId": productObjectId,
+    });
+
+    if (!user) {
+      return res.status(404).json({ error: "Product not found in cart" });
+    }
+
+    // Find the product in the cart
+    const cartItem = user.cart.find((item) =>
+      item.productId.equals(productObjectId)
+    );
+
+    if (cartItem.quantity <= quantityNum) {
+      // If quantity to decrease is greater or equal, remove the item from the cart
+      await UserModel.findByIdAndUpdate(
+        userId,
+        { $pull: { cart: { productId: productObjectId } } },
+        { new: true }
+      );
+    } else {
+      // Otherwise, decrease the quantity
+      await UserModel.findOneAndUpdate(
+        { _id: userId, 'cart.productId': productObjectId },
+        { $inc: { 'cart.$.quantity': -quantityNum } },
+        { new: true }
+      );
+    }
+    res.status(200).json({ message: "Product quantity decreased successfully" });
+  } catch (error) {
+    console.error("Error decreasing product quantity in cart:", error);
+    res.status(500).json({ error: "An error occurred", details: error.message });
+  }
+};
+
+export const removeCartItem = async (req, res) => {
+  const token = req.headers.authorization.split(" ")[1];
+  const decoded = jwt.verify(token, process.env.SECRET_KEY);
+  const userId = decoded.id;
+  const productId = req.query.productId;
+  console.log(productId);
+
+  if (!mongoose.Types.ObjectId.isValid(productId)) {
+    return res.status(400).json({ error: "Invalid product ID" });
+  }
+  const productObjectId = new mongoose.Types.ObjectId(productId);
+  // const quantityNum = parseInt(quantity, 10);
+
+  // if (isNaN(quantityNum) || quantityNum <= 0) {
+  //   return res.status(400).json({ error: "Invalid quantity" });
+  // }
+
+  try {
+    const user = await UserModel.findOne({
+      _id: userId,
+      "cart.productId": productObjectId,
+    });
+
+    if (!user) {
+      return res.status(404).json({ error: "Product not found in cart" });
+    }
+
+    // Find the product in the cart
+    const cartItem = user.cart.find((item) =>
+      item.productId.equals(productObjectId)
+    );
+
+    // removing from db 
+    await UserModel.findByIdAndUpdate(
+      userId,
+      { $pull: { cart: { productId: productObjectId } } },
+      { new: true }
+    );
+    res.status(200).json({ message: "Product removed successfully" });
+  } catch (error) {
+    console.error("Error removing product in cart:", error);
+    res.status(500).json({ error: "An error occurred", details: error.message });
+  }
+}
