@@ -1,35 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { CartService } from '../../../shared/services/cartServices/cart.service';
 import { CartProduct } from '../../../core/models/watch-details';
-import { DatePipe } from '@angular/common';
+import { CurrencyPipe, DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-cart-page',
   standalone: true,
-  imports: [DatePipe],
+  imports: [DatePipe, CurrencyPipe],
   templateUrl: './cart-page.component.html',
-  styleUrl: './cart-page.component.scss'
+  styleUrl: './cart-page.component.scss',
 })
-export class CartPageComponent implements OnInit{
-  cartProducts!: CartProduct[]
-  deliveryDate!: Date
+export class CartPageComponent implements OnInit, OnChanges {
+  cartProducts!: CartProduct[];
+  deliveryDate!: Date;
+  totalAmount: number = 0;
 
-  constructor (private _cartService: CartService){}
+  constructor(private _cartService: CartService) {}
 
   ngOnInit(): void {
     const currentDate = new Date();
     this.deliveryDate = new Date(currentDate);
     this.deliveryDate.setDate(this.deliveryDate.getDate() + 5);
-    this.getCartItems()
+    this.getCartItems();
+    // this.calcTotalAmount();
   }
 
-  // here increaseQuantity and decreaseQuantity share same code, make it one later 
+  // here increaseQuantity and decreaseQuantity share same code, make it one later
 
   increaseQuantity(productId: string): void {
     console.log(productId);
     this._cartService.addCart(productId).subscribe(
       (res) => {
-        console.log(res);
+        // console.log(res);
         this.getCartItems()
       },
       (err) => {
@@ -38,12 +40,12 @@ export class CartPageComponent implements OnInit{
     );
   }
 
-  decreaseQuantity(productId: string): void{
+  decreaseQuantity(productId: string): void {
     console.log(productId);
     this._cartService.decreaseCart(productId).subscribe(
       (res) => {
-        console.log(res);
-        this.getCartItems()
+        // console.log(res);
+        this.getCartItems();
       },
       (err) => {
         console.error(err);
@@ -51,31 +53,47 @@ export class CartPageComponent implements OnInit{
     );
   }
 
-  removeCartItem(productId: string): void{
+  removeCartItem(productId: string): void {
     this._cartService.removeCartItem(productId).subscribe(
       (res) => {
-        console.log(res);
-        this.getCartItems()
-      }, (err) => {
+        // console.log(res);
+        this.getCartItems();
+      },
+      (err) => {
         console.error(err);
       }
-    )
+    );
   }
 
-  placeOrder(){
+  calcTotalAmount(): void {
+    this.totalAmount = 0; // Reset total amount before calculation
+    for (const product of this.cartProducts) {
+      this.totalAmount += product.productId.price * product.quantity;
+    }
+  }
+  
+
+  placeOrder() {
     //order place logic
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('Changes detected:');
+  }
+  
 
-
-    // get cart products 
-    getCartItems(){
-      this._cartService.getCart().subscribe(
-        (res) => {
-          this.cartProducts = res
-        },(err) => {
-          console.error(err);
-        }
-      )
-    }
+  // get cart products
+  getCartItems() {
+    this._cartService.getCart().subscribe(
+      (res) => {
+        this.cartProducts = res;
+        console.log("Get");
+        this.calcTotalAmount();
+        
+      },
+      (err) => {
+        console.error(err);
+      }
+    );
+  }
 }

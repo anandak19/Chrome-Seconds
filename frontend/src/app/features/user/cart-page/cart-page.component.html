@@ -13,7 +13,7 @@
           >
             -
           </button>
-          <p>{{ product.quantity }}</p>
+          <input type="text" [value]="product.quantity" readonly>
           <button (click)="increaseQuantity(product.productId._id)">+</button>
         </div>
       </div>
@@ -24,8 +24,7 @@
           Delivery by {{ deliveryDate | date : "EEEE MMMM dd" }}
           <span>| Free</span>
         </p>
-        <p class="price">₹{{ product.productId.price }}</p>
-        <!-- give function to remove from cart  -->
+        <p class="price">{{ product.productId.price * product.quantity | currency:'INR':'symbol':'1.0'  }}</p>
         <button class="remove-btn" (click)="removeCartItem(product.productId._id)">Remove</button>
       </div>
     </div>
@@ -40,10 +39,10 @@
         @if (cartProducts && cartProducts.length > 0) {
           <td class="table-label">Price({{ cartProducts.length }} Watches)</td>
         }@else {
-          <td class="table-label">Price Watches</td>
+          <td class="table-label">Price</td>
         }
         <td class="table-value" style="color: #1f1f1f; font-weight: 500">
-          $25,000
+          {{totalAmount  | currency:'INR':'symbol':'1.0'  }}
         </td>
       </tr>
       <tr>
@@ -52,7 +51,7 @@
       </tr>
       <tr class="row-total">
         <td class="table-label">Total Amount</td>
-        <td class="table-value">$25,000</td>
+        <td class="table-value">{{totalAmount  | currency:'INR':'symbol':'1.0'  }}</td>
       </tr>
     </table>
     <div class="cart-container__place-order-container">
