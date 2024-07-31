@@ -18,6 +18,7 @@ export class CartPageComponent implements OnInit, OnChanges {
   constructor(private _cartService: CartService) {}
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     const currentDate = new Date();
     this.deliveryDate = new Date(currentDate);
     this.deliveryDate.setDate(this.deliveryDate.getDate() + 5);

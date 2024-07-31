@@ -7,6 +7,7 @@ import {
 import { ProductManagementService } from '../../../shared/services/productServices/product-management.service';
 import { Router, RouterLink } from '@angular/router';
 import { CartService } from '../../../shared/services/cartServices/cart.service';
+import { AosService } from '../../../shared/services/aosService/aos.service';
 
 @Component({
   selector: 'app-products-page',
@@ -26,7 +27,8 @@ export class ProductsPageComponent implements OnInit {
   constructor(
     public _productManagement: ProductManagementService,
     private _cartService: CartService,
-    private router: Router
+    private _aosService: AosService,
+    private router: Router,
   ) {}
 
   // when select a gender
@@ -59,9 +61,9 @@ export class ProductsPageComponent implements OnInit {
       this.params.brand = '';
     }
     this.displayProducts();
-
     // hide dropdown
     this.toggleGenderDropdown(this.selectedDropdown);
+
   }
 
   // when select a category
@@ -86,7 +88,6 @@ export class ProductsPageComponent implements OnInit {
     this._productManagement.getAllProducts(this.params).subscribe(
       (res) => {
         this.allProducts = res;
-        console.log('f', this.allProducts); //
       },
       (error) => {
         console.log(error);
@@ -100,11 +101,11 @@ export class ProductsPageComponent implements OnInit {
     });
   }
 
+  // when add cart button clicked 
   addCart(productId: string): void {
     console.log(productId);
     this._cartService.addCart(productId).subscribe(
       (res) => {
-        console.log(res);
         alert('Product Added to cart');
         this.router.navigateByUrl('/cart');
       },
@@ -114,6 +115,7 @@ export class ProductsPageComponent implements OnInit {
     );
   }
 
+  // to toggle gender dropdown 
   toggleGenderDropdown(dropdown: string) {
     if (this.selectedDropdown && this.selectedDropdown !== dropdown) {
       const currentOpenDropdown = document.querySelector(this.selectedDropdown);
@@ -139,7 +141,13 @@ export class ProductsPageComponent implements OnInit {
     }
   }
 
+  ngAfterViewChecked() {
+    this._aosService.refresh();
+  }
+
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     this.displayProducts();
   }
+
 }

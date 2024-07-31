@@ -12,6 +12,7 @@ import { Router, RouterLink } from '@angular/router';
 import { UserDetails } from '../../../../core/models/user-details';
 import { UserManagementService } from '../../../../shared/services/userServices/user-management.service';
 import { UserValidationService } from '../../../../shared/services/validations/user-validation.service';
+import { AosService } from '../../../../shared/services/aosService/aos.service';
 
 @Component({
   selector: 'app-signup-page',
@@ -29,10 +30,12 @@ export class SignupPageComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private _userManagement: UserManagementService,
     private _router: Router,
-    private _userValidation: UserValidationService
+    private _userValidation: UserValidationService,
+    private _aosService: AosService
   ) {}
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     this.signupForm = this.fb.group({
       fullName: [
         '',
@@ -52,6 +55,9 @@ export class SignupPageComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.formSubmitted = false;
+  }
+  ngAfterViewInit(): void {
+    this._aosService.refresh();
   }
 
 

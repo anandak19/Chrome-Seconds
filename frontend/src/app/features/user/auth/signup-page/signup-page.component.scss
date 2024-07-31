@@ -1,7 +1,8 @@
 .signup-container {
   position: relative;
-  height: calc(100dvh - 110px);
+  background-color: #000000;
   background-image: url('../../../../../assets/images/Products/auth-background.jpg');
+  height: calc(100dvh - 110px);
   background-size: cover;
   background-position: center;
   display: flex;

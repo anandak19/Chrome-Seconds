@@ -4,6 +4,7 @@ import { ProductManagementService } from '../../../shared/services/productServic
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 import { CartService } from '../../../shared/services/cartServices/cart.service';
+import { AosService } from '../../../shared/services/aosService/aos.service';
 
 @Component({
   selector: 'app-product-details-page',
@@ -22,10 +23,12 @@ export class ProductDetailsPageComponent {
     private route: ActivatedRoute,
     private _productService: ProductManagementService,
     private _cartService: CartService,
+    private _aosService: AosService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     const currentDate = new Date();
     this.deliveryDate = new Date(currentDate);
     this.deliveryDate.setDate(this.deliveryDate.getDate() + 5);
@@ -62,5 +65,9 @@ export class ProductDetailsPageComponent {
         console.error(err);
       }
     );
+  }
+
+  ngAfterViewInit(): void {
+    this._aosService.refresh();
   }
 }

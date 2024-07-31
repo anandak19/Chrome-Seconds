@@ -10,6 +10,7 @@ import {
 import { Router, RouterLink } from '@angular/router';
 import { UserLogin } from '../../../../core/models/user-details';
 import { UserManagementService } from '../../../../shared/services/userServices/user-management.service';
+import { AosService } from '../../../../shared/services/aosService/aos.service';
 
 @Component({
   selector: 'app-login-page',
@@ -27,10 +28,12 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private _userManagement: UserManagementService,
-    private _router: Router
+    private _router: Router,
+    private _aosService: AosService
   ) {}
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
@@ -38,6 +41,10 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.formSubmitted = false;
+  }
+
+  ngAfterViewInit(): void {
+    this._aosService.refresh();
   }
 
   onSubmit() {

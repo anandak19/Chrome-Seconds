@@ -1,15 +1,15 @@
 <div class="products-section">
-  <h1 class="products-section__title">FEATURED COLLECTIONS</h1>
+  <h1 class="products-section__title" data-aos="fade-up">FEATURED COLLECTIONS</h1>
   <div class="products-section__products-wrapped">
     @for (product of featuredProducts; track $index) {
 
-    <div class="products-section__product-card">
+    <div class="products-section__product-card" data-aos="fade-up">
       <div class="products-section__image">
         <img [src]="product.images[0]" alt="" />
       </div>
       <div class="products-section__product-data">
         <h5>{{ product.productName }}</h5>
-        <p><span class="products-section__rupee-symbol">₹</span>{{product.price}}</p>
+        <p><span class="products-section__rupee-symbol">₹</span>{{product.price | number:'1.0-0'}}</p>
       </div>
     </div>
     }

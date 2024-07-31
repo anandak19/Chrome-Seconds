@@ -1,11 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { UserManagementService } from '../../../shared/services/userServices/user-management.service';
 import { dbUserData, passwordUpdation, updatedUser } from '../../../core/models/user-details';
-import { error, profile } from 'node:console';
 import {
   AbstractControl,
   FormBuilder,
-  FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
@@ -41,50 +39,10 @@ export class ProfilePageComponent implements OnInit {
     private _userManagement: UserManagementService,
     private _fb: FormBuilder,
     private _router: Router,
-    private _userValidation: UserValidationService
+    private _userValidation: UserValidationService,
   ) {}
 
-  ngOnInit() {
-    // inint the reactive form with empty values for user data updation
-    this.profileForm = this._fb.group({
-      fullName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      phone: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(10),
-          Validators.maxLength(13),
-        ],
-      ],
-      address: ['', [Validators.required]],
-      pincode: [
-        '',
-        [Validators.required, Validators.minLength(7), Validators.maxLength(7)],
-      ],
-    });
 
-    // init form to update user password  
-    this.updatePasswordForm =this._fb.group({
-      currentPassword: ['', [Validators.required]],
-      newPassword : ['' , [this._userValidation.passwordValidator]],
-      confirmPassword: ['', [this.confirmPasswordValidator]]
-    })
-
-    // get user data from backend and store in the userData variable
-    this._userManagement.getUserDetails().subscribe(
-      (res) => {
-        this.userData = res;
-        this.userprofileImage = this.userData.profileImage;
-        this.patchFormValues(this.userData);
-
-        console.log('Response data strored:', this.userData);
-      },
-      (err) => {
-        console.error('Error:', err);
-      }
-    );
-  }
 
   patchFormValues(user: dbUserData) {
     this.profileForm.patchValue({
@@ -188,6 +146,49 @@ export class ProfilePageComponent implements OnInit {
   logout(){
     this._userManagement.logoutUser();
     this._router.navigate(['']);
+  }
+
+  ngOnInit() {
+    window.scrollTo(0, 0);
+    // inint the reactive form with empty values for user data updation
+    this.profileForm = this._fb.group({
+      fullName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      phone: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(13),
+        ],
+      ],
+      address: ['', [Validators.required]],
+      pincode: [
+        '',
+        [Validators.required, Validators.minLength(7), Validators.maxLength(7)],
+      ],
+    });
+
+    // init form to update user password  
+    this.updatePasswordForm =this._fb.group({
+      currentPassword: ['', [Validators.required]],
+      newPassword : ['' , [this._userValidation.passwordValidator]],
+      confirmPassword: ['', [this.confirmPasswordValidator]]
+    })
+
+    // get user data from backend and store in the userData variable
+    this._userManagement.getUserDetails().subscribe(
+      (res) => {
+        this.userData = res;
+        this.userprofileImage = this.userData.profileImage;
+        this.patchFormValues(this.userData);
+
+        console.log('Response data strored:', this.userData);
+      },
+      (err) => {
+        console.error('Error:', err);
+      }
+    );
   }
 }
 

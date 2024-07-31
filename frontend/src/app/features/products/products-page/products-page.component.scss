@@ -17,14 +17,14 @@
   // Filters styles start
   &__filters{
     display: flex;
-    gap: 38px;
+    gap: 28px;
     // background-color: #66c942;
     padding: 24px 0;
   }
 
   &__select {
     position: relative;
-    min-width: 214px;
+    min-width: 204px;
     max-width: max-content;
     padding: 2px 12px;
     border-radius: 10px;
@@ -33,12 +33,10 @@
     background-color: #f1f1f1;
     border: 1px solid #aaaaaa;
     padding: 8px 18px;
-    font-size: 18px;
     cursor: pointer;
     border-radius: 50px;
-    font-size: 18px;
+    font-size: 1.0rem;
     color: #292929;
-    // width: 80%;
     display: flex;
     gap: 15px;
     justify-content: center;
@@ -81,12 +79,6 @@
   }
   // Filters styles end
 
-  &__products-list-title{
-    h1{
-      margin: 18px 0;
-      font-size: 34px;
-    }
-  }
   &__products-list{
     display: flex;
     flex-wrap: wrap;

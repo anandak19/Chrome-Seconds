@@ -2,7 +2,7 @@
     <div class="product-details-container__hero-section">
 
         <div class="row product-details-container__image-section">
-            <div class="col-2">
+            <div class="col-2" >
               <!-- Custom indicators -->
               <ul class="list-group" style="gap: 8px">
                 <li *ngFor="let image of productData.images; let i = index" 
@@ -27,7 +27,7 @@
             </div>
           </div>
           
-        <div class="product-details-container__product-info">
+        <div class="product-details-container__product-info" data-aos="fade-right" data-aos-duration="1000" offset="0">
             <div class="product-details-container__product-info-contents">
               <p class="product-details-container__product-id">Code: {{productData.productId}}</p>
                 <h1>{{ productData.productName }}</h1>

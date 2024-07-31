@@ -7,7 +7,7 @@
   background-image: url("../../../../assets/images/profile-background.jpg");
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat; 
+  background-repeat: no-repeat;
 
 
   // profile full wrapper
@@ -111,14 +111,13 @@
   &__profile-details-right-section {
     flex: 0 0 calc(70%);
     padding: 28px;
-    // width: 30%;
 
     h1 {
       font-size: 1.2rem;
-      color: #787878;
+      color: #656565;
       font-weight: 700;
       text-align: center;
-      margin: 6px 0;
+      margin: 24px 0;
     }
     form {
       display: grid;
@@ -206,10 +205,10 @@
 
   // password change form styles
   &__password-change-form{
-  top: 50%;
-  left: 50%;
+  // top: 50%;
+  // left: 50%;
   border-radius: 15px;
-  transform: translate(-50%, -50%);
+  // transform: translate(-50%, -50%);
   width: fit-content;
   position: fixed;
   background-color: #ffffff;
@@ -229,7 +228,7 @@
     display: flex;
     justify-content: space-around;
     gap: 18px;
-    margin: 14px 0;
+    margin: 22px 0;
 
     button{
       padding: 4px 14px;

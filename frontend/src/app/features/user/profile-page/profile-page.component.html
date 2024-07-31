@@ -2,7 +2,7 @@
 
   <div
     class="profile-container__wrapper"
-    [ngClass]="{ 'blur-div': showPasswordInputs }"
+    [ngClass]="{ 'blur-div': showPasswordInputs }" data-aos="zoom-in-up"
   >
     <!-- profile left section  -->
     <div class="profile-container__profile-left-section">
@@ -34,6 +34,7 @@
 
       <div class="profile-container__user-address-card">
         @if (profileForm.value.address) {
+          <p style="font-weight: 700;">Delivery Address:</p>
         <p>{{ profileForm.get("address")?.value }}</p>
         }@else {
         <p>Delivery address not added</p>
@@ -153,7 +154,7 @@
     </div>
   </div>
   @if (showPasswordInputs) {
-    <div class="profile-container__password-change-form">
+    <div class="profile-container__password-change-form" data-aos="zoom-in-up">
     <form [formGroup]="updatePasswordForm" (ngSubmit)="onPasswordSubmit()">
       <div class="profile-container__form-group">
         <label for="currentPassword">Current Password:</label>

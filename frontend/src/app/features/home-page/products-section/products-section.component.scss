@@ -3,28 +3,54 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin: 38px 28px;
+  padding: 38px 28px;
+  background-image: url('../../../../assets/images/home-back.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat; 
+
 
   &__title {
-    font-size: 38px;
-    // color: #ffffff;
+    font-size: 2.2rem;
     margin: 0px 0 38px 0;
   }
   &__products-wrapped {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 28px;
+    gap: 38px;
 
   }
 
   &__product-card {
-    width: 334px;
-    height: 428px;
+    width: 304px;
+    height: 402px;
     border-radius: 8px;
     overflow: hidden;
-    padding: 2px;
+    padding: 8px;
     background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
+    h5 {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.5;
+      max-height: 3em; 
+      height: auto;
+      &::after {
+        content: '...';
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-height: 3em;
+        line-height: 1.5;
+        visibility: hidden;
+      }
+    }
     &:hover{
       img {
         transform: scale(1.05);
@@ -33,7 +59,6 @@
   }
   &__image {
     width: 100%;
-    // height: 300px;
     overflow: hidden;
 
     img {
@@ -56,6 +81,7 @@
       font-size: 1.1rem;
       text-align: center;
       overflow: hidden;
+      color: #232323;
     }
     p {
       font-size: 1.1rem;
@@ -65,7 +91,7 @@
     }
   }
   &__rupee-symbol{
-    color: #000000;
+    color: #232323;
     padding-right: 4px;
   }
 
