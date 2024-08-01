@@ -2,12 +2,13 @@ import express from "express";
 import cors from "cors";
 import userRoutes from "./routes/userRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
+import paymentRoutes from "./routes/paymentRoutes.js";
 
 export const app = express();
 
 app.use(cors());
-// set limit for data save size 
-app.use(express.json({ limit: '10mb' }));
+// set limit for data save size
+app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
@@ -16,3 +17,4 @@ app.get("/", (req, res) => {
 
 app.use("/api", userRoutes);
 app.use("/api", productRoutes);
+app.use("/api", paymentRoutes);

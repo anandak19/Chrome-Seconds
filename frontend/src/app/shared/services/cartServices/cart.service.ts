@@ -61,7 +61,7 @@ export class CartService {
   getCart(): Observable<any> {
     const authData = this._userService.getAuthData();
     const token = authData.token;
-    console.log(token);
+    // console.log(token);
 
     if (!token) {
       return throwError('User not logged in');
