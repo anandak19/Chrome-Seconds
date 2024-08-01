@@ -28,6 +28,7 @@
     border-radius: 8px;
     overflow: hidden;
     padding: 8px;
+    cursor: pointer;
     background-color: #ffffff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
     h5 {
@@ -94,31 +95,4 @@
     color: #232323;
     padding-right: 4px;
   }
-
-  // &__cart-button {
-  //   bottom: 0;
-  //   width: 100%;
-  //   display: flex;
-  //   justify-content: center;
-  //   button {
-  //     padding: 8px 0;
-  //     font-size: 1.1rem;
-  //     font-weight: 700;
-  //     cursor: pointer;
-  //     color: #ffffff;
-  //     border-radius: 10px;
-  //     background-color: #e54800;
-  //     width: 88%;
-  //     transition: all 0.3s ease-in-out;
-  //     &:hover{
-  //       background-color: #ff6924;
-  //       transform: scale(1.04);
-  //       }
-  //       &:active{
-  //       background-color: #932e00;
-  //       transform: scale(1);
-  //       cursor: wait;
-  //     }
-  //   }
-  // }
 }

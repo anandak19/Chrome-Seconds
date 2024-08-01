@@ -3,7 +3,7 @@
   <div class="products-section__products-wrapped">
     @for (product of featuredProducts; track $index) {
 
-    <div class="products-section__product-card" data-aos="fade-up">
+    <div class="products-section__product-card" data-aos="fade-up" [routerLink]="'products/watch/' + product._id">
       <div class="products-section__image">
         <img [src]="product.images[0]" alt="" />
       </div>
