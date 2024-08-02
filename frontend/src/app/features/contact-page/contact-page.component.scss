@@ -1,0 +1,126 @@
+.contact-container {
+  &__hero-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #000000;
+    background-image: url("../../../assets/images/background.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 30dvh;
+    color: #ffffff;
+    text-align: center;
+    h1 {
+      font-size: 2.6rem;
+      padding-bottom: 12px;
+      font-weight: 500;
+    }
+    p {
+      font-size: 1rem;
+      word-spacing: 2px;
+      letter-spacing: 1px;
+    }
+  }
+  &__contact-section {
+    padding: 4px 68px;
+    background-color: #ffffff;
+    display: flex;
+  }
+  &__contact-form-side,
+  &__contact-text-side {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  &__contact-form-side {
+    form {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(4, auto);
+      gap: 20px;
+      padding: 18px;
+    }
+  }
+  &__form-group {
+    input,
+    textarea {
+      width: 100%;
+      padding: 8px;
+      outline: none;
+      padding: 8px 16px;
+      border: 1px solid #ff9767;
+    }
+    & input {
+      border-radius: 18px;
+    }
+    & textarea {
+      height: 100px;
+      border-radius: 14px;
+      resize: none;
+    }
+    & small {
+      font-size: 12px;
+      padding: 0 18px;
+      margin: 0;
+      color: #ff0000;
+    }
+
+    &--email {
+      grid-column: 1;
+      grid-row: 1;
+    }
+    &--phone {
+      grid-column: 2;
+      grid-row: 1;
+    }
+    &--full-w {
+      grid-column: 1 / span 2;
+      grid-row: span 2;
+    }
+  }
+  &__send-btn {
+    background-color: #ff5000;
+    color: #ffffff;
+    padding: 8px;
+    border-radius: 18px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    &:hover {
+      background-color: #cd4400;
+      cursor: pointer;
+    }
+    &:active {
+      background-color: #cc4400;
+      transform: scale(0.98);
+    }
+  }
+
+  //   text side
+  &__contact-text-side {
+    display: flex;
+    gap: 18px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    color: #1b1b1b;
+    h1 {
+      font-size: 1.9rem;
+      font-weight: 600;
+    }
+    p {
+      font-size: 1rem;
+    }
+    .socials {
+      display: flex;
+      gap: 18px;
+      img {
+        cursor: pointer;
+        width: 40px;
+      }
+    }
+  }
+}

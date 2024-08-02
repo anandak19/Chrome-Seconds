@@ -1,3 +1,102 @@
 <div class="contact-container">
-    <h1>Contact Us</h1>
+  <div class="contact-container__hero-section">
+    <h1>We’d Loves To Hear From You</h1>
+    <p>
+      Whether you’re curious about features, delivery date or even refund -
+      We’re ready to answer any and all questions
+    </p>
+  </div>
+
+  <div class="contact-container__contact-section">
+    <div class="contact-container__contact-form-side" data-aos="fade-up">
+      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+        <div
+          class="contact-container__form-group contact-container__form-group--email"
+        >
+          <input
+            type="text"
+            id="email"
+            formControlName="email"
+            placeholder="Email"
+          />
+          @if (isFormSubmitted) { @if
+          (contactForm.get('email')?.hasError('required')) {
+          <small class="error-msg">Email is required</small>
+          }@else if (contactForm.get('email')?.hasError('email')) {
+          <small class="error-msg">Invalid email</small>
+          } }
+        </div>
+
+        <div
+          class="contact-container__form-group contact-container__form-group--phone"
+        >
+          <input
+            type="text"
+            id="fullName"
+            formControlName="phone"
+            placeholder="Phone"
+          />
+          @if (isFormSubmitted) { @if
+          (contactForm.get('phone')?.hasError('required')) {
+          <small class="error-msg">Phone number is required</small>
+          }@else if (contactForm.get('phone')?.hasError('minLength')) {
+          <small class="error-msg">Invalid phone</small>
+          } }
+        </div>
+
+        <div
+          class="contact-container__form-group contact-container__form-group--full-w"
+        >
+          <input
+            type="text"
+            id="fullName"
+            formControlName="fullName"
+            placeholder="Name"
+          />
+          @if (isFormSubmitted) { @if
+          (contactForm.get('fullName')?.hasError('required')) {
+          <small class="error-msg">Name is required</small>
+          }@else if (contactForm.get('fullName')?.hasError('minLength')) {
+          <small class="error-msg">Too small name</small>
+          } }
+        </div>
+
+        <div
+          class="contact-container__form-group contact-container__form-group--full-w"
+        >
+          <textarea
+            type="text"
+            id="message"
+            formControlName="message"
+            placeholder="Message"
+          ></textarea>
+          @if (isFormSubmitted) { @if
+          (contactForm.get('message')?.hasError('required')) {
+          <small class="error-msg">Message is required</small>
+          } }
+        </div>
+
+        <button
+          type="submit"
+          class="contact-container__send-btn contact-container__form-group--full-w"
+        >
+          Send
+        </button>
+      </form>
+    </div>
+    <div class="contact-container__contact-text-side" data-aos="fade-up">
+      <h1>Get In Touch</h1>
+      <p>
+        If you have any inquiries, special requests, or need further information
+        about our products, don’t hesitate to contact us. Our team of experts is
+        available to assist you with personalized recommendations and support.
+        Fill out the form or reach us directly
+      </p>
+      <div class="socials">
+        <img src="../../../assets/icons/facebook.png" alt="">
+        <img src="../../../assets/icons/instagram.png" alt="">
+        <img src="../../../assets/icons/twitter.png" alt="">
+      </div>
+    </div>
+  </div>
 </div>
