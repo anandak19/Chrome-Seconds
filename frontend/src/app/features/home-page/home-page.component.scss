@@ -2,7 +2,7 @@
 
     // watch category styles 
     &__watch-categories-container{
-        padding: 14px 38px;
+        padding: 14px 98px;
         background-color: #ffffff;
         text-align: center;
     }
@@ -34,12 +34,12 @@
     &__category-wrapper{
         display: flex;
         justify-content: space-evenly;
-        margin: 28px 0;
+        gap: 18px;
     }
 
     &__watch-category{
         position: relative;
-        width: 300px;
+        width: 450px;
         height: 300px;
         overflow: hidden;
 

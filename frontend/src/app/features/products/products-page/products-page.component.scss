@@ -19,7 +19,7 @@
     display: flex;
     gap: 28px;
     // background-color: #66c942;
-    padding: 24px 0;
+    padding: 22px 0;
   }
 
   &__select {
@@ -79,11 +79,14 @@
   }
   // Filters styles end
 
+  &__product-list-container{
+    margin: 0px 0 55px 0;
+  }
+
   &__products-list{
     display: flex;
     flex-wrap: wrap;
     gap: 22px;
-    margin: 55px 0;
   }
 
   // product card 

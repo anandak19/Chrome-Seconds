@@ -52,6 +52,9 @@
       outline: none;
       padding: 8px 16px;
       border: 1px solid #ff9767;
+      &:focus{
+        border-color: #ff4500;
+      }
     }
     & input {
       border-radius: 18px;

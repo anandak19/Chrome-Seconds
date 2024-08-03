@@ -3,6 +3,7 @@ import cors from "cors";
 import userRoutes from "./routes/userRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
+import responseRoutes from "./routes/responseRoutes.js";
 
 export const app = express();
 
@@ -18,3 +19,4 @@ app.get("/", (req, res) => {
 app.use("/api", userRoutes);
 app.use("/api", productRoutes);
 app.use("/api", paymentRoutes);
+app.use("/api", responseRoutes);
