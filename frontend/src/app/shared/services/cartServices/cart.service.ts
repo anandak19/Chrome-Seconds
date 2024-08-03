@@ -1,6 +1,5 @@
 import {
   HttpClient,
-  HttpErrorResponse,
   HttpHeaders,
   HttpParams,
 } from '@angular/common/http';
@@ -88,6 +87,29 @@ export class CartService {
     const params = new HttpParams().set('productId', productId);
     return this._http
       .delete(`${this.apiUrl}/cart`, {
+        headers, params
+      })
+      .pipe(catchError(this._userService.handleError));
+  }
+
+  clearCart(dbOrderId: string): Observable<any> {
+    const authData = this._userService.getAuthData();
+    const token = authData.token;
+    if (!token) {
+      return throwError('User not logged in');
+    }
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+
+    console.log(dbOrderId);
+    
+    const params = new HttpParams().set('dbOrderId', dbOrderId);
+    console.log(params);
+
+    return this._http
+      .delete(`${this.apiUrl}/clear-cart`, {
         headers, params
       })
       .pipe(catchError(this._userService.handleError));

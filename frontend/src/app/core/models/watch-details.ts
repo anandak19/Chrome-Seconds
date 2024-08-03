@@ -43,3 +43,8 @@ export interface CartProduct {
   quantity: number;
   _id: string;
 }
+
+export interface orderData {
+  productId: string;
+  quantity: number;
+}

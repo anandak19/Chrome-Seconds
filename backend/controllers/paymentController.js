@@ -1,5 +1,7 @@
 import Razorpay from "razorpay";
+import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import orderModel from "../models/order.model.js";
 dotenv.config();
 
 const instance = new Razorpay({
@@ -7,31 +9,54 @@ const instance = new Razorpay({
   key_secret: process.env.RAZOR_KEY_SECRET,
 });
 
+
 export const createOrder = async (req, res) => {
-  console.log(req.body);
+  const { amount, order } = req.body;
+
+  const token = req.headers.authorization.split(" ")[1];
+  const decoded = jwt.verify(token, process.env.SECRET_KEY);
+  const userId = decoded.id;
+
+  if (!amount) {
+    return res.status(400).json({ error: "Amount is required" });
+  }
+  if (!order) {
+    return res.status(400).json({ error: "Order is required" });
+  }
+  if (!userId) {
+    return res.status(401).json({ error: "User not login" });
+  }
+
   try {
-    const { amount } = req.body;
-    if (!amount) {
-      return res.status(400).json({ error: "Amount is required" });
-    }
-    var options = {
+    // Save order
+    const newOrder = new orderModel({
+      amount,
+      order,
+      userId,
+    });
+    const savedOrder = await newOrder.save();
+    const dbOrderId  = savedOrder._id
+
+    const options = {
       amount: amount * 100,
       currency: "INR",
-      receipt: "rcp1",
+      receipt: `rcp_${dbOrderId}`
     };
-    instance.orders.create(options, function (err, order) {
-      console.log(order);
-      res.send({ orderId: order.id, amount: amount });
+
+    instance.orders.create(options, (err, orderResponse) => {
+      if (err) {
+        console.error("Error in instance.orders.create:", err);
+        return res.status(500).json({ error: "Failed to create order in payment gateway", details: err.message });
+      }
+      res.send({ orderId: orderResponse.id, amount, dbOrderId});
     });
   } catch (error) {
     console.error("Error in createOrder:", error);
-    res
-      .status(500)
-      .json({ error: "Internal Server Error", details: error.message });
+    res.status(500).json({ error: "Internal Server Error", details: error.message });
   }
 };
 
-// post 
+// post
 export const orderSuccess = async (req, res) => {
   try {
     const { orderId, paymentId } = req.query;
@@ -41,7 +66,7 @@ export const orderSuccess = async (req, res) => {
   }
 };
 
-// get 
+// get
 export const orderCancel = async (req, res) => {
   try {
     res.send("Payment cancelled");

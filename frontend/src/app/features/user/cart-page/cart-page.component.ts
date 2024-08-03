@@ -1,11 +1,12 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { CartService } from '../../../shared/services/cartServices/cart.service';
-import { CartProduct } from '../../../core/models/watch-details';
+import { CartProduct, orderData } from '../../../core/models/watch-details';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { WindowRefService } from '../../../shared/services/windowRefService/window-ref.service';
 import { OrderService } from '../../../shared/services/orderService/order.service';
 import { UserManagementService } from '../../../shared/services/userServices/user-management.service';
 import { dbUserData } from '../../../core/models/user-details';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart-page',
@@ -24,7 +25,8 @@ export class CartPageComponent implements OnInit, OnChanges {
     private _cartService: CartService,
     private _windowRef: WindowRefService,
     private _orderService: OrderService,
-    private _userService: UserManagementService
+    private _userService: UserManagementService,
+    private router: Router
   ) {}
 
   // get current user data 
@@ -85,18 +87,26 @@ export class CartPageComponent implements OnInit, OnChanges {
     }
   }
 
+  // place order 
   placeOrder(amount: number) {
     console.log('To pay', amount);
-
+    
+    // create a order object 
+    let order : orderData[] = []
+    this.cartProducts.forEach(item => {
+      order.push({productId: item.productId._id, quantity: item.quantity})
+    })
+    //
     //order place logic
-    this._orderService.createRzPayOrder(amount).subscribe(
+    this._orderService.createRzPayOrder(amount, order).subscribe(
       (res) => {
         console.log('res', res);
         const orderId = res.orderId;
         const amount = res.amount;
+        const dbOrderId = res.dbOrderId;
 
         // call pay with razor with id,amnt
-        this.payWithRazor(orderId, amount);
+        this.payWithRazor(orderId, amount, dbOrderId);
       },
       (error) => {
         console.error('Error creating order', error);
@@ -104,7 +114,7 @@ export class CartPageComponent implements OnInit, OnChanges {
     );
   }
 
-  payWithRazor(orderId: string, amount: number) {
+  payWithRazor(orderId: string, amount: number, dbOrderId: string) {
     const options: any = {
       key: 'rzp_test_J9Uy26wK6oSemQ',
       amount: amount,
@@ -127,17 +137,27 @@ export class CartPageComponent implements OnInit, OnChanges {
       },
     };
 
+    // successful 
     options.handler = (response: any, error: any) => {
       options.response = response;
       console.log(response);
       alert('Payment successful!');
-      //call api to varify signature and capture transactions
-      // save the order details to a collections for admin ref 
+      console.log(dbOrderId);
+      
+      this._cartService.clearCart(dbOrderId).subscribe(
+        (res) => {
+          this.router.navigateByUrl('/products')
+        },
+        (err) => {
+          console.error(err);
+        }
+      );
+      // Call API to verify signature and capture transactions
     };
 
+    // when user close the window while transaction in process
     options.modal.ondismiss = () => {
-      // when user close the window while transaction in process
-      console.log('Transaction cancelled');
+      alert('Transaction cancelled');
     };
 
     const rzp = new this._windowRef.nativeWindow.Razorpay(options);
@@ -165,8 +185,9 @@ export class CartPageComponent implements OnInit, OnChanges {
     this._cartService.getCart().subscribe(
       (res) => {
         this.cartProducts = res;
-        // console.log("Get");
+        console.log(this.cartProducts);
         this.calcTotalAmount();
+        
       },
       (err) => {
         console.error(err);
