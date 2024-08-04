@@ -129,6 +129,14 @@ export const routes: Routes = [
               './features/admin/add-product/add-product.component'
             ).then((c) => c.AddProductComponent),
         },
+        {
+          path: 'orders',
+          title: 'Chrome Seconds - Orders',
+          loadComponent: () =>
+            import(
+              './features/admin/orders/orders.component'
+            ).then((c) => c.OrdersComponent),
+        },
       ],
     },
 

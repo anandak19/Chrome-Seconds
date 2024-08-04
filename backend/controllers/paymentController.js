@@ -2,6 +2,7 @@ import Razorpay from "razorpay";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import orderModel from "../models/order.model.js";
+import UserModel from "../models/user.model.js"
 dotenv.config();
 
 const instance = new Razorpay({
@@ -9,7 +10,7 @@ const instance = new Razorpay({
   key_secret: process.env.RAZOR_KEY_SECRET,
 });
 
-
+// to create order ,payment and db
 export const createOrder = async (req, res) => {
   const { amount, order } = req.body;
 
@@ -27,12 +28,22 @@ export const createOrder = async (req, res) => {
     return res.status(401).json({ error: "User not login" });
   }
 
+  const user = await UserModel.findById(userId);
+  const userDetails = {
+    fullName: user.fullName,
+    address: user.address,
+    phone: user.phone,
+    email: user.email,
+    pincode: user.pincode,
+    userId: user._id,
+  };
+
   try {
     // Save order
     const newOrder = new orderModel({
       amount,
       order,
-      userId,
+      userDetails,
     });
     const savedOrder = await newOrder.save();
     const dbOrderId  = savedOrder._id
@@ -74,3 +85,5 @@ export const orderCancel = async (req, res) => {
     res.status(500).send(error);
   }
 };
+
+

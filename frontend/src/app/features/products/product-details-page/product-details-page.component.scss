@@ -1,4 +1,5 @@
 .product-details-container {
+  min-height: calc(100dvh - 110px);
   // hero section 
   &__hero-section {
     display: flex;

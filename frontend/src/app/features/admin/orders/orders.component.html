@@ -1,0 +1,85 @@
+<div class="orders-container">
+  <h1 class="orders-container__title">All Orders</h1>
+
+  @if (showOrder) {
+  <div class="orders-container__orders-div">
+    <div class="btn-wrapper">
+      <button (click)="closeOrder()">
+        <img src="../../../../assets/icons/cancel.png" alt="" />
+      </button>
+    </div>
+
+    <div class="orders-container__order-item-container">
+      @for (item of currentOrder; track $index) {
+      <div class="orders-container__order-item">
+        <div class="item-image">
+          @if (item.productId.images) {
+          <img [src]="item.productId.images[0]" alt="" />
+          }
+        </div>
+        <div class="product-details">
+          <h6>{{ item.productId.productName }}</h6>
+          <p>Color: {{ item.productId.color }}</p>
+        </div>
+        <div class="product-quantity">
+          <p>Quantity: {{ item.quantity }}</p>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+  }
+
+  <div *ngIf="showOrder" class="overlay"></div>
+
+  <div class="orders-container__table-wrapper">
+    <table class="orders-container__table">
+      <thead>
+        <tr>
+          <th>User Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Delivery Address</th>
+          <th>PIN Code</th>
+          <th>Order Details</th>
+          <th>Ordered Date</th>
+          <th>Delivery Date</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (order of orders; track $index) {
+        <tr>
+          <td>{{ order.userDetails.fullName }}</td>
+          <td>{{ order.userDetails.email }}</td>
+          <td>{{ order.userDetails.phone }}</td>
+          <td>{{ order.userDetails.address }}</td>
+          <td>{{ order.userDetails.pincode }}</td>
+          <td class="order-link">
+            <button (click)="openOrder(order.order)">View Order</button>
+          </td>
+          <td>{{ order.orderDate | date : "dd-MM-yyyy" }}</td>
+          <td>{{ order.deliveryDate | date : "dd-MM-yyyy" }}</td>
+          <td style="text-align: center">
+            <button class="delete-btn" (click)="deleteOrder(order._id)">
+              <img src="../../../../assets/icons/delete.png" alt="" />
+            </button>
+          </td>
+        </tr>
+        }@empty {
+        <tr>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

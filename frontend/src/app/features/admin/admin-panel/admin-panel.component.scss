@@ -1,6 +1,7 @@
 .admin-panel {
   background-color: #ffffff;
   padding: 14px 28px;
+  min-height: calc(100dvh - 110px);
 
   &__title {
     text-align: center;
@@ -10,8 +11,9 @@
     display: flex;
     justify-content: end;
     margin: 18px 0;
+    gap: 18px;
   }
-  &__add-btn {
+  &__routing-btn {
     padding: 8px 22px;
     font-size: 18px;
     border-radius: 6px;
@@ -112,7 +114,7 @@
     }
     tr {
       &:hover {
-        background-color: #dcdcdc;
+        background-color: #f0f0f0;
       }
     }
 

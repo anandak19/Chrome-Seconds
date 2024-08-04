@@ -1,4 +1,5 @@
 .products-container {
+  min-height: calc(100dvh - 110px);
   &__hero {
     img {
       width: 100%;

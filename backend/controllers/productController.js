@@ -115,7 +115,7 @@ export const deleteProduct = async (req, res) => {
   }
 };
 
-// function to update availability
+// function to update availability of product
 export const updateAvailability = async (req, res) => {
   // extract role from header
   // const token = req.headers.authorization.split(" ")[1];
