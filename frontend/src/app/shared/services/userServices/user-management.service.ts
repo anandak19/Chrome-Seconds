@@ -13,7 +13,7 @@ import { AppConfig } from '../../../../config/app-config';
   providedIn: 'root',
 })
 export class UserManagementService {
-  private apiUrl = 'http://localhost:3002/api/users';
+  private apiUrl = 'users';
 
   private currentUserImageSubject!: BehaviorSubject<string>;
   public currentUserImage!: Observable<string>;

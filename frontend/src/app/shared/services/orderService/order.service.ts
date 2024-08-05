@@ -8,7 +8,7 @@ import { UserManagementService } from '../userServices/user-management.service';
   providedIn: 'root',
 })
 export class OrderService {
-  private apiUrl = 'http://localhost:3002/api/order';
+  private apiUrl = 'order';
 
   constructor(
     private _http: HttpClient,

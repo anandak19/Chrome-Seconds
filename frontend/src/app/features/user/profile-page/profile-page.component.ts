@@ -180,6 +180,8 @@ export class ProfilePageComponent implements OnInit {
     this._userManagement.getUserDetails().subscribe(
       (res) => {
         this.userData = res;
+        console.log("user data:", this.userData);
+        
         this.userprofileImage = this.userData.profileImage;
         this.patchFormValues(this.userData);
 

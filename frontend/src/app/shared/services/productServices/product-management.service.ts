@@ -17,7 +17,7 @@ import { UserManagementService } from '../userServices/user-management.service';
   providedIn: 'root',
 })
 export class ProductManagementService {
-  private apiUrl = 'http://localhost:3002/api/products';
+  private apiUrl = 'products';
 
   constructor(
     private _http: HttpClient,
