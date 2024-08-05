@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -11,9 +11,6 @@ export class ContactService {
   constructor(private http: HttpClient) {}
 
   submitContactForm(data: any): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-    return this.http.post(this.apiUrl, data , { headers });
+    return this.http.post(this.apiUrl, data );
   }
 }

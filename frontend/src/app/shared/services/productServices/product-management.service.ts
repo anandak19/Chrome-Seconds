@@ -26,19 +26,11 @@ export class ProductManagementService {
 
   // create products
   createProduct(productData: WatchDetails) {
-    const authData = this._userManagement.getAuthData();
-    const token = authData.token;
-    if (!token) {
-      return throwError('User not logged in');
-    }
     return this._http
-      .post(`${this.apiUrl}`, productData, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .pipe(catchError(this.handleError));
+      .post(`${this.apiUrl}`, productData,)
   }
 
-  // get all products
+  // get all products / get all products based on filter
   getAllProducts(
     paramsObj?: ProductParams
   ): Observable<databaseWatchDetails[]> {
@@ -76,15 +68,6 @@ export class ProductManagementService {
     productId: string,
     isAvailable: boolean
   ): Observable<databaseWatchDetails> {
-    // const authData = this._userManagement.getAuthData();
-    // const token = authData.token;
-    // if (!token) {
-    //   return throwError('User not logged in');
-    // }
-    // const headers = new HttpHeaders({
-    //   'Content-Type': 'application/json',
-    //   Authorization: `Bearer ${token}`,
-    // });
     return this._http.patch<databaseWatchDetails>(
       `${this.apiUrl}/availability`,
       { isAvailable: isAvailable, productId: productId }
@@ -93,27 +76,16 @@ export class ProductManagementService {
 
   // delete a product
   deleteOneProduct(productId: string): Observable<databaseWatchDetails> {
-    const authData = this._userManagement.getAuthData();
-    const token = authData.token;
-    if (!token) {
-      return throwError('User not logged in');
-    }
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    });
-
     return this._http
-      .delete<databaseWatchDetails>(`${this.apiUrl}/${productId}`, { headers })
-      .pipe(catchError(this.handleError));
+      .delete<databaseWatchDetails>(`${this.apiUrl}/${productId}`)
   }
 
-  // handle error
-  private handleError(error: HttpErrorResponse) {
-    let errorMessage;
-    if (error.error) {
-      errorMessage = error.error.error;
-    }
-    return throwError(errorMessage);
-  }
+  // // handle error
+  // private handleError(error: HttpErrorResponse) {
+  //   let errorMessage;
+  //   if (error.error) {
+  //     errorMessage = error.error.error;
+  //   }
+  //   return throwError(errorMessage);
+  // }
 }

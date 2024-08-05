@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   UserDetails,
@@ -6,7 +6,7 @@ import {
   passwordUpdation,
   updatedUser,
 } from '../../../core/models/user-details';
-import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { AppConfig } from '../../../../config/app-config';
 
 @Injectable({
@@ -25,13 +25,12 @@ export class UserManagementService {
     this.currentUserImage = this.currentUserImageSubject.asObservable();
   }
 
-  // ------------http requests------------
+  //-------- HTTP requests -------- 
 
   // to create a new user / signup
   createUser(newUser: UserDetails): Observable<any> {
     return this._http
       .post(`${this.apiUrl}`, newUser)
-      .pipe(catchError(this.handleError));
   }
 
   // to login a user
@@ -44,91 +43,46 @@ export class UserManagementService {
           userImage: userImage,
           role: role,
         };
-
-        
+        // set token, userImage and role to localStorage 
         const authDataString = JSON.stringify(authData);
         localStorage.setItem('authData', authDataString);
         this.currentUserImageSubject.next(userImage);
       }),
-      catchError(this.handleError)
     );
   }
 
   // http requests to get user details
   getUserDetails(): Observable<any> {
-    // const token = this.getToken();
-    const authData = this.getAuthData()
-    const token = authData.token
-    if (!token) {
-      return throwError('User not logged in');
-    }
     return this._http
-      .get(`${this.apiUrl}/profile`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .pipe(catchError(this.handleError));
+      .get(`${this.apiUrl}/profile`)
   }
 
   // http reqest to store the user image string
   updateUserImage(imageString: string | null): Observable<any> {
-    const authData = this.getAuthData();
-    const token = authData.token;
-    if (!token) {
-      return throwError('User not logged in');
-    }
     return this._http
       .post(
         `${this.apiUrl}/add-image`,
         { image: imageString },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
       )
-      .pipe(catchError(this.handleError));
   }
 
   // http reqest to update user details
   updateUserDetails(userData: updatedUser): Observable<any> {
-    const authData = this.getAuthData()
-    const token = authData.token;
-    if (!token) {
-      return throwError('User not logged in');
-    }
     return this._http
-      .patch(`${this.apiUrl}`, userData, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .pipe(catchError(this.handleError));
+      .patch(`${this.apiUrl}`, userData,)
   }
 
   // http reqest to update user password
   updateUserPassword(passwords: passwordUpdation): Observable<any> {
-    const authData = this.getAuthData();
-    const token = authData.token
-    if (!token) {
-      return throwError('User not logged in');
-    }
     return this._http
-      .patch(`${this.apiUrl}/password`, passwords, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .pipe(catchError(this.handleError));
+      .patch(`${this.apiUrl}/password`, passwords)
   }
 
-  // to handle the error in http requests
-  handleError(error: HttpErrorResponse) {
-    let errorMessage;
-    if (error.error) {
-      errorMessage = error.error.error;
-    }
-    return throwError(errorMessage);
-  }
   // ------------other functions------------
 
-  // get auth data from localStorage 
+  // get Auth data from localStorage 
   getAuthData() {
     const authDataString = localStorage.getItem('authData');
-
     if (authDataString) {
       try {
         const authData = JSON.parse(authDataString);
@@ -166,7 +120,6 @@ export class UserManagementService {
 
   logoutUser() {
     localStorage.clear();
-    
     this.currentUserImageSubject.next(AppConfig.defaultUserUrl);
   }
 }

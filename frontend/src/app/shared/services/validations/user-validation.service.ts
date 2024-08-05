@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
-import { UserManagementService } from '../userServices/user-management.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserValidationService {
 
-  constructor(private _userManagement: UserManagementService) { }
+  constructor() { }
 
 
   passwordValidator(control: AbstractControl): ValidationErrors | null {
