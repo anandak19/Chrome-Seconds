@@ -1,5 +1,4 @@
 import UserModel from "../models/user.model.js";
-import ProductModel from "../models/product.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
@@ -63,11 +62,10 @@ export const loginUser = async (req, res) => {
     const role =
       requestedUser.email === process.env.ADMIN_EMAIL ? "admin" : "user";
 
-    // Generate a JWT token
+    // Generate JWT token
     const token = jwt.sign(
       { id: requestedUser._id, role },
-      process.env.SECRET_KEY,
-      { expiresIn: "48h" } // Token expires in 48 hour
+      process.env.SECRET_KEY
     );
 
     // to send user image
@@ -188,7 +186,8 @@ export const updatePassword = async (req, res) => {
     res.status(200).json(updatedUser);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: 'An error occurred', details: error.message });
+    res
+      .status(500)
+      .json({ error: "An error occurred", details: error.message });
   }
 };
-

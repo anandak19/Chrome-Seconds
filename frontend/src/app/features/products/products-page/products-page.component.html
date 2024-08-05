@@ -76,7 +76,7 @@
               <h4 [routerLink]="'watch/' + product._id">
                 {{ product.productName }}
               </h4>
-              <p><span>₹</span>{{ product.price | currency:'INR':'symbol':'1.0'}}</p>
+              <p>{{ product.price | currency:'INR':'symbol':'1.0'}}</p>
             </div>
             <div class="products-container__product-card-discription-button">
               <p>{{ product.description }}</p>
