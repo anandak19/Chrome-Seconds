@@ -8,11 +8,12 @@ import { ProductManagementService } from '../../../shared/services/productServic
 import { Router, RouterLink } from '@angular/router';
 import { CartService } from '../../../shared/services/cartServices/cart.service';
 import { AosService } from '../../../shared/services/aosService/aos.service';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-products-page',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, NgxPaginationModule],
   templateUrl: './products-page.component.html',
   styleUrl: './products-page.component.scss',
 })
@@ -23,6 +24,9 @@ export class ProductsPageComponent implements OnInit {
   selectedDropdown!: string;
   allProducts: databaseWatchDetails[] = [];
   params: ProductParams = {};
+  // pagination 
+  pageSize = 9;
+  currentP = 1
 
   constructor(
     public _productManagement: ProductManagementService,
@@ -148,6 +152,16 @@ export class ProductsPageComponent implements OnInit {
   ngOnInit(): void {
     window.scrollTo(0, 0);
     this.displayProducts();
+
+    // test usage 
+    // this._productManagement.getPaginatedProducts({ page: 0, limit: 3 }).subscribe(
+    //   (res) => {
+    //     console.log(res);
+    //   },
+    //   (error) => {
+    //     console.error('Error fetching paginated products:', error);
+    //   }
+    // );
   }
 
 }

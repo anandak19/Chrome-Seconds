@@ -5,7 +5,7 @@
       width: 100%;
       background-color: rgb(121, 219, 116);
       height: auto;
-      display: block; 
+      display: block;
     }
   }
 
@@ -16,7 +16,7 @@
   }
 
   // Filters styles start
-  &__filters{
+  &__filters {
     display: flex;
     gap: 28px;
     // background-color: #66c942;
@@ -36,18 +36,18 @@
     padding: 8px 18px;
     cursor: pointer;
     border-radius: 50px;
-    font-size: 1.0rem;
+    font-size: 1rem;
     color: #292929;
     display: flex;
     gap: 15px;
     justify-content: center;
-    img{
+    img {
       width: 12px;
     }
   }
 
-  .selected{
-    background-color: #E54800;
+  .selected {
+    background-color: #e54800;
     color: #ffffff;
   }
 
@@ -62,14 +62,14 @@
     z-index: 99;
     max-height: 200px;
     overflow-y: auto;
-    div{
+    div {
       padding: 10px 26px;
       cursor: pointer;
       background-color: #fff;
       color: #333;
       font-size: 16px;
       transition: all 0.1s ease-in;
-      &:hover{
+      &:hover {
         background-color: #e9e9e9;
         font-size: 18px;
       }
@@ -80,48 +80,85 @@
   }
   // Filters styles end
 
-  &__product-list-container{
+  &__product-list-container {
     margin: 0px 0 55px 0;
+
   }
 
-  &__products-list{
+  &__products-list {
     display: flex;
     flex-wrap: wrap;
     gap: 22px;
   }
 
-  // product card 
-  &__product-card{
+  &__paginator-controls{
+    margin-top: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+  ::ng-deep{
+    .ngx-pagination{
+      display: flex;
+      gap: 8px;
+      box-sizing: border-box;
+    }
+    .ngx-pagination li{
+      border-radius: 50% !important;
+      box-sizing: border-box !important;
+      border: 1px solid #d2d2d2;
+      &:hover{
+        border: 1px solid #292929;
+      }
+    }
+    .ngx-pagination a, .ngx-pagination button {
+      cursor: pointer;
+      border-radius: 50% !important;
+  }
+    .ngx-pagination .current {
+      background: #ffffff;
+      border: 1px solid #292929;
+      color: #000000;
+  }
+  }
+
+
+
+
+  // product card
+  &__product-card {
     width: calc(33.33% - 22px);
     display: flex;
-    border: 1px solid #BFB9B9;
+    border: 1px solid #bfb9b9;
     border-radius: 10px;
     background-color: #f4f4f4;
     overflow: hidden;
   }
-  &__product-card-image{
+  &__product-card-image {
     width: 236px;
     height: 246px;
     overflow: hidden;
-    &:hover{
+    &:hover {
       cursor: pointer;
     }
-    img{
+    img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
     }
   }
-  &__product-card-product-details{
+  &__product-card-product-details {
     padding: 24px;
     height: 246px;
     width: calc(100% - 236px);
   }
-  &__product-card-name-price{
+  &__product-card-name-price {
     height: 50%;
-    border-bottom: 1px solid #BFB9B9;
-    h4{
+    border-bottom: 1px solid #bfb9b9;
+    h4 {
       font-size: 1.2rem;
       font-weight: 700;
       width: 100%;
@@ -131,29 +168,29 @@
       -webkit-line-clamp: 2;
       line-clamp: 2;
       text-overflow: ellipsis;
-      &:hover{
+      &:hover {
         cursor: pointer;
       }
     }
-    p{
+    p {
       font-size: 1.2rem;
       font-weight: 600;
-      color: #E54800;
+      color: #e54800;
       overflow: hidden;
       text-overflow: ellipsis;
-      span{
+      span {
         padding-right: 4px;
       }
     }
   }
 
-  &__product-card-discription-button{
+  &__product-card-discription-button {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 50%;
     padding-top: 6px;
-    p{
+    p {
       font-size: 0.8rem;
       font-weight: 300;
       width: 100%;
@@ -164,8 +201,8 @@
       line-clamp: 2;
       text-overflow: ellipsis;
     }
-    button{
-      background-color: #E54800;
+    button {
+      background-color: #e54800;
       color: #ffffff;
       font-size: 1.2rem;
       padding: 6px 8px;
@@ -185,5 +222,4 @@
       }
     }
   }
-
 }

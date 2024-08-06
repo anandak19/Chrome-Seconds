@@ -16,21 +16,6 @@ export const getAllProducts = async (req, res) => {
   }
 };
 
-// function to get paginated data  /do error handle here
-export const getPaginatedProducts = async (req, res) => {
-  const page = req.body.page || 0;
-  const limit = req.body.limit || 3;
-  const skip = page * limit;
-  console.log("page:", page, "limit:", limit);
-  try {
-    const products = await ProductModel.find({}).skip(skip).limit(limit);
-    res.status(200).json(products);
-  } catch (err) {
-    console.error("Error fetching products: ", err);
-    res.status(500).json({ error: "Internal server error" });
-  }
-};
-
 // function to get 8 products for home page
 export const getSomeProducts = async (req, res) => {
   try {

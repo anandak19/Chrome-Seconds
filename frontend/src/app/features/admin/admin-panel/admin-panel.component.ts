@@ -3,11 +3,12 @@ import { Router, RouterLink } from '@angular/router';
 import { ProductManagementService } from '../../../shared/services/productServices/product-management.service';
 import { databaseWatchDetails } from '../../../core/models/watch-details';
 import { CommonModule, CurrencyPipe } from '@angular/common';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-admin-panel',
   standalone: true,
-  imports: [RouterLink, CurrencyPipe, CommonModule],
+  imports: [RouterLink, CurrencyPipe, CommonModule, NgxPaginationModule],
   templateUrl: './admin-panel.component.html',
   styleUrl: './admin-panel.component.scss',
 })
@@ -15,6 +16,9 @@ export class AdminPanelComponent implements OnInit {
   public allProductsDetails: databaseWatchDetails[] = [];
   showActions: boolean = false;
   selectedProduct! : databaseWatchDetails
+
+  pageSize = 3;
+  currentP = 1
 
   constructor(
     public _router: Router,

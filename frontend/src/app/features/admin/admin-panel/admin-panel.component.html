@@ -8,11 +8,19 @@
   </div>
 
   @if (showActions) {
-    <div class="admin-panel__actions-div">
-      <button class="availality-btn" (click)="changeAvailability()">{{ selectedProduct.isAvailable ? 'Set as Not Available' : 'Set as Available' }}</button>
-      <button class="delete-btn" (click)="deleteProductClicked()">Delete Product</button>
-      <button class="close-btn" (click)="toggleActions('')">Close</button>
-    </div>
+  <div class="admin-panel__actions-div">
+    <button class="availality-btn" (click)="changeAvailability()">
+      {{
+        selectedProduct.isAvailable
+          ? "Set as Not Available"
+          : "Set as Available"
+      }}
+    </button>
+    <button class="delete-btn" (click)="deleteProductClicked()">
+      Delete Product
+    </button>
+    <button class="close-btn" (click)="toggleActions('')">Close</button>
+  </div>
   }
   <div *ngIf="showActions" class="overlay"></div>
 
@@ -35,7 +43,8 @@
       </tr>
     </thead>
     <tbody>
-      @for (product of allProductsDetails; track $index) {
+      @for (product of allProductsDetails | paginate:{itemsPerPage: pageSize,
+      currentPage:currentP}; track $index) {
       <tr>
         <td>{{ product.productId }}</td>
         <td>{{ product.productName }}</td>
@@ -45,7 +54,7 @@
         <td>{{ product.price | currency : "INR" : "symbol" : "4.2-3" }}</td>
         <td>
           @for (image of product.images; track $index) {
-            <img [src]="image" alt="{{ product.productName }}" />
+          <img [src]="image" alt="{{ product.productName }}" />
           }
         </td>
         <td>{{ product.specifications }}</td>
@@ -54,15 +63,40 @@
         <td>{{ product.material }}</td>
         <td>{{ product.gender }}</td>
         <td>
-          <button (click)="toggleActions(product._id)" class="admin-panel__watch-action-btn">
+          <button
+            (click)="toggleActions(product._id)"
+            class="admin-panel__watch-action-btn"
+          >
             Action
           </button>
         </td>
       </tr>
       }@empty {
-        <td>Nothing to show</td>
+        <tr>
+          <td>Loading..</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
       }
-      
     </tbody>
   </table>
+
+  <pagination-controls
+  class="admin-panel__paginator-controls"
+  data-aos="fade-up"
+  previousLabel=""
+  nextLabel=""
+  (pageChange)="currentP = $event"
+>
+</pagination-controls>
 </div>

@@ -33,7 +33,7 @@
           {{ slectedBrand }}
           <img src="../../../../assets/icons/down.svg" alt="" />
         </div>
-             <!-- Update new Brand names here  -->
+        <!-- Update new Brand names here  -->
         <div class="brand-list select-items select-hide">
           <div (click)="selectBrand('Brand')">All</div>
           <div (click)="selectBrand('RADO')">RADO</div>
@@ -66,8 +66,13 @@
     <div class="products-container__product-list-container">
       <div class="products-container__products-list">
         <!-- product card start -->
-        @for (product of allProducts; track $index) {
-        <div class="products-container__product-card" data-aos="fade-up" data-aos-anchor-placement="center-bottom">
+        @for (product of allProducts | paginate:{itemsPerPage: pageSize,
+        currentPage:currentP}; track $index ) {
+        <div
+          class="products-container__product-card"
+          data-aos="fade-up"
+          data-aos-anchor-placement="center-bottom"
+        >
           <div class="products-container__product-card-image">
             <img [src]="product.images[0]" alt="" />
           </div>
@@ -76,7 +81,7 @@
               <h4 [routerLink]="'watch/' + product._id">
                 {{ product.productName }}
               </h4>
-              <p>{{ product.price | currency:'INR':'symbol':'1.0'}}</p>
+              <p>{{ product.price | currency : "INR" : "symbol" : "1.0" }}</p>
             </div>
             <div class="products-container__product-card-discription-button">
               <p>{{ product.description }}</p>
@@ -87,6 +92,14 @@
         }
         <!-- product card end -->
       </div>
+      <pagination-controls
+        data-aos="fade-up"
+        class="products-container__paginator-controls"
+        previousLabel=""
+        nextLabel=""
+        (pageChange)="currentP = $event"
+      >
+      </pagination-controls>
     </div>
 
     <!-- Products list end -->
