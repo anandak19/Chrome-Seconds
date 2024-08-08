@@ -30,6 +30,11 @@ export class AdminPanelComponent implements OnInit {
     this.getAllProducts()
   }
 
+  onPageChange(event: number) {
+    this.currentP = event;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
   getAllProducts() {
     // get products
     this._productManagement.getAllProducts().subscribe(

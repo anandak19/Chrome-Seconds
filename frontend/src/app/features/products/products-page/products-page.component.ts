@@ -136,6 +136,11 @@ export class ProductsPageComponent implements OnInit {
     selectItems.forEach((item) => item.classList.add('select-hide'));
   }
 
+  onPageChange(event: number) {
+    this.currentP = event;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
   // when click anywhere on screen
   @HostListener('document:click', ['$event'])
   onClick(event: MouseEvent) {

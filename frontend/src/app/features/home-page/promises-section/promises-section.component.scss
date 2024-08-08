@@ -1,0 +1,36 @@
+.promises-section{
+    padding: 0 98px;
+    height: 30dvh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffff;
+    height: calc(45dvh - 110px);
+    &__card{
+        display: flex;
+        gap: 18px;
+        width: fit-content;
+    }
+    &__card-image{
+        width: 70px;
+        height: fit-content;
+        img{
+            width: 100%;
+        }
+    }
+    &__card-promise{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: left;
+        h3{
+            margin: 0;
+            font-weight: 600;
+            font-size: 1.3rem;
+        }
+        p{
+            margin: 0;
+            font-size: 0.9rem;
+        }
+    }
+}
