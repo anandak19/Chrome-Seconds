@@ -120,8 +120,8 @@ export class CartPageComponent implements OnInit, OnChanges {
       amount: amount,
       currency: 'INR',
       name: 'Chrome Seconds',
-      description: '',
-      image: '',
+      description: 'Purchase of Chrome Seconds product',
+      image: 'https://img.freepik.com/premium-vector/man-watch-symbol-icon-logo-design_106330-549.jpg',
       order_id: orderId,
       modal: {
         escape: false,

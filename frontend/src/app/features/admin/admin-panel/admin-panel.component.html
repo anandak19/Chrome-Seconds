@@ -8,18 +8,29 @@
   </div>
 
   @if (showActions) {
-  <div class="admin-panel__actions-div">
-    <button class="availality-btn" (click)="changeAvailability()">
-      {{
-        selectedProduct.isAvailable
-          ? "Set as Not Available"
-          : "Set as Available"
-      }}
-    </button>
-    <button class="delete-btn" (click)="deleteProductClicked()">
-      Delete Product
-    </button>
-    <button class="close-btn" (click)="toggleActions('')">Close</button>
+  <div class="admin-panel__actions-div" data-aos="zoom-in" data-aos-duration="400">
+    <div class="btn-wrapper">
+      <button (click)="toggleActions('')">
+        <img src="../../../../assets/icons/cancel.png" alt="" />
+      </button>
+    </div>
+
+    <div class="contents">
+      <p>Current Status: <span>{{selectedProduct.isAvailable? "Available": "Not Available"}}</span></p>
+      <button class="availality-btn" (click)="changeAvailability()">
+        {{
+          selectedProduct.isAvailable
+            ? "Set as Not Available"
+            : "Set as Available"
+        }}
+      </button>
+      <button class="delete-btn" (click)="deleteProductClicked()">
+        Delete Product
+      </button>
+    </div>
+
+
+
   </div>
   }
   <div *ngIf="showActions" class="overlay"></div>
