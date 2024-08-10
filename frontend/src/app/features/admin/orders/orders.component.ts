@@ -3,6 +3,7 @@ import { OrderService } from '../../../shared/services/orderService/order.servic
 import { dbOrder } from '../../../core/models/orders';
 import { CommonModule, DatePipe } from '@angular/common';
 import { ProductManagementService } from '../../../shared/services/productServices/product-management.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-orders',
@@ -65,13 +66,31 @@ export class OrdersComponent implements OnInit {
 
   // delete an order
   deleteOrder(id: string){
-    this._orderService.deleteOrderById(id).subscribe(
-      (res)=> {
-        this.getAllOrders()
-      }, (err) => {
-        console.error(err);
+    Swal.fire({
+      title: 'Are you sure?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#c03f00',
+      cancelButtonColor: '#c00000',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this._orderService.deleteOrderById(id).subscribe(
+          (res)=> {
+            this.getAllOrders()
+            Swal.fire({
+              title: 'Deleted!',
+              text: 'Order has been deleted.',
+              icon: 'success',
+              confirmButtonColor: '#c03f00',
+            });
+          }, (err) => {
+            alert("Server error")
+            console.error(err);
+          }
+        )
       }
-    )
+    });
   }
 
   ngOnInit(): void {

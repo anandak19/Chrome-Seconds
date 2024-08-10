@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 import { CartService } from '../../../shared/services/cartServices/cart.service';
 import { AosService } from '../../../shared/services/aosService/aos.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-product-details-page',
@@ -57,8 +58,16 @@ export class ProductDetailsPageComponent {
     console.log(productId);
     this._cartService.addCart(productId).subscribe(
       (res) => {
-        console.log(res);
-        alert("Product Added to cart")
+        Swal.fire({
+          toast: true,
+          position: 'top',
+          icon: 'success',
+          title: 'Product added to cart!',
+          showConfirmButton: false,
+          timer: 2500,
+          timerProgressBar: false,
+        });
+        
         this.router.navigateByUrl('/cart')
       },
       (err) => {
