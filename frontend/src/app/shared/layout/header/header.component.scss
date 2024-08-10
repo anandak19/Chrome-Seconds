@@ -80,24 +80,6 @@
       align-items: center;
       // border: 1px solid wheat;
     }
-    &__login-button {
-      border: 1px solid #e54800;
-      background-color: #000000;
-      color: #e54800;
-      font-size: 22px;
-      height: 50%;
-      width: 100px;
-      border-radius: 50px;
-      transition: all ease-in 0.3s;
-      &:hover {
-        background-color: #e54800;
-        color: #ffffff;
-      }
-    }
-    .active-btn {
-      background-color: #e54800;
-      color: #ffffff;
-    }
   
     &__cart {
       height: 50px;

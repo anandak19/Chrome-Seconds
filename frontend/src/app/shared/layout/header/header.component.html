@@ -54,8 +54,6 @@
   </div>
 
   <div class="header-container__cart-account">
-    <!-- if the user is logged in show this  -->
-    @if (isLoggedIn) {
     <img
       src="../../../../assets/images/icons/bag.png"
       alt="Cart"
@@ -65,16 +63,5 @@
     <div class="header-container__user" routerLink="user">
       <img [src]="userImage" alt="Profile Picture" />
     </div>
-    }@else {
-      <!-- if the user is not logged in show this -->
-    <button
-      class="header-container__login-button"
-      routerLink="login"
-      routerLinkActive="active-btn"
-      [routerLinkActiveOptions]="{ exact: true }"
-    >
-      Login
-    </button>
-    }
   </div>
 </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { UserManagementService } from '../../services/userServices/user-management.service';
+import { AppConfig } from '../../../../config/app-config';
 
 @Component({
   selector: 'app-header',
@@ -12,27 +13,18 @@ import { UserManagementService } from '../../services/userServices/user-manageme
 export class HeaderComponent implements OnInit{
 
   public userImage! : string
-  isLoggedIn: boolean = false;
-  
 
   constructor(private _usermanagement: UserManagementService) {}
-
 
   ngOnInit(): void {
     // get user image and show it 
     this._usermanagement.currentUserImage.subscribe( image => {
-      this.userImage = image
+      if (image) {
+        this.userImage = image
+      } else {
+        this.userImage = AppConfig.defaultUserUrl
+      }
     })
-
-    // check if user is login 
-    this._usermanagement.isLoggedIn.subscribe(status => {
-      this.isLoggedIn = status;
-    });
-    
-  }
-
-  onClick(){
-    console.log("hi");
     
   }
 }

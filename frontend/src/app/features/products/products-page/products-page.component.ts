@@ -9,6 +9,7 @@ import { Router, RouterLink } from '@angular/router';
 import { CartService } from '../../../shared/services/cartServices/cart.service';
 import { AosService } from '../../../shared/services/aosService/aos.service';
 import { NgxPaginationModule } from 'ngx-pagination';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-products-page',
@@ -24,15 +25,15 @@ export class ProductsPageComponent implements OnInit {
   selectedDropdown!: string;
   allProducts: databaseWatchDetails[] = [];
   params: ProductParams = {};
-  // pagination 
+  // pagination
   pageSize = 9;
-  currentP = 1
+  currentP = 1;
 
   constructor(
     public _productManagement: ProductManagementService,
     private _cartService: CartService,
     private _aosService: AosService,
-    private router: Router,
+    private router: Router
   ) {}
 
   // when select a gender
@@ -67,7 +68,6 @@ export class ProductsPageComponent implements OnInit {
     this.displayProducts();
     // hide dropdown
     this.toggleGenderDropdown(this.selectedDropdown);
-
   }
 
   // when select a category
@@ -105,13 +105,26 @@ export class ProductsPageComponent implements OnInit {
     });
   }
 
-  // when add cart button clicked 
+    // update this code to check if the user is login
+  // if true only perfom this code , else navigate to login 
+  // when add cart button clicked
   addCart(productId: string): void {
     console.log(productId);
     this._cartService.addCart(productId).subscribe(
       (res) => {
-        alert('Product Added to cart');
-        this.router.navigateByUrl('/cart');
+        // check if respose coming or true 
+        if (res) {
+          Swal.fire({
+            toast: true,
+            position: 'top',
+            icon: 'success',
+            title: 'Product added to cart!',
+            showConfirmButton: false,
+            timer: 2500,
+            timerProgressBar: false,
+          });
+          this.router.navigateByUrl('/cart');
+        }
       },
       (err) => {
         console.error(err);
@@ -119,7 +132,7 @@ export class ProductsPageComponent implements OnInit {
     );
   }
 
-  // to toggle gender dropdown 
+  // to toggle gender dropdown
   toggleGenderDropdown(dropdown: string) {
     if (this.selectedDropdown && this.selectedDropdown !== dropdown) {
       const currentOpenDropdown = document.querySelector(this.selectedDropdown);
@@ -157,16 +170,5 @@ export class ProductsPageComponent implements OnInit {
   ngOnInit(): void {
     window.scrollTo(0, 0);
     this.displayProducts();
-
-    // test usage 
-    // this._productManagement.getPaginatedProducts({ page: 0, limit: 3 }).subscribe(
-    //   (res) => {
-    //     console.log(res);
-    //   },
-    //   (error) => {
-    //     console.error('Error fetching paginated products:', error);
-    //   }
-    // );
   }
-
 }

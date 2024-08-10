@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CartService } from '../../../shared/services/cartServices/cart.service';
 import { CartProduct, orderData } from '../../../core/models/watch-details';
 import { CurrencyPipe, DatePipe } from '@angular/common';
@@ -15,11 +15,12 @@ import { Router } from '@angular/router';
   templateUrl: './cart-page.component.html',
   styleUrl: './cart-page.component.scss',
 })
-export class CartPageComponent implements OnInit, OnChanges {
+export class CartPageComponent implements OnInit {
   cartProducts!: CartProduct[];
   deliveryDate!: Date;
   totalAmount: number = 0;
   userData!: dbUserData;
+  isProfileComplete: boolean = false;
 
   constructor(
     private _cartService: CartService,
@@ -89,14 +90,13 @@ export class CartPageComponent implements OnInit, OnChanges {
 
   // place order 
   placeOrder(amount: number) {
-    console.log('To pay', amount);
-    
-    // create a order object 
+    this.checkProfileCompleteness()
+    if (this.isProfileComplete) {
+          // create a order object 
     let order : orderData[] = []
     this.cartProducts.forEach(item => {
       order.push({productId: item.productId._id, quantity: item.quantity})
     })
-    //
     //order place logic
     this._orderService.createRzPayOrder(amount, order).subscribe(
       (res) => {
@@ -112,6 +112,10 @@ export class CartPageComponent implements OnInit, OnChanges {
         console.error('Error creating order', error);
       }
     );
+    } else {
+      alert("Complete profile with all details to place order")
+    }
+
   }
 
   payWithRazor(orderId: string, amount: number, dbOrderId: string) {
@@ -176,10 +180,6 @@ export class CartPageComponent implements OnInit, OnChanges {
 
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log('Changes detected:');
-  }
-
   // get cart products
   getCartItems() {
     this._cartService.getCart().subscribe(
@@ -187,11 +187,19 @@ export class CartPageComponent implements OnInit, OnChanges {
         this.cartProducts = res;
         console.log(this.cartProducts);
         this.calcTotalAmount();
-        
       },
       (err) => {
         console.error(err);
       }
     );
+  }
+
+  checkProfileCompleteness(){
+    const { address, phone, pincode } = this.userData;
+    if (address && phone && pincode) {
+      this.isProfileComplete = true
+    } else {
+      this.isProfileComplete = false
+    }
   }
 }

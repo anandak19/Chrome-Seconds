@@ -53,22 +53,26 @@ export class ProductDetailsPageComponent {
     this.currentSlide = index;
   }
 
+  // update this code to check if the user is login
+  // if true only perfom this code , else navigate to login 
   // to add to cart 
   addCart(productId: string): void {
     console.log(productId);
     this._cartService.addCart(productId).subscribe(
       (res) => {
-        Swal.fire({
-          toast: true,
-          position: 'top',
-          icon: 'success',
-          title: 'Product added to cart!',
-          showConfirmButton: false,
-          timer: 2500,
-          timerProgressBar: false,
-        });
-        
-        this.router.navigateByUrl('/cart')
+        // check if the respose is true 
+        if (res) {
+          Swal.fire({
+            toast: true,
+            position: 'top',
+            icon: 'success',
+            title: 'Product added to cart!',
+            showConfirmButton: false,
+            timer: 2500,
+            timerProgressBar: false,
+          });
+          this.router.navigateByUrl('/cart')
+        }
       },
       (err) => {
         console.error(err);

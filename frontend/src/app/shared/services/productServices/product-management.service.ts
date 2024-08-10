@@ -1,17 +1,14 @@
 import {
   HttpClient,
-  HttpErrorResponse,
-  HttpHeaders,
   HttpParams,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import {
   ProductParams,
   WatchDetails,
   databaseWatchDetails,
 } from '../../../core/models/watch-details';
-import { UserManagementService } from '../userServices/user-management.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,9 +17,7 @@ export class ProductManagementService {
   private apiUrl = 'products';
 
   constructor(
-    private _http: HttpClient,
-    private _userManagement: UserManagementService
-  ) {}
+    private _http: HttpClient  ) {}
 
   // create products
   createProduct(productData: WatchDetails) {
@@ -79,13 +74,4 @@ export class ProductManagementService {
     return this._http
       .delete<databaseWatchDetails>(`${this.apiUrl}/${productId}`)
   }
-
-  // // handle error
-  // private handleError(error: HttpErrorResponse) {
-  //   let errorMessage;
-  //   if (error.error) {
-  //     errorMessage = error.error.error;
-  //   }
-  //   return throwError(errorMessage);
-  // }
 }
