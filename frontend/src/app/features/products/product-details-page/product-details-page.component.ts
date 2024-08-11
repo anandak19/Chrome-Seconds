@@ -6,6 +6,7 @@ import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 import { CartService } from '../../../shared/services/cartServices/cart.service';
 import { AosService } from '../../../shared/services/aosService/aos.service';
 import Swal from 'sweetalert2';
+import { UserManagementService } from '../../../shared/services/userServices/user-management.service';
 
 @Component({
   selector: 'app-product-details-page',
@@ -19,10 +20,12 @@ export class ProductDetailsPageComponent {
   productData!: databaseWatchDetails;
   currentSlide: number = 0;
   deliveryDate!: Date;
+  isLogin :boolean = false
 
   constructor(
     private route: ActivatedRoute,
     private _productService: ProductManagementService,
+    private _userService: UserManagementService,
     private _cartService: CartService,
     private _aosService: AosService,
     private router: Router
@@ -46,6 +49,8 @@ export class ProductDetailsPageComponent {
         }
       );
     }
+    
+    this.checkIfUserLogin()
   }
 
   // to show image 
@@ -53,31 +58,38 @@ export class ProductDetailsPageComponent {
     this.currentSlide = index;
   }
 
-  // update this code to check if the user is login
-  // if true only perfom this code , else navigate to login 
   // to add to cart 
   addCart(productId: string): void {
-    console.log(productId);
-    this._cartService.addCart(productId).subscribe(
-      (res) => {
-        // check if the respose is true 
-        if (res) {
-          Swal.fire({
-            toast: true,
-            position: 'top',
-            icon: 'success',
-            title: 'Product added to cart!',
-            showConfirmButton: false,
-            timer: 2500,
-            timerProgressBar: false,
-          });
-          this.router.navigateByUrl('/cart')
+    if (this.isLogin) {
+      this._cartService.addCart(productId).subscribe(
+        (res) => {
+          // check if the respose is true 
+          if (res) {
+            Swal.fire({
+              toast: true,
+              position: 'top',
+              icon: 'success',
+              title: 'Product added to cart!',
+              showConfirmButton: false,
+              timer: 2500,
+              timerProgressBar: false,
+            });
+            this.router.navigateByUrl('/cart')
+          }
+        },
+        (err) => {
+          console.error(err);
         }
-      },
-      (err) => {
-        console.error(err);
-      }
-    );
+      );
+    } else {
+      this.router.navigate(['/login']);
+    }    
+  }
+
+  checkIfUserLogin(){
+    this._userService.isLoggedIn.subscribe((loggedIn: boolean) => {
+      this.isLogin = loggedIn;
+    });
   }
 
   ngAfterViewInit(): void {

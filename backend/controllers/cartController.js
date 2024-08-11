@@ -10,6 +10,9 @@ dotenv.config();
 export const addCart = async (req, res) => {
   const { productId, quantity } = req.body;
   // separate the id from token
+  if (!req.headers.authorization) {
+    return res.status(401).json({ message: "Authorization header is missing" });
+  }
   const token = req.headers.authorization.split(" ")[1];
   const decoded = jwt.verify(token, process.env.SECRET_KEY);
   const userId = decoded.id;

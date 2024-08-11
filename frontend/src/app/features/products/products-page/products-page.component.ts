@@ -10,6 +10,7 @@ import { CartService } from '../../../shared/services/cartServices/cart.service'
 import { AosService } from '../../../shared/services/aosService/aos.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import Swal from 'sweetalert2';
+import { UserManagementService } from '../../../shared/services/userServices/user-management.service';
 
 @Component({
   selector: 'app-products-page',
@@ -25,12 +26,14 @@ export class ProductsPageComponent implements OnInit {
   selectedDropdown!: string;
   allProducts: databaseWatchDetails[] = [];
   params: ProductParams = {};
+  isLogin :boolean = false
   // pagination
   pageSize = 9;
   currentP = 1;
 
   constructor(
     public _productManagement: ProductManagementService,
+    private _userService: UserManagementService,
     private _cartService: CartService,
     private _aosService: AosService,
     private router: Router
@@ -109,27 +112,30 @@ export class ProductsPageComponent implements OnInit {
   // if true only perfom this code , else navigate to login 
   // when add cart button clicked
   addCart(productId: string): void {
-    console.log(productId);
-    this._cartService.addCart(productId).subscribe(
-      (res) => {
-        // check if respose coming or true 
-        if (res) {
-          Swal.fire({
-            toast: true,
-            position: 'top',
-            icon: 'success',
-            title: 'Product added to cart!',
-            showConfirmButton: false,
-            timer: 2500,
-            timerProgressBar: false,
-          });
-          this.router.navigateByUrl('/cart');
+    if (this.isLogin) {
+      this._cartService.addCart(productId).subscribe(
+        (res) => {
+          // check if respose coming or true 
+          if (res) {
+            Swal.fire({
+              toast: true,
+              position: 'top',
+              icon: 'success',
+              title: 'Product added to cart!',
+              showConfirmButton: false,
+              timer: 2500,
+              timerProgressBar: false,
+            });
+            this.router.navigateByUrl('/cart');
+          }
+        },
+        (err) => {
+          console.error(err);
         }
-      },
-      (err) => {
-        console.error(err);
-      }
-    );
+      );
+    } else {
+      this.router.navigate(['/login']);
+    }
   }
 
   // to toggle gender dropdown
@@ -154,6 +160,13 @@ export class ProductsPageComponent implements OnInit {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  checkIfUserLogin(){
+    this._userService.isLoggedIn.subscribe((loggedIn: boolean) => {
+      this.isLogin = loggedIn;
+    });
+  }
+  
+
   // when click anywhere on screen
   @HostListener('document:click', ['$event'])
   onClick(event: MouseEvent) {
@@ -170,5 +183,6 @@ export class ProductsPageComponent implements OnInit {
   ngOnInit(): void {
     window.scrollTo(0, 0);
     this.displayProducts();
+    this.checkIfUserLogin()
   }
 }

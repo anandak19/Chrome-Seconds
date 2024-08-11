@@ -49,7 +49,6 @@ export class LoginPageComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     console.log('Submitted');
-
     this.formSubmitted = true;
     if (this.loginForm.valid) {
       console.log(this.loginForm.value);

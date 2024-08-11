@@ -7,6 +7,8 @@ import { OrderService } from '../../../shared/services/orderService/order.servic
 import { UserManagementService } from '../../../shared/services/userServices/user-management.service';
 import { dbUserData } from '../../../core/models/user-details';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
+import 'animate.css';
 
 @Component({
   selector: 'app-cart-page',
@@ -113,9 +115,28 @@ export class CartPageComponent implements OnInit {
       }
     );
     } else {
-      alert("Complete profile with all details to place order")
+      Swal.fire({
+        title: "Complete your profile",
+        text: "Delivery details missing.",
+        showClass: {
+          popup: `
+            animate__animated
+            animate__fadeInUp
+            animate__faster
+          `
+        },
+        hideClass: {
+          popup: `
+            animate__animated
+            animate__fadeOutDown
+            animate__faster
+          `
+        },
+        showConfirmButton: true,
+        confirmButtonColor: '#c03f00',
+      });
+      this.router.navigateByUrl('/user');
     }
-
   }
 
   payWithRazor(orderId: string, amount: number, dbOrderId: string) {
