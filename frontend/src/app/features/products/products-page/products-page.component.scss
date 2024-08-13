@@ -59,8 +59,7 @@
     top: 100%;
     left: 0;
     right: 0;
-    z-index: 99;
-    max-height: 200px;
+    z-index: 9;
     overflow-y: auto;
     div {
       padding: 10px 26px;
@@ -170,6 +169,8 @@
       text-overflow: ellipsis;
       &:hover {
         cursor: pointer;
+        color: #cc3e00;
+        text-decoration: underline;
       }
     }
     p {
@@ -204,7 +205,7 @@
     button {
       background-color: #e54800;
       color: #ffffff;
-      font-size: 1.2rem;
+      font-size: 1.0rem;
       padding: 6px 8px;
       width: 100%;
       margin-top: auto;

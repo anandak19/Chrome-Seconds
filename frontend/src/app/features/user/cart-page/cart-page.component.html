@@ -37,7 +37,7 @@
     <table class="cart-container__price-table">
       <tr>
         @if (cartProducts && cartProducts.length > 0) {
-          <td class="table-label">Price({{ cartProducts.length }} Watches)</td>
+          <td class="table-label">Price({{ cartProducts.length }} Model)</td>
         }@else {
           <td class="table-label">Price</td>
         }
@@ -54,8 +54,10 @@
         <td class="table-value">{{totalAmount  | currency:'INR':'symbol':'1.0'  }}</td>
       </tr>
     </table>
-    <div class="cart-container__place-order-container">
-      <button (click)="placeOrder(totalAmount)">PLACE ORDER</button>
-    </div>
+    @if (cartProducts && cartProducts.length > 0) {
+      <div class="cart-container__place-order-container">
+        <button (click)="placeOrder(totalAmount)">PLACE ORDER</button>
+      </div>
+    }
   </div>
 </div>

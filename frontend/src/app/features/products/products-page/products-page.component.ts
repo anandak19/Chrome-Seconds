@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   databaseWatchDetails,
   ProductParams,
@@ -11,6 +11,8 @@ import { AosService } from '../../../shared/services/aosService/aos.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import Swal from 'sweetalert2';
 import { UserManagementService } from '../../../shared/services/userServices/user-management.service';
+import { DataService } from '../../../shared/services/passingDataService/data.service';
+
 
 @Component({
   selector: 'app-products-page',
@@ -19,14 +21,16 @@ import { UserManagementService } from '../../../shared/services/userServices/use
   templateUrl: './products-page.component.html',
   styleUrl: './products-page.component.scss',
 })
-export class ProductsPageComponent implements OnInit {
+export class ProductsPageComponent implements OnInit, OnDestroy {
+  @ViewChild('targetDiv') proudcts!: ElementRef;
+  
   slectedGender = 'Gender';
   slectedBrand = 'Brand';
   slectedCategory = 'Category';
   selectedDropdown!: string;
   allProducts: databaseWatchDetails[] = [];
   params: ProductParams = {};
-  isLogin :boolean = false
+  isLogin: boolean = false;
   // pagination
   pageSize = 9;
   currentP = 1;
@@ -36,6 +40,7 @@ export class ProductsPageComponent implements OnInit {
     private _userService: UserManagementService,
     private _cartService: CartService,
     private _aosService: AosService,
+    private _dataService: DataService,
     private router: Router
   ) {}
 
@@ -44,7 +49,6 @@ export class ProductsPageComponent implements OnInit {
     console.log(gender);
     this.slectedGender = gender;
     if (gender !== 'Gender') {
-      // this.slectedGender = gender;
       if (gender) {
         this.params.gender = gender;
       }
@@ -108,14 +112,12 @@ export class ProductsPageComponent implements OnInit {
     });
   }
 
-    // update this code to check if the user is login
-  // if true only perfom this code , else navigate to login 
   // when add cart button clicked
   addCart(productId: string): void {
     if (this.isLogin) {
       this._cartService.addCart(productId).subscribe(
         (res) => {
-          // check if respose coming or true 
+          // check if respose coming or true
           if (res) {
             Swal.fire({
               toast: true,
@@ -157,15 +159,15 @@ export class ProductsPageComponent implements OnInit {
 
   onPageChange(event: number) {
     this.currentP = event;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const position = window.innerHeight * 0.4;
+    window.scrollTo({ top: position, behavior: 'smooth' });
   }
 
-  checkIfUserLogin(){
+  checkIfUserLogin() {
     this._userService.isLoggedIn.subscribe((loggedIn: boolean) => {
       this.isLogin = loggedIn;
     });
   }
-  
 
   // when click anywhere on screen
   @HostListener('document:click', ['$event'])
@@ -182,7 +184,18 @@ export class ProductsPageComponent implements OnInit {
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
-    this.displayProducts();
-    this.checkIfUserLogin()
+    this.checkIfUserLogin();
+
+    this._dataService.currentData.subscribe((data) => {
+      if (data !== '' ) {
+        this.selectGender(`${data}`);
+      }else{
+        this.displayProducts();
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this._dataService.changeData('')
   }
 }

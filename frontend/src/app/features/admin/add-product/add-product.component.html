@@ -97,11 +97,19 @@
               error: isFormSubmitted && productForm.get('brand')?.invalid
             }"
           >
-              <!-- Update new Brand names here  -->
+            <!-- Update new Brand names here  -->
             <option value="">Select Brand</option>
-            <option value="RADO">RADO</option>
-            <option value="TISSOT">TISSOT</option>
+            <option value="CASIO">CASIO</option>
+            <option value="DIESEL">DIESEL</option>
             <option value="FASTRACK">FASTRACK</option>
+            <option value="FIRE-BOLT">FIRE BOLT</option>
+            <option value="FOSSIL">FOSSIL</option>
+            <option value="GUCCI">GUCCI</option>
+            <option value="RADO">RADO</option>
+            <option value="TIMEX">TIMEX</option>
+            <option value="TISSOT">TISSOT</option>
+            <option value="TITAN">TITAN</option>
+            
           </select>
           @if (productForm.get('brand')?.invalid && isFormSubmitted) {
           <small>
@@ -240,14 +248,16 @@
           <label
             for="image"
             [ngClass]="{
-              'image-warning': isFormSubmitted  && productForm.get('images')?.hasError('minArrayLength'),
+              'image-warning':
+                isFormSubmitted &&
+                productForm.get('images')?.hasError('minArrayLength'),
               'image-stored': imageRemaining == 0
-            }">
-            @if (imageRemaining > 0) {
-              Choose images ({{ imageRemaining }} remaining)
-            }@else {
-              All images are added
-            }
+            }"
+          >
+            @if (imageRemaining > 0) { Choose images ({{
+              imageRemaining
+            }}
+            remaining) }@else { All images are added }
           </label>
         </div>
       </div>

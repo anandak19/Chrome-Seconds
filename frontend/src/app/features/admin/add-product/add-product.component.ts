@@ -1,5 +1,6 @@
 import { CommonModule, Location } from '@angular/common';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
+import Swal from 'sweetalert2';
 import {
   AbstractControl,
   FormArray,
@@ -10,7 +11,6 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { UserManagementService } from '../../../shared/services/userServices/user-management.service';
 import { ProductManagementService } from '../../../shared/services/productServices/product-management.service';
 
 @Component({
@@ -48,6 +48,7 @@ export class AddProductComponent {
       material: ['', Validators.required],
       gender: ['', Validators.required],
     });
+
   }
 
   // to get the image array from form
@@ -110,9 +111,15 @@ export class AddProductComponent {
       // Add submission logic here ----
       this._productManagement.createProduct(productData).subscribe(
         (res) => {
-          alert('Product added successfully');
-          console.log('Added prododuct is: ');
-          console.log(res);
+          Swal.fire({
+            text: "Product added succesfully",
+            toast: true,
+            position: "top",
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+          });
+
           this.isFormSubmitted = false;
           this.imageRemaining = 4;
           // Clear the images form array

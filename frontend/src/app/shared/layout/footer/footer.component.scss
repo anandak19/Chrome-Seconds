@@ -1,26 +1,123 @@
-.footer-container{
+.footer-container {
+  &__main {
+    background-color: #130600;
+    padding: 38px 0;
+  }
+  &__main-contents {
+    margin: 0 98px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__contents-block {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    flex: 1;
+    margin: 0 29px;
+    &:last-child {
+      margin-right: 0;
+    }
+    .title {
+      margin-left: -14px;
+      h1 {
+        font-size: 1.2rem;
+        color: #ffffff;
+      }
+    }
+    .links {
+      color: #ffffff;
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        li {
+          position: relative;
+          padding-left: 20px;
+          margin-bottom: 8px;
+          cursor: pointer;
+          &::before {
+            content: "→";
+            position: absolute;
+            left: -10px;
+            color: #e04400;
+            font-size: 1.2rem;
+            line-height: 1;
+            transition: left 0.3s ease;
+          }
+          &:hover::before {
+            color: #ff6600;
+            left: 0;
+          }
+        }
+      }
+    }
+
+    &--main {
+      margin-left: 0;
+      flex: 2;
+      .brand {
+        display: flex;
+        margin-left: -9px;
+      }
+      .brand-image {
+        height: 70px;
+        width: auto;
+        & img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .brand-name {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        h1 {
+          margin: 0;
+          padding: 0;
+          color: #ffffff;
+          font-size: 34px;
+          font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+            "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+          font-weight: bold;
+          font-style: italic;
+        }
+      }
+      .about {
+        width: 408px;
+        p {
+          color: #ffffff;
+          font-size: 0.9rem;
+        }
+      }
+      .follow-links {
+        display: flex;
+        gap: 14px;
+      }
+      .icon {
+        width: 30px;
+        height: auto;
+        img {
+          width: 100%;
+          height: auto;
+        }
+      }
+    }
+  }
+
+  // bottom section
+  &__bottom {
     background-color: #000000;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 36px 0;
-    bottom: 0;
-
-    &__contents{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+    padding: 14px 0;
+  }
+  &__copyright {
+    color: #7a7a7a;
+    p {
+      margin: 0;
+      padding: 0;
     }
-    &__dev, &__name{
-        color: #acacac;
-    }
-    &__dev{
-        font-size: 14px;
-    }
-
-
-    &__copyright{
-        color: #7a7a7a;
-    }
+  }
 }

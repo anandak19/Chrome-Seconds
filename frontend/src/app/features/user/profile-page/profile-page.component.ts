@@ -12,6 +12,7 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 import { UserValidationService } from '../../../shared/services/validations/user-validation.service';
 
 @Component({
@@ -87,6 +88,14 @@ export class ProfilePageComponent implements OnInit {
         this._userManagement.updateUserDetails(this.updatedUser).subscribe(
           (res) => {
             console.log(res);
+            Swal.fire({
+              title: 'Saved',
+              icon: 'success',
+              showConfirmButton: false,
+              timer: 2000,
+              width: '300px',
+              padding: '1em',
+            });
           },(err) => {
             console.log(err);
           }
@@ -112,7 +121,6 @@ export class ProfilePageComponent implements OnInit {
     this.updatePasswordForm.reset();
   }
   onPasswordSubmit(){
-    // when user clicked save . write a http patch request  , with the {current password and new password} as parameter
     if (this.updatePasswordForm.valid) {
       console.log(this.updatePasswordForm.value);
       this.newPasswordData = {
@@ -122,16 +130,22 @@ export class ProfilePageComponent implements OnInit {
       
       this._userManagement.updateUserPassword(this.newPasswordData).subscribe(
         (res) => {
-         console.log(res);
+         this.closePasswordForm();
+         Swal.fire({
+          title: 'Password Updated',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 2000,
+          width: '300px',
+          padding: '1em',
+        });
         },
         (err) => {
           console.log(err);
-          
+          alert("An error occured")
         }
       )
     }
-    // console the response 
-    // alert the error 
   }
 
   // confirm password validation 

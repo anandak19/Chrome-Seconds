@@ -22,9 +22,14 @@
         height: 70px;
         width: auto;
       }
-      & h1 {
+      & h1 ,span{
         color: #ffffff;
         font-size: 34px;
+        margin: 0;
+        // font-family: 'Playfair Display', serif;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-weight: bold;
+        font-style: italic;
       }
     }
   

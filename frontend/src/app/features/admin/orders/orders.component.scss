@@ -17,6 +17,26 @@
     font-weight: 600;
     margin: 28px 0;
   }
+  &__back-btn {
+    float: right;
+    padding: 8px 22px;
+    font-size: 18px;
+    border-radius: 6px;
+    background-color: #e54800;
+    color: #ffffff;
+    margin: 12px 0;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    &:hover {
+      background-color: #c03f00;
+    }
+    &:active {
+      background-color: #a83600;
+      transform: scale(0.98);
+    }
+  }
+  
   &__order-item-container{
     overflow-y: scroll;
 

@@ -7,10 +7,15 @@
         background-color: #ffffff;
     }
 
+    &__admin-btn-wrapper{
+        display: flex;
+        justify-content: center;
+    }
     &__admin-btn{
         background-color: #E54800;
         color: #ffffff;
-        border-radius: 50px;
+        display: flex;
+        align-items: center;
         padding: 4px 14px;
         font-size: 18px;
         transition: all 0.3s ease;

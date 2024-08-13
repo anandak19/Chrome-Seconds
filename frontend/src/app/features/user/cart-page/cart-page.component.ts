@@ -166,8 +166,14 @@ export class CartPageComponent implements OnInit {
     options.handler = (response: any, error: any) => {
       options.response = response;
       console.log(response);
-      alert('Payment successful!');
-      console.log(dbOrderId);
+      Swal.fire({
+        title: 'Order Placed!',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 2000,
+        width: '300px',
+        padding: '1em',
+      });
       
       this._cartService.clearCart(dbOrderId).subscribe(
         (res) => {

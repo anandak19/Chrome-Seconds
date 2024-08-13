@@ -4,7 +4,6 @@
   <app-promises-section></app-promises-section>
 
   <div class="home-container__watch-categories-container">
-      <!-- <button class="home-container__admin-btn" routerLink="/admin">Go to Admin Panel</button> -->
     <h1 class="home-container__section-title" data-aos="fade-up" >Top Categories</h1>
     <div class="home-container__category-wrapper">
 
@@ -12,7 +11,7 @@
         <img src="../../../assets/images/home/men-watch.jpg" alt="" />
         <div class="home-container__overlay">
           <h2>Men's <br />Collection</h2>
-          <button>Discover</button>
+          <button (click)="sendGender('Men')">Discover</button>
         </div>
       </div>
 
@@ -20,7 +19,7 @@
         <img src="../../../assets/images/home/women-watch.jpg" alt="" />
         <div class="home-container__overlay">
           <h2>Women's <br />Collection</h2>
-          <button>Discover</button>
+          <button (click)="sendGender('Women')">Discover</button>
         </div>
       </div>
 
@@ -28,7 +27,7 @@
         <img src="../../../assets/images/home/unisex-watch.jpg" alt="" />
         <div class="home-container__overlay">
           <h2>Unisex <br />Collection</h2>
-          <button>Discover</button>
+          <button (click)="sendGender('Unisex')">Discover</button>
         </div>
       </div>
     </div>
@@ -37,5 +36,12 @@
   <!-- products  section  -->
    <app-products-section></app-products-section>
    <app-brands-section></app-brands-section>
+
+   @if (isAdmin) {
+     <div class="home-container__admin-btn-wrapper">
+       <button class="home-container__admin-btn" routerLink="/admin">Go to Admin Panel</button>
+      </div>
+    }
+
 
 </div>

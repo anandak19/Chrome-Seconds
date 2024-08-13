@@ -36,9 +36,17 @@
         <!-- Update new Brand names here  -->
         <div class="brand-list select-items select-hide">
           <div (click)="selectBrand('Brand')">All</div>
-          <div (click)="selectBrand('RADO')">RADO</div>
-          <div (click)="selectBrand('TISSOT')">TISSOT</div>
+          <!-- <div (click)="selectBrand('CASIO')">CASIO</div> -->
+          <div (click)="selectBrand('DIESEL')">DIESEL</div>
           <div (click)="selectBrand('FASTRACK')">FASTRACK</div>
+          <!-- <div (click)="selectBrand('FIRE-BOLT')">FIRE BOLT</div> -->
+          <div (click)="selectBrand('FOSSIL')">FOSSIL</div>
+          <div (click)="selectBrand('GUCCI')">GUCCI</div>
+          <div (click)="selectBrand('RADO')">RADO</div>
+          <div (click)="selectBrand('TIMEX')">TIMEX</div>
+          <div (click)="selectBrand('TISSOT')">TISSOT</div>
+          <!-- <div (click)="selectBrand('TITAN')">TITAN</div> -->
+
         </div>
       </div>
       <!-- Category  -->
@@ -63,7 +71,7 @@
     <!-- Filters end  -->
 
     <!-- Products list start -->
-    <div class="products-container__product-list-container">
+    <div class="products-container__product-list-container" #proudcts>
       <div class="products-container__products-list">
         <!-- product card start -->
         @for (product of allProducts | paginate:{itemsPerPage: pageSize,
@@ -85,7 +93,11 @@
             </div>
             <div class="products-container__product-card-discription-button">
               <p>{{ product.description }}</p>
-              <button (click)="addCart(product._id)">Add to cart</button>
+              @if (product.isAvailable) {
+                <button (click)="addCart(product._id)">Add to cart</button>
+              }@else {
+                <button>Not available</button>
+              }
             </div>
           </div>
         </div>
@@ -97,11 +109,11 @@
         class="products-container__paginator-controls"
         previousLabel=""
         nextLabel=""
-        (pageChange)="currentP = $event"
+        (pageChange)="onPageChange($event)"
       >
       </pagination-controls>
     </div>
-
     <!-- Products list end -->
+
   </div>
 </div>

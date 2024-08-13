@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from '../../../shared/services/orderService/order.service';
 import { dbOrder } from '../../../core/models/orders';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule, DatePipe, Location } from '@angular/common';
 import { ProductManagementService } from '../../../shared/services/productServices/product-management.service';
 import Swal from 'sweetalert2';
 
@@ -19,7 +19,7 @@ export class OrdersComponent implements OnInit {
   showOrder: boolean = false
   currentOrder!: any
 
-  constructor (private _orderService: OrderService, private _productService: ProductManagementService) {}
+  constructor (private _orderService: OrderService, private _productService: ProductManagementService, private location: Location) {}
 
 
 
@@ -91,6 +91,10 @@ export class OrdersComponent implements OnInit {
         )
       }
     });
+  }
+
+  navigateBack(){
+    this.location.back();
   }
 
   ngOnInit(): void {
