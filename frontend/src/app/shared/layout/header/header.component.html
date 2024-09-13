@@ -1,67 +1,122 @@
 <div class="header-container">
-  <div class="header-container__brand" routerLink="">
-    <img src="../../../../assets/images/brand/watch.png" alt="CS" />
-    <h1>Chrome <span style="color: #FF5000">Seconds</span> </h1>
-  </div>
+  <div class="header-container__header-items">
+    <div class="header-container__nav-window" [ngClass]="{ 'header-container__nav-window-open': isToggleNav }">
+      <nav>
+        <h1>Chrome <span style="color: #ff5000">Seconds</span></h1>
+        <ul class="header-container__nav-window-list">
+          <li class="header-container__item">
+            <a
+              routerLink=""
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              >Home</a
+            >
+          </li>
+          <li class="header-container__item">
+            <a
+              routerLink="products"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              >Products</a
+            >
+          </li>
+          <li class="header-container__item">
+            <a
+              routerLink="about"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              >About</a
+            >
+          </li>
 
-  <div class="header-container__navigation">
-    <nav>
-      <ul class="header-container__list">
-        <li class="header-container__item">
-          <a
-            routerLink=""
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }"
-            >Home</a
-          >
-        </li>
-        <li class="header-container__item">
-          <a
-            routerLink="products"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }"
-            >Products</a
-          >
-        </li>
-        <li class="header-container__item">
-          <a
-            routerLink="about"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }"
-            >About</a
-          >
-        </li>
+          <li class="header-container__item">
+            <a
+              routerLink="contact"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              >Contact</a
+            >
+          </li>
 
-        <li class="header-container__item">
-          <a
-            routerLink="contact"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }"
-            >Contact</a
-          >
-        </li>
-        
-        <!-- <li class="header-container__item">
-          <a
-            routerLink="admin"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }"
-            >Admin</a
-          >
-        </li> -->
-      </ul>
-    </nav>
-  </div>
+          <li class="header-container__item header-container__item--close" (click)="onMoreClick()">
+            <img src="../../../../assets/icons/cancel.png" alt="">
+          </li>
+        </ul>
+      </nav>
+    </div>
 
-  <div class="header-container__cart-account">
-    <img
-      src="../../../../assets/images/icons/bag.png"
-      alt="Cart"
-      [routerLink]="['cart']"
-      class="header-container__cart"
-    />
-    <div class="header-container__user" routerLink="user">
-      <img [src]="userImage" alt="Profile Picture" />
+    <div class="header-container__more">
+      <a (click)="onMoreClick()">
+        <img src="../../../../assets/icons/more.png" alt="More icon" />
+      </a>
+    </div>
+
+    <div class="header-container__brand" routerLink="">
+      <img src="../../../../assets/images/brand/watch.png" alt="CS" />
+      <h1>Chrome <span style="color: #ff5000">Seconds</span></h1>
+    </div>
+
+    <!-- wide screen navigations start -->
+    <div class="header-container__navigation">
+      <nav>
+        <ul class="header-container__list">
+          <li class="header-container__item">
+            <a
+              routerLink=""
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              >Home</a
+            >
+          </li>
+          <li class="header-container__item">
+            <a
+              routerLink="products"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              >Products</a
+            >
+          </li>
+          <li class="header-container__item">
+            <a
+              routerLink="about"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              >About</a
+            >
+          </li>
+
+          <li class="header-container__item">
+            <a
+              routerLink="contact"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              >Contact</a
+            >
+          </li>
+
+          <!-- <li class="header-container__item">
+            <a
+              routerLink="admin"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              >Admin</a
+            >
+          </li> -->
+        </ul>
+      </nav>
+    </div>
+    <!-- wide screen navigations end -->
+
+    <div class="header-container__cart-account">
+      <img
+        src="../../../../assets/images/icons/bag.png"
+        alt="Cart"
+        [routerLink]="['cart']"
+        class="header-container__cart"
+      />
+      <div class="header-container__user" routerLink="user">
+        <img [src]="userImage" alt="Profile Picture" />
+      </div>
     </div>
   </div>
 </div>
