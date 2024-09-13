@@ -134,6 +134,15 @@
     border-radius: 10px;
     background-color: #f4f4f4;
     overflow: hidden;
+
+    &--empty{
+      min-height: 264px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-style: italic;
+      color: #696969;
+    }
   }
   &__product-card-image {
     width: 236px;
