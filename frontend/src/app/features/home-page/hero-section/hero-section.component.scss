@@ -1,13 +1,24 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
 .hero-container {
   .full-width-carousel {
-    width: 100%;
+    width: fit-content;
     height: 55vh;
+
+    @include respond-to(small) {
+      height: 26px;
+    }
   }
   .carousel-item {
     height: 55vh;
     & img {
       height: 100%;
       object-fit: cover;
+    }
+    @include respond-to(small) {
+      height: 18vh;
+      width: 100dvw;
     }
   }
 }

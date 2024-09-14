@@ -26,30 +26,56 @@
         aria-label="Slide 3"
       ></button>
     </div>
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img
-          src="../../../../assets/images/home/banner-chrome.svg"
-          class="d-block w-100"
-          alt="..."
-        />
-      </div>
-      <div class="carousel-item">
-        <img
-          src="../../../../assets/images/home/img9.svg"
-          class="d-block w-100"
-          alt="..."
-        />
-      </div>
-      <div class="carousel-item">
-        <img
-          src="../../../../assets/images/home/banner-hand.svg"
-          class="d-block w-100"
-          alt="..."
-        />
-      </div>
 
-      
+    <div class="carousel-inner">
+      <!-- banner -1  -->
+      <div class="carousel-item active">
+        <picture>
+          <!-- Mobile image for small screens -->
+          <source
+            media="(max-width: 576px)"
+            srcset="../../../../assets/images/home/banner-1-mobile.svg"
+          />
+          <!-- Default image for larger screens -->
+          <img
+            src="../../../../assets/images/home/banner-chrome.svg"
+            class="d-block w-100"
+            alt="Banner Chrome"
+          />
+        </picture>
+      </div>
+      <!-- banner -2 -->
+      <div class="carousel-item">
+        <picture>
+          <!-- Mobile image for small screens -->
+          <source
+            media="(max-width: 576px)"
+            srcset="../../../../assets/images/home/banner-2-mobile.svg"
+          />
+          <!-- Default image for larger screens -->
+          <img
+            src="../../../../assets/images/home/img9.svg"
+            class="d-block w-100"
+            alt="Banner Chrome"
+          />
+        </picture>
+      </div>
+      <!-- banner -3 -->
+      <div class="carousel-item">
+        <picture>
+          <!-- Mobile image for small screens -->
+          <source
+            media="(max-width: 576px)"
+            srcset="../../../../assets/images/home/banner-3-mobile.svg"
+          />
+          <!-- Default image for larger screens -->
+          <img
+            src="../../../../assets/images/home/banner-hand.svg"
+            class="d-block w-100"
+            alt="Banner Chrome"
+          />
+        </picture>
+      </div>
     </div>
   </div>
 </div>
