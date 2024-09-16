@@ -5,9 +5,10 @@
   .full-width-carousel {
     width: fit-content;
     height: 55vh;
+    background-color: #ffffff;
 
     @include respond-to(small) {
-      height: 26px;
+      height: 18dvh;
     }
   }
   .carousel-item {
@@ -19,6 +20,11 @@
     @include respond-to(small) {
       height: 18vh;
       width: 100dvw;
+    }
+  }
+  @include respond-to(small) {
+    .carousel-indicators{
+      display: none;
     }
   }
 }
